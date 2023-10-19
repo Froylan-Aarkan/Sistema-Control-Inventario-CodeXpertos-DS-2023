@@ -25,7 +25,7 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         // TODO
     } 
     
-    private void inicializarVentana(String cargoUsuario){
+    public void inicializarVentana(String cargoUsuario){
         this.cargoUsuario = cargoUsuario;
     }
     

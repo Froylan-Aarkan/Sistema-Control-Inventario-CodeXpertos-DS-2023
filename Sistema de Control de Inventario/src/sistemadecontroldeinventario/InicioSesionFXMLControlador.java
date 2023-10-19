@@ -53,7 +53,7 @@ public class InicioSesionFXMLControlador implements Initializable {
         }       
     }
     
-    private void desplegarVentanaPrincipal(){
+    private void desplegarVentanaPrincipal(Usuario usuarioSesion){
         try {
             FXMLLoader loaderVentanaPrincipal = new FXMLLoader(getClass().getResource("VentanaPrincipalFXML.fxml"));
             Parent ventanaPrincipal = loaderVentanaPrincipal.load();
@@ -62,6 +62,7 @@ public class InicioSesionFXMLControlador implements Initializable {
             Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
             Stage stageVentanaPrincipal = (Stage) tfUsuario.getScene().getWindow();
             stageVentanaPrincipal.setScene(escenaVentanaPrincipal);
+            controladorVentanaPrincipal.inicializarVentana(usuarioSesion.getCargo());
             stageVentanaPrincipal.show();
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +97,7 @@ public class InicioSesionFXMLControlador implements Initializable {
             Usuario usuarioSesion = UsuarioDAO.verificarUsuario(correoInstitucional, contrasenia);
             if(usuarioSesion.getIdUsuario()!= 0){
                 Utilidades.mostrarAlertaSimple("Bienvenid@", "Bienvenid@ " + usuarioSesion.getNombreCompleto()+ ".", Alert.AlertType.INFORMATION);
-                desplegarVentanaPrincipal();
+                desplegarVentanaPrincipal(usuarioSesion);
             }else{
                 Utilidades.mostrarAlertaSimple("Credenciales incorrectas", "El correo institucional y/o contraseña es incorrecto, favor de verificar", Alert.AlertType.WARNING);
             }
