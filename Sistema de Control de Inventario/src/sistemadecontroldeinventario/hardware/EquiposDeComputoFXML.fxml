@@ -35,8 +35,10 @@
       </Label>
       <TableView fx:id="tvEquiposComputo" layoutX="133.0" layoutY="149.0" prefHeight="450.0" prefWidth="1100.0">
         <columns>
-          <TableColumn fx:id="tvEquiposComputo" prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="tcMarca" prefWidth="307.0" resizable="false" text="Marca" />
+          <TableColumn fx:id="tcModelo" prefWidth="306.0" resizable="false" text="Modelo" />
+            <TableColumn fx:id="tcNumeroSerie" prefWidth="280.0" resizable="false" text="Número de Serie" />
+            <TableColumn fx:id="tcEstado" prefWidth="200.0" resizable="false" text="Estado" />
         </columns>
       </TableView>
       <TextField fx:id="tfBusqueda" layoutX="433.0" layoutY="97.0" prefHeight="31.0" prefWidth="500.0" promptText="Buscar por " style="-fx-border-color: black;" />

@@ -26,5 +26,17 @@
             <Font size="64.0" />
          </font>
       </Label>
+      <Button fx:id="btnHardware" layoutX="316.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" text="Hardware">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="664.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaSoftware" text="Software">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="1065.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaUsuarios" text="Usuarios">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>
