@@ -42,7 +42,7 @@ public class UsuarioDAO {
                     usuarioSesion.setIdUsuario(0);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar iniciar sesión: " + e.getMessage(), Alert.AlertType.ERROR);
             } finally {
                 conexionBD.close();
             }
