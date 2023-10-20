@@ -8,7 +8,7 @@ import java.sql.Date;
 
 /**
  *
- * @author froyl
+ * @author froylan
  */
 public class Hardware {
     private int idHardware;
