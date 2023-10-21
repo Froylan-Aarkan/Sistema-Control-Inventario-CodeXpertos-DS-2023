@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.InicioSesionFXMLControlador;
 
 /**
  * FXML Controller class
@@ -138,23 +141,19 @@ public class SoftwareFXMLControlador implements Initializable {
     
     private void abrirFormularioSoftware(Software software){
         try {
-            FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().
-                    getResource("software/FormularioSoftwareFXML.fxml"));
-            Parent ventanaRegistrarSoftware = loaderVentanaSoftware.load();
+            FXMLLoader loaderVentanaRegistrarSoftware = new FXMLLoader(getClass().
+                    getResource("sistemadecontroldeinventario/software/FormularioSoftwareFXML.fxml"));
+            Parent ventanaRegistrarSoftware = loaderVentanaRegistrarSoftware.load();
             
-            FormularioSoftwareFXMLControlador ventanaRegistroSoftware = 
-                    loaderVentanaSoftware.getController();
-            
-            ventanaRegistroSoftware.inicializarValores(software);
-            
-            Scene escenarioSoftwareNuevo = new Scene(ventanaRegistrarSoftware);
+            Scene escenarioSoftware = new Scene(ventanaRegistrarSoftware);
             Stage stageSoftware = new Stage();
-            stageSoftware.setScene(escenarioSoftwareNuevo);
+            stageSoftware.setScene(escenarioSoftware);
             stageSoftware.initModality(Modality.APPLICATION_MODAL);
             stageSoftware.showAndWait();
+            cargarDatosTabla();
             
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

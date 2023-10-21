@@ -55,6 +55,7 @@ public class FormularioSoftwareFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarComponentesCombo();
     }    
 
     private void inicializarComponentesCombo(){
