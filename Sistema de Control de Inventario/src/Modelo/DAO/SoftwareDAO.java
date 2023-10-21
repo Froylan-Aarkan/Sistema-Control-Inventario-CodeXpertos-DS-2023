@@ -4,10 +4,75 @@
  */
 package Modelo.DAO;
 
+import Modelo.ConexionBaseDeDatos;
+import Modelo.POJO.Software;
+import Utilidades.Utilidades;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javafx.scene.control.Alert;
+
 /**
  *
  * @author johno
  */
 public class SoftwareDAO {
+    public static ArrayList<Software> recuperarTodoSoftware() throws SQLException{
+        ArrayList<Software> softwareBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT * FROM software";
+                PreparedStatement consultaSoftware = conexionBD.prepareStatement(consulta);
+                ResultSet resultadoConsulta = consultaSoftware.executeQuery();
+                softwareBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Software softwareTemporal = new Software();
+                    softwareTemporal.setIdSoftware(resultadoConsulta.getInt("idSoftware"));
+                    softwareTemporal.setNombre(resultadoConsulta.getString("nombre"));
+                    softwareTemporal.setPeso(resultadoConsulta.getString("peso"));
+                    softwareTemporal.setArquitectura(resultadoConsulta.getInt("arquitectura"));
+                    softwareBD.add(softwareTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " 
+                                + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+        }
+        return softwareBD;
+    }
     
+    public static boolean eliminarSoftware(int idSoftware) throws SQLException{
+        boolean resultado = true;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consultaEliminar = "DELETE FROM software WHERE idSoftware = ?";
+                PreparedStatement consultaEliminarSoftware = conexionBD.prepareStatement(consultaEliminar);
+                consultaEliminarSoftware.setInt(1, idSoftware);
+                int filasAfectadas = consultaEliminarSoftware.executeUpdate();
+                
+                if(filasAfectadas > 0){
+                    resultado = true;
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            resultado = false;
+            return resultado;
+        }
+        return resultado;
+    }
 }
