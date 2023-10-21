@@ -24,7 +24,7 @@ public class SoftwareDAO {
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT * FROM software";
+                String consulta = "SELECT idSoftware, nombre, arquitectura, peso FROM software";
                 PreparedStatement consultaSoftware = conexionBD.prepareStatement(consulta);
                 ResultSet resultadoConsulta = consultaSoftware.executeQuery();
                 softwareBD = new ArrayList<>();
@@ -40,20 +40,23 @@ public class SoftwareDAO {
                 
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", 
-                        "Algo ocurrió mal al intentar recuperar los software registrados: " 
-                                + e.getMessage(), Alert.AlertType.ERROR);
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " + e.getMessage(),
+                        Alert.AlertType.ERROR);
             }finally{
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
         }
         return softwareBD;
     }
     
     public static boolean eliminarSoftware(int idSoftware) throws SQLException{
-        boolean resultado = true;
+        Utilidades mensajeRespuesta = null;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = true;
         if(conexionBD != null){
             try{
                 String consultaEliminar = "DELETE FROM software WHERE idSoftware = ?";
@@ -62,16 +65,29 @@ public class SoftwareDAO {
                 int filasAfectadas = consultaEliminarSoftware.executeUpdate();
                 
                 if(filasAfectadas > 0){
+                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
+                            "Se eliminó el software correctamente.",
+                            Alert.AlertType.INFORMATION);
                     resultado = true;
+                }else{
+                    mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
+                            "No se pudo eliminar el software.",
+                            Alert.AlertType.ERROR);
+                    resultado = false;
                 }
-            }catch(SQLException e){
-                e.printStackTrace();
+            }catch(SQLException sqlException){
+                mensajeRespuesta.mostrarAlertaSimple("Error",
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+                resultado = false;
             }finally{
                 conexionBD.close();
             }
         }else{
+            mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
+                    "No hay conexión con la base de datos.",
+                    Alert.AlertType.ERROR);
             resultado = false;
-            return resultado;
         }
         return resultado;
     }

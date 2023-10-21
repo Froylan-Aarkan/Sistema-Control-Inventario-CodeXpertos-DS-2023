@@ -9,8 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemadecontroldeinventario.software.SoftwareFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.SoftwareFXMLControlador">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
       <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="518.0" layoutY="63.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
@@ -46,8 +45,8 @@
       <TableView fx:id="tvSoftware" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
          <columns>
             <TableColumn fx:id="tcNombre" prefWidth="400.0" text="Nombre" />
-            <TableColumn fx:id="tcArquitectura" prefWidth="250.0" text="Arquitectura" />
             <TableColumn fx:id="tcPeso" prefWidth="251.0" text="Peso" />
+            <TableColumn fx:id="tcArquitectura" prefWidth="250.0" text="Arquitectura" />
          </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="652.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
