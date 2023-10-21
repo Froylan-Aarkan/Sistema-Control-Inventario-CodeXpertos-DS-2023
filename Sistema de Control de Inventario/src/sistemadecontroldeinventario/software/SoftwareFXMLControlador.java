@@ -8,6 +8,7 @@ import Modelo.ConexionBaseDeDatos;
 import Modelo.DAO.SoftwareDAO;
 import Modelo.POJO.Software;
 import Utilidades.Utilidades;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,11 +18,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -40,14 +45,13 @@ public class SoftwareFXMLControlador implements Initializable {
     @FXML
     private TableColumn<Software, String> tcPeso;
     public ObservableList<Software> listaSoftware;
-
+    private String cargoUsuario;
     /**
      * Initializes the controller class.
      */
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         configurarTabla();
         cargarDatosTabla();
     }  
@@ -121,10 +125,37 @@ public class SoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void registrarSoftware(ActionEvent event) {
+        abrirFormularioSoftware(null);
     }
    
     private Software verificarSoftwareSeleccionado(){
         int filaSeleccionada = tvSoftware.getSelectionModel().getFocusedIndex();
         return filaSeleccionada >= 0 ? listaSoftware.get(filaSeleccionada) : null;
     }
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
+    
+    private void abrirFormularioSoftware(Software software){
+        try {
+            FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().
+                    getResource("software/FormularioSoftwareFXML.fxml"));
+            Parent ventanaRegistrarSoftware = loaderVentanaSoftware.load();
+            
+            FormularioSoftwareFXMLControlador ventanaRegistroSoftware = 
+                    loaderVentanaSoftware.getController();
+            
+            ventanaRegistroSoftware.inicializarValores(software);
+            
+            Scene escenarioSoftwareNuevo = new Scene(ventanaRegistrarSoftware);
+            Stage stageSoftware = new Stage();
+            stageSoftware.setScene(escenarioSoftwareNuevo);
+            stageSoftware.initModality(Modality.APPLICATION_MODAL);
+            stageSoftware.showAndWait();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

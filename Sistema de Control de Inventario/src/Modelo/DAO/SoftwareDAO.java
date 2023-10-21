@@ -91,4 +91,47 @@ public class SoftwareDAO {
         }
         return resultado;
     }
+    
+    public static boolean registrarSoftware(Software softwareNuevo) throws SQLException{
+        Utilidades mensajeRespuesta = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = true;
+        if(conexionBD != null){
+            try {
+                String sentencia = "INSERT INTO software(nombre,peso,arquitectura)"
+                        + " VALUES (?,?,?)";
+                PreparedStatement sentenciaNuevoSoftware = conexionBD.prepareStatement(sentencia);
+                sentenciaNuevoSoftware.setString(1, softwareNuevo.getNombre());
+                sentenciaNuevoSoftware.setString(2, softwareNuevo.getPeso());
+                sentenciaNuevoSoftware.setInt(3, softwareNuevo.getArquitectura());
+
+                int numeroFilas = sentenciaNuevoSoftware.executeUpdate();
+                if(numeroFilas > 0){
+                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
+                            "Se agregó el software correctamente.",
+                            Alert.AlertType.INFORMATION);
+                    resultado = true;
+                }else{
+                    mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
+                            "No se pudo agregar el software.",
+                            Alert.AlertType.ERROR);
+                    resultado = false;
+                }
+            } catch (SQLException sqlException) {
+                mensajeRespuesta.mostrarAlertaSimple("Error",
+                        "Algo ocurrió mal al intentar guardar los software registrados: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+                resultado = false;
+            } finally {
+                conexionBD.close();
+            }
+        }else{
+            mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
+                    "No hay conexión con la base de datos.",
+                    Alert.AlertType.ERROR);
+            resultado = false;
+        }
+        
+        return resultado;
+    }
 }
