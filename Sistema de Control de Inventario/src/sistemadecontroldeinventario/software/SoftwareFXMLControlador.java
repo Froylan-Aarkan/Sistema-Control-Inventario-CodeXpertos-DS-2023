@@ -88,7 +88,7 @@ public class SoftwareFXMLControlador implements Initializable {
                 try{
                     boolean resultado = SoftwareDAO.eliminarSoftware(softwareEliminacion.getIdSoftware());
                     if(resultado == true){
-                        cargarDatosTabla();
+                        cargarDatosTabla(); 
                     }else{
                         Utilidades.mostrarAlertaSimple("Operacion fallida", 
                                 "La eliminación del software ha fallado",
