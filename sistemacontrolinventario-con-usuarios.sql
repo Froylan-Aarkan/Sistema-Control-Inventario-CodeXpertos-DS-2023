@@ -86,9 +86,9 @@ CREATE TABLE `hardware` (
   `posicion` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `almacenamiento` float NOT NULL,
   `ram` float NOT NULL,
-  `direccionMac` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `direccionMac` varchar(17) NOT NULL,
   `direccionIp` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `grafica` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `grafica` varchar(100) DEFAULT NULL,
   `fechaIngreso` datetime NOT NULL,
   `sistemaOperativo` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `arquitectura` int NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE `hardware` (
   `CentroComputo_idCentroComputo` int NOT NULL,
   PRIMARY KEY (`idHardware`,`CentroComputo_idCentroComputo`),
   UNIQUE KEY `numeroSerie_UNIQUE` (`numeroSerie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +106,7 @@ CREATE TABLE `hardware` (
 
 LOCK TABLES `hardware` WRITE;
 /*!40000 ALTER TABLE `hardware` DISABLE KEYS */;
+INSERT INTO `hardware` VALUES (1,'D500SD','N3N0CX26T980138','Funcional','Intel Core i5-12400 2.5 GHz','A1',512,8,'F8-E4-3B-A3-51-E7','192.168.100.98',NULL,'2023-10-21 00:00:00','Windows 11 Pro',64,'ASUS','Intel B660',1);
 /*!40000 ALTER TABLE `hardware` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-18 16:34:53
+-- Dump completed on 2023-10-21 11:23:08

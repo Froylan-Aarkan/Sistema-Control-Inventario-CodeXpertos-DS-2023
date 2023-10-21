@@ -42,12 +42,11 @@ public class InicioSesionFXMLControlador implements Initializable {
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }    
 
     @FXML
     private void iniciarSesion(ActionEvent event) {
-        //TODO validacion de usuario
         if(camposValidos()){
             validarUsuario(tfUsuario.getText(), pfContrasenia.getText());
         }       
