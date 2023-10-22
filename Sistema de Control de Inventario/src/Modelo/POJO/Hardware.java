@@ -28,6 +28,7 @@ public class Hardware {
     private String marca;
     private String tarjetaMadre;
     private int idCentroComputo;
+    private String centroComputo;
 
     public Hardware() {
     }
@@ -100,6 +101,10 @@ public class Hardware {
         return idCentroComputo;
     }
 
+    public String getCentroComputo() {
+        return centroComputo;
+    }
+
     public void setIdHardware(int idHardware) {
         this.idHardware = idHardware;
     }
@@ -166,5 +171,9 @@ public class Hardware {
 
     public void setIdCentroComputo(int idCentroComputo) {
         this.idCentroComputo = idCentroComputo;
+    }
+
+    public void setCentroComputo(String centroComputo) {
+        this.centroComputo = centroComputo;
     }
 }

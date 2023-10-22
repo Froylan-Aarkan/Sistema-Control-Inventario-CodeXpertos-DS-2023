@@ -77,9 +77,9 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             FXMLLoader loaderVentanaRegistrarEquipoDeComputo = new FXMLLoader(getClass().getResource("RegistrarEquipoComputoFXML.fxml"));
             Parent ventanaRegistrarEquipoDeComputo = loaderVentanaRegistrarEquipoDeComputo.load();
             
-            Scene escenarioEquiposDeComputo = new Scene(ventanaRegistrarEquipoDeComputo);
+            Scene escenarioRegistrarEquipoDeComputo = new Scene(ventanaRegistrarEquipoDeComputo);
             Stage stageEquiposDeComputo = new Stage();
-            stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
+            stageEquiposDeComputo.setScene(escenarioRegistrarEquipoDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
             stageEquiposDeComputo.showAndWait();
             cargarTabla();
@@ -91,14 +91,54 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
 
     @FXML
     private void modificarEquipoComputo(ActionEvent event) {
+        if(verificarSeleccion()){
+            
+        }else{
+            Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a modificar.", Alert.AlertType.WARNING);
+        }     
     }
 
     @FXML
     private void consultarEquipoComputo(ActionEvent event) {
+        if(verificarSeleccion()){
+            try {
+            FXMLLoader loaderVentanaConsultarEquipoDeComputo = new FXMLLoader(getClass().getResource("ConsultarEquipoComputoFXML.fxml"));
+            Parent ventanaConsultarEquipoDeComputo = loaderVentanaConsultarEquipoDeComputo.load();
+            
+            ConsultarEquipoComputoFXMLControlador controlador = loaderVentanaConsultarEquipoDeComputo.getController();
+            controlador.inicializarVentana(HardwareDAO.buscarHardwarePorNumeroSerie(tvEquiposComputo.getSelectionModel().getSelectedItem().getNumeroSerie()));
+            
+            Scene escenarioConsultarEquipoDeComputo = new Scene(ventanaConsultarEquipoDeComputo);
+            Stage stageEquiposDeComputo = new Stage();
+            stageEquiposDeComputo.setScene(escenarioConsultarEquipoDeComputo);
+            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+            stageEquiposDeComputo.showAndWait();
+            
+            } catch (IOException | SQLException e) {
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a consultar.", Alert.AlertType.WARNING);
+        }     
     }
 
     @FXML
     private void eliminarEquipoComputo(ActionEvent event) {
+        if(verificarSeleccion()){
+            if(Utilidades.mostrarDialogoConfirmacion("Eliminar equipo de cómputo", "¿Desea eliminar el equipo de cómputo seleccionado?")){
+                try {
+                    if(HardwareDAO.eliminarEquipoComputo(tvEquiposComputo.getSelectionModel().getSelectedItem().getIdHardware())){
+                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el equipo de cómputo.", Alert.AlertType.INFORMATION);
+                        cargarTabla();
+                    }
+                } catch (SQLException e) {
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a eliminar.", Alert.AlertType.WARNING);
+        }        
     }
     
     public void inicializarVentana(String cargoUsuario){
@@ -126,5 +166,9 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+    
+    private boolean verificarSeleccion(){
+        return tvEquiposComputo.getSelectionModel().getSelectedItem() != null;
     }
 }

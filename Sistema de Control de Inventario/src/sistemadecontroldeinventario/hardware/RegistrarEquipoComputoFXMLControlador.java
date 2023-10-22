@@ -8,7 +8,10 @@ import Modelo.DAO.HardwareDAO;
 import Modelo.POJO.Hardware;
 import Utilidades.Utilidades;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -113,11 +116,15 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
             equipoComputoNuevo.setAlmacenamiento(Float.parseFloat(tfAlmacenamiento.getText()));
             equipoComputoNuevo.setRam(Float.parseFloat(tfRam.getText()));
             
-            if(HardwareDAO.registrarEquipoComputo(equipoComputoNuevo)){
-                Utilidades.mostrarAlertaSimple("Equipo Registrado", "Se registró el nuevo equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
-                
-                Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
-                stage.close();
+            try {
+                if(HardwareDAO.registrarEquipoComputo(equipoComputoNuevo)){
+                    Utilidades.mostrarAlertaSimple("Equipo Registrado", "Se registró el nuevo equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
+                    
+                    Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
+                    stage.close();
+                }
+            } catch (SQLException e) {
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
             }
         }
     }
@@ -133,123 +140,131 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
     
     private boolean camposValidos(){
         boolean sonValidos = true;
-        
-        if(tfMarca.getText().equals("")){
-            lbErrorMarca.setText("No se puede dejar vacío.");
-            tfMarca.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorMarca.setText("");
-            tfMarca.setStyle("");
+        try {           
+            if(tfMarca.getText().equals("")){
+                lbErrorMarca.setText("No se puede dejar vacío.");
+                tfMarca.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorMarca.setText("");
+                tfMarca.setStyle("");
+            }
+            
+            if(tfModelo.getText().equals("")){
+                lbErrorModelo.setText("No se puede dejar vacío.");
+                tfModelo.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorModelo.setText("");
+                tfModelo.setStyle("");
+            }
+            
+            if(tfNumeroSerie.getText().equals("")){
+                lbErrorNumeroSerie.setText("No se puede dejar vacío.");
+                tfNumeroSerie.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else if(HardwareDAO.buscarHardwarePorNumeroSerie(tfNumeroSerie.getText()) != null){
+                lbErrorNumeroSerie.setText("Ese número de serie ya existe.");
+                tfNumeroSerie.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorNumeroSerie.setText("");
+                tfNumeroSerie.setStyle("");
+            }
+            
+            if(tfProcesador.getText().equals("")){
+                lbErrorProcesador.setText("No se puede dejar vacío.");
+                tfProcesador.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorProcesador.setText("");
+                tfProcesador.setStyle("");
+            }
+            
+            if(cbArquitectura.getSelectionModel().isEmpty()){
+                lbErrorArquitectura.setText("Debe seleccionar una arquitectura.");
+                cbArquitectura.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorArquitectura.setText("");
+                cbArquitectura.setStyle("");
+            }
+            
+            if(tfTarjetaMadre.getText().equals("")){
+                lbErrorTarjetaMadre.setText("No se puede dejar vacío.");
+                tfTarjetaMadre.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorTarjetaMadre.setText("");
+                tfTarjetaMadre.setStyle("");
+            }
+            
+            if(tfSistemaOperativo.getText().equals("")){
+                lbErrorSistemaOperativo.setText("No se puede dejar vacío.");
+                tfSistemaOperativo.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorSistemaOperativo.setText("");
+                tfSistemaOperativo.setStyle("");
+            }
+            
+            if(tfGrafica.getText().equals("")){
+                lbErrorGrafica.setText("No se puede dejar vacío.");
+                tfGrafica.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorGrafica.setText("");
+                tfGrafica.setStyle("");
+            }
+            
+            if(tfDireccionMac.getText().equals("")){
+                lbErrorDireccionMac.setText("No se puede dejar vacío.");
+                tfDireccionMac.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorDireccionMac.setText("");
+                tfDireccionMac.setStyle("");
+            }
+            
+            if(tfDireccionIp.getText().equals("")){
+                lbErrorDireccionIp.setText("No se puede dejar vacío.");
+                tfDireccionIp.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorDireccionIp.setText("");
+                tfDireccionIp.setStyle("");
+            }
+            
+            if(tfRam.getText().equals("")){
+                lbErrorRam.setText("No se puede dejar vacío.");
+                tfRam.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else if(!esNumerico(tfRam.getText())){
+                lbErrorRam.setText("Debe ingresar valores numéricos");
+                tfRam.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorRam.setText("");
+                tfRam.setStyle("");
+            }
+            
+            if(tfAlmacenamiento.getText().equals("")){
+                lbErrorAlmacenamiento.setText("No se puede dejar vacío.");
+                tfAlmacenamiento.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else if(!esNumerico(tfAlmacenamiento.getText())){
+                lbErrorAlmacenamiento.setText("Debe ingresar valores numéricos");
+                tfAlmacenamiento.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbErrorAlmacenamiento.setText("");
+                tfAlmacenamiento.setStyle("");
+            }
+            
+            
+        } catch (SQLException e) {
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
         }
-        
-        if(tfModelo.getText().equals("")){
-            lbErrorModelo.setText("No se puede dejar vacío.");
-            tfModelo.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorModelo.setText("");
-            tfModelo.setStyle("");
-        }
-        
-        if(tfNumeroSerie.getText().equals("")){
-            lbErrorNumeroSerie.setText("No se puede dejar vacío.");
-            tfNumeroSerie.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorNumeroSerie.setText("");
-            tfNumeroSerie.setStyle("");
-        }
-        
-        if(tfProcesador.getText().equals("")){
-            lbErrorProcesador.setText("No se puede dejar vacío.");
-            tfProcesador.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorProcesador.setText("");
-            tfProcesador.setStyle("");
-        }
-        //TODO correccion de validacion de ComboBox
-        if(cbArquitectura.getSelectionModel().isEmpty()){
-            lbErrorArquitectura.setText("Debe seleccionar una arquitectura.");
-            cbArquitectura.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorArquitectura.setText("");
-            cbArquitectura.setStyle("");
-        }
-        
-        if(tfTarjetaMadre.getText().equals("")){
-            lbErrorTarjetaMadre.setText("No se puede dejar vacío.");
-            tfTarjetaMadre.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorTarjetaMadre.setText("");
-            tfTarjetaMadre.setStyle("");
-        }
-        
-        if(tfSistemaOperativo.getText().equals("")){
-            lbErrorSistemaOperativo.setText("No se puede dejar vacío.");
-            tfSistemaOperativo.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorSistemaOperativo.setText("");
-            tfSistemaOperativo.setStyle("");
-        }
-        
-        if(tfGrafica.getText().equals("")){
-            lbErrorGrafica.setText("No se puede dejar vacío.");
-            tfGrafica.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorGrafica.setText("");
-            tfGrafica.setStyle("");
-        }
-        
-        if(tfDireccionMac.getText().equals("")){
-            lbErrorDireccionMac.setText("No se puede dejar vacío.");
-            tfDireccionMac.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorDireccionMac.setText("");
-            tfDireccionMac.setStyle("");
-        }
-        
-        if(tfDireccionIp.getText().equals("")){
-            lbErrorDireccionIp.setText("No se puede dejar vacío.");
-            tfDireccionIp.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorDireccionIp.setText("");
-            tfDireccionIp.setStyle("");
-        }
-        
-        if(tfRam.getText().equals("")){
-            lbErrorRam.setText("No se puede dejar vacío.");
-            tfRam.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else if(!esNumerico(tfRam.getText())){
-            lbErrorRam.setText("Debe ingresar valores numéricos");
-            tfRam.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorRam.setText("");
-            tfRam.setStyle("");
-        }
-        
-        if(tfAlmacenamiento.getText().equals("")){
-            lbErrorAlmacenamiento.setText("No se puede dejar vacío.");
-            tfAlmacenamiento.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else if(!esNumerico(tfAlmacenamiento.getText())){
-            lbErrorAlmacenamiento.setText("Debe ingresar valores numéricos");
-            tfAlmacenamiento.setStyle("-fx-border-color: red");
-            sonValidos = false;
-        }else{
-            lbErrorAlmacenamiento.setText("");
-            tfAlmacenamiento.setStyle("");
-        }
-        
         return sonValidos;
     }
     

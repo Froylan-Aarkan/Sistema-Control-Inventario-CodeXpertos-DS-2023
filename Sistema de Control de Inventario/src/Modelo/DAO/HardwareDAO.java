@@ -6,6 +6,7 @@ package Modelo.DAO;
 
 import Modelo.ConexionBaseDeDatos;
 import Modelo.POJO.Hardware;
+import Modelo.DAO.CentroComputoDAO;
 import Utilidades.Utilidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,7 @@ public class HardwareDAO {
         return hardwareBD;
     }
     
-    public static boolean registrarEquipoComputo(Hardware equipoComputoNuevo){
+    public static boolean registrarEquipoComputo(Hardware equipoComputoNuevo) throws SQLException{
         boolean resultadoOperacion = false;
         
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
@@ -86,6 +87,76 @@ public class HardwareDAO {
                 }
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar registrar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+        }
+        
+        return resultadoOperacion;
+    }
+    
+    public static Hardware buscarHardwarePorNumeroSerie(String numeroSerie) throws SQLException{
+        Hardware equipoComputoBusqueda = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+            String consulta = "SELECT * FROM hardware WHERE numeroSerie = ?";
+            PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+            consultaHardware.setString(1, numeroSerie);
+            ResultSet resultadoConsulta = consultaHardware.executeQuery();
+                       
+            if(resultadoConsulta.next()){
+                equipoComputoBusqueda = new Hardware();
+                equipoComputoBusqueda.setIdHardware(resultadoConsulta.getInt("idHardware"));
+                equipoComputoBusqueda.setMarca(resultadoConsulta.getString("marca"));
+                equipoComputoBusqueda.setModelo(resultadoConsulta.getString("modelo"));
+                equipoComputoBusqueda.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
+                equipoComputoBusqueda.setProcesador(resultadoConsulta.getString("procesador"));
+                equipoComputoBusqueda.setArquitectura(resultadoConsulta.getInt("arquitectura"));
+                equipoComputoBusqueda.setTarjetaMadre(resultadoConsulta.getString("tarjetaMadre"));
+                equipoComputoBusqueda.setSistemaOperativo(resultadoConsulta.getString("sistemaOperativo"));
+                equipoComputoBusqueda.setGrafica(resultadoConsulta.getString("grafica"));
+                equipoComputoBusqueda.setRam(resultadoConsulta.getFloat("ram"));
+                equipoComputoBusqueda.setDireccionMac(resultadoConsulta.getString("direccionMac"));
+                equipoComputoBusqueda.setDireccionIp(resultadoConsulta.getString("direccionIp"));
+                equipoComputoBusqueda.setAlmacenamiento(resultadoConsulta.getFloat("almacenamiento"));
+                equipoComputoBusqueda.setEstado(resultadoConsulta.getString("estado"));
+                equipoComputoBusqueda.setFechaIngreso(resultadoConsulta.getDate("fechaIngreso"));
+                equipoComputoBusqueda.setPosicion(resultadoConsulta.getString("posicion"));
+                equipoComputoBusqueda.setIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo"));
+                equipoComputoBusqueda.setCentroComputo(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(equipoComputoBusqueda.getIdCentroComputo()));
+            }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+        }
+        
+        return equipoComputoBusqueda;
+    }
+    
+    public static boolean eliminarEquipoComputo(int idHardware) throws SQLException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "DELETE FROM hardware WHERE idHardware = ?";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                consultaHardware.setInt(1, idHardware);
+                int filasAfectadas = consultaHardware.executeUpdate();
+                
+                if(filasAfectadas > 0){
+                    resultadoOperacion = true;
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar eliminar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
