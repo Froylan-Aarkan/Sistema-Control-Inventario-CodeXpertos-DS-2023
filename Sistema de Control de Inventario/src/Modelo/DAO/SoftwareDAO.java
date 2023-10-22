@@ -68,7 +68,6 @@ public class SoftwareDAO {
                     mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
                             "Se eliminó el software correctamente.",
                             Alert.AlertType.INFORMATION);
-                    resultado = true;
                 }else{
                     mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
                             "No se pudo eliminar el software.",
@@ -110,7 +109,6 @@ public class SoftwareDAO {
                     mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
                             "Se agregó el software correctamente.",
                             Alert.AlertType.INFORMATION);
-                    resultado = true;
                 }else{
                     mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
                             "No se pudo agregar el software.",
@@ -132,6 +130,94 @@ public class SoftwareDAO {
             resultado = false;
         }
         
+        return resultado;
+    }
+    
+    public static boolean verificarSoftwareRepetido(Software softwareRevision) throws SQLException{
+        Utilidades mensajeRespuesta = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = true;
+        if(conexionBD != null){
+            try {
+                String consulta = "SELECT * FROM software "
+                                + "WHERE nombre = '?' && peso = '?' && arquitectura = '?'";
+                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consulta);
+                prepararVerificarSoftware.setString(1, softwareRevision.getNombre());
+                prepararVerificarSoftware.setString(2, softwareRevision.getPeso());
+                prepararVerificarSoftware.setInt(3, softwareRevision.getArquitectura());
+                
+                int numeroFilas = prepararVerificarSoftware.executeUpdate();
+                if(numeroFilas > 0){
+                    mensajeRespuesta.mostrarAlertaSimple("Software repetido",
+                            "El software que intenta registrar ya se encuentra registrado en la base de datos.",
+                            Alert.AlertType.INFORMATION);
+                }else{
+                    resultado = false;
+                }
+            }catch(SQLException sqlException){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar buscar los software repetidos: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+            resultado = false;
+        }
+        return resultado;
+    }
+
+    public static boolean modificarSoftware(Software softwareModificar) throws SQLException {
+        Utilidades mensajeRespuesta = null;
+        Connection conexionBaseDatos = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = true;
+        
+        if(conexionBaseDatos != null){
+            try{
+                String sentencia = "UPDATE software "
+                        + "SET nombre = ?, peso = ?, arquitectura = ? "
+                        + "WHERE idAlumno = ?";
+                PreparedStatement prepararSentencia = conexionBaseDatos.prepareStatement(sentencia);
+                prepararSentencia.setString(1, softwareModificar.getNombre());
+                prepararSentencia.setString(2, softwareModificar.getPeso());
+                prepararSentencia.setInt(3, softwareModificar.getArquitectura());
+
+                prepararSentencia.setInt(4, softwareModificar.getIdSoftware());
+                
+                int numeroFilas = prepararSentencia.executeUpdate();
+                boolean repetido = verificarSoftwareRepetido(softwareModificar);
+                if(repetido){
+                    resultado = false;
+                }else{
+                    if(numeroFilas > 0){
+                        mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
+                                "Se modificó el software correctamente.",
+                                Alert.AlertType.INFORMATION);
+                    }else{
+                        mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
+                                "No se pudo modificar el software.",
+                                Alert.AlertType.ERROR);
+                        resultado = false;
+                    }
+                }
+            }catch(SQLException sqlException){
+                mensajeRespuesta.mostrarAlertaSimple("Error",
+                        "Algo ocurrió mal al intentar modificar los software: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+                resultado = false;
+            }finally{
+                conexionBaseDatos.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+            resultado = false;
+        }
+   
         return resultado;
     }
 }
