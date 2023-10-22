@@ -4,6 +4,8 @@
  */
 package Modelo.POJO;
 
+import java.sql.Blob;
+
 /**
  *
  * @author froyl
@@ -14,6 +16,7 @@ public class Usuario {
     private String nombreCompleto;
     private String correoInstitucional;
     private String contrasenia;
+    private byte[] foto;
     private int idCentroComputo;
 
     public Usuario() {
@@ -65,6 +68,14 @@ public class Usuario {
 
     public void setIdCentroComputo(int idCentroComputo) {
         this.idCentroComputo = idCentroComputo;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     @Override

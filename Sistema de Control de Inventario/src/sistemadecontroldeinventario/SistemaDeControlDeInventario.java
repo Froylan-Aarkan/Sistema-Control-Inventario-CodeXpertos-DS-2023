@@ -18,7 +18,7 @@ public class SistemaDeControlDeInventario extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("InicioSesionFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("usuario/RegistrarUsuarioFXML.fxml"));
         
         Scene scene = new Scene(root);
         

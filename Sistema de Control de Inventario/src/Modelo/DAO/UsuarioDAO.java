@@ -7,10 +7,15 @@ package Modelo.DAO;
 import Modelo.ConexionBaseDeDatos;
 import Modelo.POJO.Usuario;
 import Utilidades.Utilidades;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 
 /**
@@ -51,5 +56,109 @@ public class UsuarioDAO {
         }
         
         return usuarioSesion;
+    }
+    
+    public static ArrayList<Usuario> recuperarTodoUsuario() throws SQLException{
+        ArrayList<Usuario> usuarioBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT nombreCompleto, correoInstitucional, cargo FROM usuario";
+                PreparedStatement consultaUsuario = conexionBD.prepareStatement(consulta);
+                ResultSet resultadoConsulta = consultaUsuario.executeQuery();
+                usuarioBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Usuario usuarioTemporal = new Usuario();
+                    usuarioTemporal.setNombreCompleto(resultadoConsulta.getString("nombreCompleto"));
+                    usuarioTemporal.setCorreoInstitucional(resultadoConsulta.getString("correoInstitucional"));
+                    usuarioTemporal.setCargo(resultadoConsulta.getString("cargo"));
+                    usuarioBD.add(usuarioTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " + e.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return usuarioBD;
+    }
+    
+    public static ArrayList<Usuario> recuperarTodoUsuarioPorCorreo(String correoInstitucional) throws SQLException{
+        ArrayList<Usuario> usuarioBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT nombreCompleto, correoInstitucional, cargo, contrasenia, foto FROM usuario where correoInstitucional=?";
+                PreparedStatement consultaUsuario = conexionBD.prepareStatement(consulta);
+                consultaUsuario.setString(1, correoInstitucional);
+                ResultSet resultadoConsulta = consultaUsuario.executeQuery();
+                usuarioBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Usuario usuarioTemporal = new Usuario();
+                    usuarioTemporal.setNombreCompleto(resultadoConsulta.getString("nombreCompleto"));
+                    usuarioTemporal.setCorreoInstitucional(resultadoConsulta.getString("correoInstitucional"));
+                    usuarioTemporal.setCargo(resultadoConsulta.getString("cargo"));
+                    usuarioTemporal.setContrasenia(resultadoConsulta.getString("contrasenia"));
+                    usuarioTemporal.setFoto(resultadoConsulta.getBytes("foto"));
+                    usuarioBD.add(usuarioTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " + e.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return usuarioBD;
+    }
+    
+    public static boolean registrarUsuario(Usuario usuario, File foto) throws FileNotFoundException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "INSERT INTO usuario (nombreCompleto, correoInstitucional, cargo, contrasenia, foto) values (?,?,?,?,?) ";
+                PreparedStatement registrarUsuario = conexionBD.prepareStatement(consulta);
+                registrarUsuario.setString(1, usuario.getNombreCompleto());
+                registrarUsuario.setString(2, usuario.getCorreoInstitucional());
+                registrarUsuario.setString(3, usuario.getCargo());
+                registrarUsuario.setString(4, usuario.getContrasenia());
+                FileInputStream fotoUsuario = new FileInputStream(foto);
+                registrarUsuario.setBlob(5, fotoUsuario);
+                int numFilas = registrarUsuario.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("Error", 
+                        "Error al intentar registrar el usuario ",
+                        Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e ){
+                    e.getMessage();
+            }
+
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return resultadoOperacion;
     }
 }

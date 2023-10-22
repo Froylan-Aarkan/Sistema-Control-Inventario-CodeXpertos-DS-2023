@@ -79,6 +79,19 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
 
     @FXML
     private void desplegarVentanaUsuarios(ActionEvent event) {
+        try {
+            FXMLLoader loaderVentanaUsuarios = new FXMLLoader(getClass().getResource("usuario/UsuarioFXML.fxml"));
+            Parent ventanaUsuario = loaderVentanaUsuarios.load();
+            
+            Scene escenarioUsuario = new Scene(ventanaUsuario);
+            Stage stageSoftware = new Stage();
+            stageSoftware.setScene(escenarioUsuario);
+            stageSoftware.initModality(Modality.APPLICATION_MODAL);
+            stageSoftware.showAndWait();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
