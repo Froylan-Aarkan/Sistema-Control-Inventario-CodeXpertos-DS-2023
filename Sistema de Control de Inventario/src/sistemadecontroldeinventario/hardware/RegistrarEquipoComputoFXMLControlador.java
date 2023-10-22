@@ -131,6 +131,19 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
 
     @FXML
     private void cancelarOperacion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Seguro que desea borrar todos los datos de registro?")){
+            tfMarca.setText("");
+            tfModelo.setText("");
+            tfAlmacenamiento.setText("");
+            tfDireccionIp.setText("");
+            tfDireccionMac.setText("");
+            tfGrafica.setText("");
+            tfNumeroSerie.setText("");
+            tfProcesador.setText("");
+            tfRam.setText("");
+            tfSistemaOperativo.setText("");
+            tfTarjetaMadre.setText("");
+        }
     }
     
     private void iniciarComboBox(){
