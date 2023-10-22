@@ -91,8 +91,8 @@ public class UsuarioDAO {
         return usuarioBD;
     }
     
-    public static ArrayList<Usuario> recuperarTodoUsuarioPorCorreo(String correoInstitucional) throws SQLException{
-        ArrayList<Usuario> usuarioBD = null;
+    public static Usuario recuperarTodoUsuarioPorCorreo(String correoInstitucional) throws SQLException{
+        Usuario usuarioTemporal = new Usuario();
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
@@ -100,17 +100,14 @@ public class UsuarioDAO {
                 PreparedStatement consultaUsuario = conexionBD.prepareStatement(consulta);
                 consultaUsuario.setString(1, correoInstitucional);
                 ResultSet resultadoConsulta = consultaUsuario.executeQuery();
-                usuarioBD = new ArrayList<>();
-                
-                while(resultadoConsulta.next()){
-                    Usuario usuarioTemporal = new Usuario();
+                if (resultadoConsulta.next()){
+
                     usuarioTemporal.setNombreCompleto(resultadoConsulta.getString("nombreCompleto"));
                     usuarioTemporal.setCorreoInstitucional(resultadoConsulta.getString("correoInstitucional"));
                     usuarioTemporal.setCargo(resultadoConsulta.getString("cargo"));
                     usuarioTemporal.setContrasenia(resultadoConsulta.getString("contrasenia"));
                     usuarioTemporal.setFoto(resultadoConsulta.getBytes("foto"));
-                    usuarioBD.add(usuarioTemporal);
-                }
+                }   
                 
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", 
@@ -124,7 +121,7 @@ public class UsuarioDAO {
                     "No hay conexion con la base de datos.", 
                     Alert.AlertType.ERROR);
         }
-        return usuarioBD;
+        return usuarioTemporal;
     }
     
     public static boolean registrarUsuario(Usuario usuario, File foto) throws FileNotFoundException{
@@ -132,7 +129,7 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "INSERT INTO usuario (nombreCompleto, correoInstitucional, cargo, contrasenia, foto) values (?,?,?,?,?) ";
+                String consulta = "INSERT INTO usuario (nombreCompleto, correoInstitucional, cargo, contrasenia,CentroComputo_idCentroComputo, foto) values (?,?,?,?,1,?) ";
                 PreparedStatement registrarUsuario = conexionBD.prepareStatement(consulta);
                 registrarUsuario.setString(1, usuario.getNombreCompleto());
                 registrarUsuario.setString(2, usuario.getCorreoInstitucional());
@@ -154,6 +151,70 @@ public class UsuarioDAO {
                     e.getMessage();
             }
 
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return resultadoOperacion;
+    }
+    
+    public static boolean modificarUsuario(Usuario usuario, String usuarioModificar) throws FileNotFoundException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "update usuario set nombreCompleto = ?, correoInstitucional=?, cargo=?, contrasenia= ? where correoInstitucional = ? ";
+                PreparedStatement modificarUsuario = conexionBD.prepareStatement(consulta);
+                modificarUsuario.setString(1, usuario.getNombreCompleto());
+                modificarUsuario.setString(2, usuario.getCorreoInstitucional());
+                modificarUsuario.setString(3, usuario.getCargo());
+                modificarUsuario.setString(4, usuario.getContrasenia());
+                modificarUsuario.setString(5, usuarioModificar);
+                int numFilas = modificarUsuario.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("Error", 
+                        "Error al intentar modificar el usuario ",
+                        Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e ){
+                    e.getMessage();
+            }
+
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return resultadoOperacion;
+    }
+    
+    public static boolean eliminarUsuario(String correo){
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "DELETE FROM usuario where correoInstitucional = ?";
+                PreparedStatement eliminarUsuario = conexionBD.prepareStatement(consulta);
+                eliminarUsuario.setString(1, correo);
+                int numFilas = eliminarUsuario.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("Error", 
+                        "Error al intentar eliminar el usuario ",
+                        Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e){
+                e.getMessage();
+            }
+           
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
                     "No hay conexion con la base de datos.", 

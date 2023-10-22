@@ -66,5 +66,10 @@
          <font>
             <Font size="23.0" />
          </font></Button>
+      <Button layoutX="22.0" layoutY="94.0" mnemonicParsing="false" onAction="#actualizarTabla" prefHeight="50.0" prefWidth="151.0" style="-fx-background-color: #058125;" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
