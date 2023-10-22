@@ -8,8 +8,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.RegistrarSoftwareFXMLController">
-   <children>
+<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.RegistroSoftwareFXMLControlador">
+    <children>
       <Label layoutX="124.0" layoutY="14.0" text="Formulario software" textFill="#2108ff">
          <font>
             <Font size="40.0" />
