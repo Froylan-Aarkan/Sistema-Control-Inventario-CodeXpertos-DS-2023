@@ -106,6 +106,8 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
                 equipoComputoNuevo.setArquitectura(32);
             }else if (cbArquitectura.getSelectionModel().isSelected(1)){
                 equipoComputoNuevo.setArquitectura(64);
+            }else if(cbArquitectura.getSelectionModel().isSelected(2)){
+                equipoComputoNuevo.setArquitectura(86);
             }
                         
             equipoComputoNuevo.setTarjetaMadre(tfTarjetaMadre.getText());
@@ -149,6 +151,7 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
     private void iniciarComboBox(){
         cbArquitectura.getItems().add("x32 bits");
         cbArquitectura.getItems().add("x64 bits");
+        cbArquitectura.getItems().add("x86 bits");
     }
     
     private boolean camposValidos(){
