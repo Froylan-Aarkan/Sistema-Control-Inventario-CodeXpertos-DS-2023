@@ -81,12 +81,9 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
             softwareNuevo.setNombre(nombre);
             softwareNuevo.setPeso(peso);
             softwareNuevo.setArquitectura(arquitectura);
-            System.out.println("fuera try");
             try{
                 boolean repetido = SoftwareDAO.verificarSoftwareRepetido(nombre, peso, arquitectura);
-                System.out.println("entrada try");
                 if(!repetido){
-                    System.out.println("no repite");
                     if(SoftwareDAO.registrarSoftware(softwareNuevo)){
                         Utilidades.mostrarAlertaSimple("Software registrado", 
                         "El software ha sido registrado exitosamente",
@@ -100,7 +97,6 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
                         Alert.AlertType.INFORMATION);
                     }
                 }else{ 
-                    System.out.println("repite");
                     Utilidades.mostrarAlertaSimple("Software repetido", 
                             "El software ya esta registrado.", Alert.AlertType.INFORMATION);
                 }

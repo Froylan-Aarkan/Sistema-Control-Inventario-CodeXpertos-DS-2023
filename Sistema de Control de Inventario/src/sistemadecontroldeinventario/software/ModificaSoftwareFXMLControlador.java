@@ -167,13 +167,20 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
     private void cargarSoftwareModificar(Software softwareEditado){
         tfNombre.setText(softwareEditado.getNombre());
         tfPeso.setText(softwareEditado.getPeso());
+        int arquitectura = softwareEditado.getArquitectura();
+        int index = 0;
         
-        /*if(cbArquitectura.getSelectionModel().isSelected(0))
-            
-        cbArquitectura.setItems(ListaArquitecturas);
-        ObservableList<String> itemsArquitectura = cbArquitectura.getItems();
-        String arquitecturaSeleccionada = Integer.toString(softwareEditado.getArquitectura());
-        cbArquitectura.getSelectionModel().select(itemsArquitectura.indexOf(arquitecturaSeleccionada));*/
+        switch (arquitectura){
+            case 32: 
+                break;
+            case 64:
+                index = 1;
+                break;
+            case 86:
+                index = 2;
+                break;
+        }        
+        cbArquitectura.getSelectionModel().select(index);
     }
     
 }
