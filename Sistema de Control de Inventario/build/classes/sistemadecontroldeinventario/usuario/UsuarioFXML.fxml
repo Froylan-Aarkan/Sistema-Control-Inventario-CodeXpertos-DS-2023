@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.SoftwareFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.usuario.UsuarioFXMLControlador">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
       <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="518.0" layoutY="63.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
@@ -32,7 +32,7 @@
             <Font size="64.0" />
          </font>
       </Label>
-      <Label layoutX="419.0" layoutY="-14.0" text="Consultar software" textFill="WHITE">
+      <Label layoutX="567.0" layoutY="-14.0" text="Usuarios" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font>
@@ -42,30 +42,34 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView fx:id="tvSoftware" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
+      <TableView fx:id="tvUsuarios" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
          <columns>
-            <TableColumn fx:id="tcIdSoftware" prefWidth="75.0" text="Id" />
-            <TableColumn fx:id="tcNombre" prefWidth="400.0" text="Nombre" />
-            <TableColumn fx:id="tcPeso" prefWidth="251.0" text="Peso" />
-            <TableColumn fx:id="tcArquitectura" prefWidth="250.0" text="Arquitectura" />
+            <TableColumn fx:id="tcNombre" prefWidth="381.0" text="Nombre completo" />
+            <TableColumn fx:id="tcCorreo" prefWidth="270.0" text="Correo Institucional" />
+            <TableColumn fx:id="tcCargo" prefWidth="250.0" text="Cargo" />
          </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00aa45" height="80.0" layoutY="652.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
-      <Button layoutX="1126.0" layoutY="667.0" mnemonicParsing="false" onAction="#eliminarSoftware" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE">
+      <Button layoutX="1126.0" layoutY="667.0" mnemonicParsing="false" onAction="#eliminarUsuario" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font></Button>
-      <Button layoutX="599.0" layoutY="668.0" mnemonicParsing="false" onAction="#consultarPorEquipoComputo" style="-fx-background-color: #058125;" text="Consultar por equipo de computo" textFill="WHITE">
+      <Button layoutX="757.0" layoutY="667.0" mnemonicParsing="false" onAction="#consultarUsuario" style="-fx-background-color: #058125;" text="Consultar " textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font></Button>
-      <Button layoutX="332.0" layoutY="668.0" mnemonicParsing="false" onAction="#modificarSoftware" style="-fx-background-color: #058125;" text="Modificar" textFill="WHITE">
+      <Button layoutX="398.0" layoutY="668.0" mnemonicParsing="false" onAction="#modificarUsuario" style="-fx-background-color: #058125;" text="Modificar" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font></Button>
-      <Button layoutX="83.0" layoutY="667.0" mnemonicParsing="false" onAction="#registrarSoftware" style="-fx-background-color: #058125;" text="Registrar" textFill="WHITE">
+      <Button layoutX="83.0" layoutY="667.0" mnemonicParsing="false" onAction="#registrarUsuario" style="-fx-background-color: #058125;" text="Registrar" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font></Button>
+      <Button layoutX="22.0" layoutY="94.0" mnemonicParsing="false" onAction="#actualizarTabla" prefHeight="50.0" prefWidth="151.0" style="-fx-background-color: #058125;" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
