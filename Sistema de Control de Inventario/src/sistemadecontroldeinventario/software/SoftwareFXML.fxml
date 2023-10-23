@@ -44,7 +44,6 @@
       </Button>
       <TableView fx:id="tvSoftware" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
          <columns>
-            <TableColumn fx:id="tcIdSoftware" prefWidth="75.0" text="Id" />
             <TableColumn fx:id="tcNombre" prefWidth="400.0" text="Nombre" />
             <TableColumn fx:id="tcPeso" prefWidth="251.0" text="Peso" />
             <TableColumn fx:id="tcArquitectura" prefWidth="250.0" text="Arquitectura" />
