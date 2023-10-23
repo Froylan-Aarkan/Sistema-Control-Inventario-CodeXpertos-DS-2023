@@ -194,4 +194,36 @@ public class HardwareDAO {
         }
         return resultadoOperacion;
     }
+    
+    public static ArrayList<Hardware> recuperarHardwareSoftware(int idSoftware) throws SQLException{
+        ArrayList<Hardware> hardwareBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT idHardware, modelo, estado, posicion, marca FROM hardware inner join hardwaresoftware where hardwaresoftware.Software_idSoftware = ? and hardwaresoftware.Hardware_idHardware = idHardware";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                consultaHardware.setInt(1, idSoftware);
+                ResultSet resultadoConsulta = consultaHardware.executeQuery();
+                hardwareBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Hardware hardwareTemporal = new Hardware();
+                    hardwareTemporal.setIdHardware(resultadoConsulta.getInt("idHardware"));
+                    hardwareTemporal.setMarca(resultadoConsulta.getString("marca"));
+                    hardwareTemporal.setModelo(resultadoConsulta.getString("modelo"));
+                    hardwareTemporal.setPosicion(resultadoConsulta.getString("posicion"));
+                    hardwareTemporal.setEstado(resultadoConsulta.getString("estado"));
+                    hardwareBD.add(hardwareTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar los hardware registrados: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+        }
+        return hardwareBD;
+    }
 }
