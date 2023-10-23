@@ -138,23 +138,10 @@ public class SoftwareFXMLControlador implements Initializable {
             boolean actualizar = Utilidades.mostrarDialogoConfirmacion("Modificar registro de software", 
                     "¿Deseas modificar la información del software?");
             if(actualizar)
-                try{
-                    FXMLLoader loaderVentanaModificarSoftware = new FXMLLoader(getClass().getResource("ModificaSoftwareFXML.fxml"));
-                    Parent ventanaModificarSoftware = loaderVentanaModificarSoftware.load();
-
-                    Scene escenarioModificarSofware = new Scene(ventanaModificarSoftware);
-                    Stage stageSofware = new Stage();
-                    stageSofware.setScene(escenarioModificarSofware);
-                    stageSofware.initModality(Modality.APPLICATION_MODAL);
-                    stageSofware.showAndWait();
-                    cargarDatosTabla();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                abrirFormularioSoftwareModificar(softwareModificacion);
             }else{
                 Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                   "Necesita seleccionar un objeto a modificaw", 
+                   "Necesita seleccionar un objeto a modificar", 
                     Alert.AlertType.WARNING);
             }
         }else{
@@ -167,6 +154,7 @@ public class SoftwareFXMLControlador implements Initializable {
     @FXML
     private void registrarSoftware(ActionEvent event) {
         abrirFormularioSoftware(null);
+        cargarDatosTabla();
     }
    
     private Software verificarSoftwareSeleccionado(){
@@ -187,7 +175,27 @@ public class SoftwareFXMLControlador implements Initializable {
             stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
             stageEquiposDeComputo.showAndWait();
-            cargarDatosTabla();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void abrirFormularioSoftwareModificar(Software softwareModificar){
+        try {
+            FXMLLoader loaderVentanaModificarSoftware = new FXMLLoader(getClass().getResource("ModificaSoftwareFXML.fxml"));
+            Parent ventanaModificarSoftware = loaderVentanaModificarSoftware.load();
+            
+            ModificaSoftwareFXMLControlador formularioModificar = 
+                    loaderVentanaModificarSoftware.getController();
+            
+            formularioModificar.inicializaValores(true,softwareModificar);
+            
+            Scene escenarioSoftware = new Scene(ventanaModificarSoftware);
+            Stage stageSoftware = new Stage();
+            stageSoftware.setScene(escenarioSoftware);
+            stageSoftware.initModality(Modality.APPLICATION_MODAL);
+            stageSoftware.showAndWait();
             
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);

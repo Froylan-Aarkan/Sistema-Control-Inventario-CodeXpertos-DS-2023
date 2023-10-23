@@ -24,7 +24,7 @@ public class SoftwareDAO {
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT idSoftware, nombre, arquitectura, peso FROM software";
+                String consulta = "SELECT idSoftware, nombre, arquitectura, peso FROM software;";
                 PreparedStatement consultaSoftware = conexionBD.prepareStatement(consulta);
                 ResultSet resultadoConsulta = consultaSoftware.executeQuery();
                 softwareBD = new ArrayList<>();
@@ -56,10 +56,10 @@ public class SoftwareDAO {
     public static boolean eliminarSoftware(int idSoftware) throws SQLException{
         Utilidades mensajeRespuesta = null;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
-        boolean resultado = true;
+        boolean resultado = false;
         if(conexionBD != null){
             try{
-                String consultaEliminar = "DELETE FROM software WHERE idSoftware = ?";
+                String consultaEliminar = "DELETE FROM software WHERE idSoftware = ?;";
                 PreparedStatement consultaEliminarSoftware = conexionBD.prepareStatement(consultaEliminar);
                 consultaEliminarSoftware.setInt(1, idSoftware);
                 int filasAfectadas = consultaEliminarSoftware.executeUpdate();
@@ -68,17 +68,16 @@ public class SoftwareDAO {
                     mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
                             "Se eliminó el software correctamente.",
                             Alert.AlertType.INFORMATION);
+                    resultado = true;
                 }else{
                     mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
                             "No se pudo eliminar el software.",
                             Alert.AlertType.ERROR);
-                    resultado = false;
                 }
             }catch(SQLException sqlException){
                 mensajeRespuesta.mostrarAlertaSimple("Error",
                         "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
                         Alert.AlertType.ERROR);
-                resultado = false;
             }finally{
                 conexionBD.close();
             }
@@ -86,7 +85,6 @@ public class SoftwareDAO {
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
                     "No hay conexión con la base de datos.",
                     Alert.AlertType.ERROR);
-            resultado = false;
         }
         return resultado;
     }
@@ -94,11 +92,11 @@ public class SoftwareDAO {
     public static boolean registrarSoftware(Software softwareNuevo) throws SQLException{
         Utilidades mensajeRespuesta = null;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
-        boolean resultado = true;
+        boolean resultado = false;
         if(conexionBD != null){
             try {
                 String sentencia = "INSERT INTO software(nombre,peso,arquitectura)"
-                        + " VALUES (?,?,?)";
+                        + " VALUES (?,?,?);";
                 PreparedStatement sentenciaNuevoSoftware = conexionBD.prepareStatement(sentencia);
                 sentenciaNuevoSoftware.setString(1, softwareNuevo.getNombre());
                 sentenciaNuevoSoftware.setString(2, softwareNuevo.getPeso());
@@ -106,20 +104,12 @@ public class SoftwareDAO {
 
                 int numeroFilas = sentenciaNuevoSoftware.executeUpdate();
                 if(numeroFilas > 0){
-                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
-                            "Se agregó el software correctamente.",
-                            Alert.AlertType.INFORMATION);
-                }else{
-                    mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
-                            "No se pudo agregar el software.",
-                            Alert.AlertType.ERROR);
-                    resultado = false;
+                    resultado = true;
                 }
             } catch (SQLException sqlException) {
                 mensajeRespuesta.mostrarAlertaSimple("Error",
                         "Algo ocurrió mal al intentar guardar los software registrados: " + sqlException.getMessage(),
                         Alert.AlertType.ERROR);
-                resultado = false;
             } finally {
                 conexionBD.close();
             }
@@ -127,32 +117,30 @@ public class SoftwareDAO {
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
                     "No hay conexión con la base de datos.",
                     Alert.AlertType.ERROR);
-            resultado = false;
         }
         
         return resultado;
     }
     
-    public static boolean verificarSoftwareRepetido(Software softwareRevision) throws SQLException{
+    public static boolean verificarSoftwareRepetido(String nombre, String peso, int arquitectura) throws SQLException{
         Utilidades mensajeRespuesta = null;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
-        boolean resultado = true;
+        boolean resultado = false;
         if(conexionBD != null){
             try {
-                String consulta = "SELECT * FROM software "
-                                + "WHERE nombre = '?' && peso = '?' && arquitectura = '?'";
-                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consulta);
-                prepararVerificarSoftware.setString(1, softwareRevision.getNombre());
-                prepararVerificarSoftware.setString(2, softwareRevision.getPeso());
-                prepararVerificarSoftware.setInt(3, softwareRevision.getArquitectura());
+                String consulta = "SELECT idSoftware,nombre,peso,arquitectura FROM software "
+                                + "WHERE nombre = ? AND peso = ? AND arquitectura = ?;";
                 
-                int numeroFilas = prepararVerificarSoftware.executeUpdate();
-                if(numeroFilas > 0){
+                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consulta);
+                prepararVerificarSoftware.setString(1, nombre);
+                prepararVerificarSoftware.setString(2, peso);
+                prepararVerificarSoftware.setInt(3, arquitectura);
+                ResultSet numeroFilas = prepararVerificarSoftware.executeQuery();
+                if(numeroFilas.next()){
                     mensajeRespuesta.mostrarAlertaSimple("Software repetido",
                             "El software que intenta registrar ya se encuentra registrado en la base de datos.",
                             Alert.AlertType.INFORMATION);
-                }else{
-                    resultado = false;
+                    resultado = true;
                 }
             }catch(SQLException sqlException){
                 Utilidades.mostrarAlertaSimple("Error", 
@@ -165,7 +153,6 @@ public class SoftwareDAO {
             Utilidades.mostrarAlertaSimple("Error de conexion", 
                     "No hay conexion con la base de datos.", 
                     Alert.AlertType.ERROR);
-            resultado = false;
         }
         return resultado;
     }
@@ -188,7 +175,7 @@ public class SoftwareDAO {
                 prepararSentencia.setInt(4, softwareModificar.getIdSoftware());
                 
                 int numeroFilas = prepararSentencia.executeUpdate();
-                boolean repetido = verificarSoftwareRepetido(softwareModificar);
+                /*boolean repetido = verificarSoftwareRepetido(softwareModificar);
                 if(repetido){
                     resultado = false;
                 }else{
@@ -202,7 +189,7 @@ public class SoftwareDAO {
                                 Alert.AlertType.ERROR);
                         resultado = false;
                     }
-                }
+                }*/
             }catch(SQLException sqlException){
                 mensajeRespuesta.mostrarAlertaSimple("Error",
                         "Algo ocurrió mal al intentar modificar los software: " + sqlException.getMessage(),
