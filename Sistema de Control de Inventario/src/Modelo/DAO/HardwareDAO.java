@@ -6,7 +6,6 @@ package Modelo.DAO;
 
 import Modelo.ConexionBaseDeDatos;
 import Modelo.POJO.Hardware;
-import Modelo.DAO.CentroComputoDAO;
 import Utilidades.Utilidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
