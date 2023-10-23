@@ -52,9 +52,34 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="138.0" layoutY="651.0" mnemonicParsing="false" onAction="#registrarEquipoComputo" text="Registrar" />
-      <Button layoutX="391.0" layoutY="651.0" mnemonicParsing="false" onAction="#modificarEquipoComputo" text="Modificar" />
-      <Button layoutX="891.0" layoutY="651.0" mnemonicParsing="false" onAction="#consultarEquipoComputo" text="Consultar" />
-      <Button layoutX="1165.0" layoutY="651.0" mnemonicParsing="false" onAction="#eliminarEquipoComputo" text="Eliminar" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00aa45" height="80.0" layoutY="675.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
+      <Button layoutX="133.0" layoutY="692.0" mnemonicParsing="false" onAction="#registrarEquipoComputo" prefHeight="50.0" prefWidth="129.0" style="-fx-background-color: #058125;" text="Registrar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="433.0" layoutY="692.0" mnemonicParsing="false" onAction="#modificarEquipoComputo" style="-fx-background-color: #058125;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="804.0" layoutY="690.0" mnemonicParsing="false" onAction="#consultarEquipoComputo" style="-fx-background-color: #058125;" text="Consultar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="1120.0" layoutY="692.0" mnemonicParsing="false" onAction="#eliminarEquipoComputo" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>
