@@ -50,6 +50,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     private TextField tfContrasenia;
     @FXML
     private ImageView ivFoto;
+    
     private File archivoFoto;
     private String usuarioModificar;
 
