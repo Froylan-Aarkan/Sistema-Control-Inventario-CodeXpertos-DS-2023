@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Modelo/DAO/HardwareDAO.java</file>
+            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Utilidades/Utilidades.java</file>
             <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Modelo/DAO/UsuarioDAO.java</file>
+            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/usuario/ConsultarUsuarioFXMLControlador.java</file>
             <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/hardware/RegistrarEquipoComputoFXMLControlador.java</file>
-            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Modelo/POJO/Usuario.java</file>
+            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/usuario/UsuarioFXMLControlador.java</file>
+            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/usuario/ModificarUsuarioFXMLControlador.java</file>
+            <file>file:/C:/Workspace/SistemaGestionComputo/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/usuario/RegistrarUsuarioFXMLControlador.java</file>
         </group>
     </open-files>
 </project-private>

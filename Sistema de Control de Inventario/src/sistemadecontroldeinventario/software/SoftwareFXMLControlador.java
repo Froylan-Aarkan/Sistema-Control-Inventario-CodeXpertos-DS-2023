@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +30,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.InicioSesionFXMLControlador;
+import sistemadecontroldeinventario.usuario.ConsultarUsuarioFXMLControlador;
 
 /**
  * FXML Controller class
@@ -46,6 +50,8 @@ public class SoftwareFXMLControlador implements Initializable {
     private TableColumn<Software, String> tcPeso;
     public ObservableList<Software> listaSoftware;
     private String cargoUsuario;
+    @FXML
+    private TableColumn tcIdSoftware;
     /**
      * Initializes the controller class.
      */
@@ -57,6 +63,7 @@ public class SoftwareFXMLControlador implements Initializable {
     }  
     
     private void configurarTabla(){
+        tcIdSoftware.setCellValueFactory(new PropertyValueFactory("idSoftware"));
         tcNombre.setCellValueFactory(new PropertyValueFactory ("nombre"));
         tcArquitectura.setCellValueFactory(new PropertyValueFactory("arquitectura"));
         tcPeso.setCellValueFactory(new PropertyValueFactory("peso"));
@@ -117,6 +124,31 @@ public class SoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void consultarPorEquipoComputo(ActionEvent event) {
+        if(!tvSoftware.getSelectionModel().isEmpty()){
+            try {
+                    int seleccionado = tvSoftware.getSelectionModel().getSelectedItem().getIdSoftware();
+                    System.out.println(seleccionado);
+                    FXMLLoader loaderVentanaConsultarUsuario = new FXMLLoader(getClass().getResource("ConsultarSoftwareEquiposFXML.fxml"));
+                    Parent ventanaConsultarUsuario = loaderVentanaConsultarUsuario.load();
+
+                    Scene escenarioUsuario = new Scene(ventanaConsultarUsuario);
+                    Stage stageSoftware = new Stage();
+                    stageSoftware.setScene(escenarioUsuario);
+                    stageSoftware.initModality(Modality.APPLICATION_MODAL);
+
+                    ConsultarSoftwareEquiposFXMLControlador controlador = (ConsultarSoftwareEquiposFXMLControlador) loaderVentanaConsultarUsuario.getController();
+                    controlador.inicializarUsuario(seleccionado);
+
+                    stageSoftware.showAndWait();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }else{
+            Utilidades.mostrarAlertaSimple("Selecciona un software", "Se debe seleccionar un software", Alert.AlertType.WARNING);
+        }
+            
     }
 
     @FXML

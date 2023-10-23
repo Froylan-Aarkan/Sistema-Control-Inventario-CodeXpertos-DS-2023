@@ -75,7 +75,9 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     private void guardarModificaciónUsuario(Usuario usuario){
         try{
             if(UsuarioDAO.modificarUsuario(usuario, usuarioModificar)){
-                Utilidades.mostrarAlertaSimple("Registro exitoso", "El alumno se registró con exito", Alert.AlertType.CONFIRMATION);
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
+                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                stage.close();
             }
             
         } catch (FileNotFoundException ex) {

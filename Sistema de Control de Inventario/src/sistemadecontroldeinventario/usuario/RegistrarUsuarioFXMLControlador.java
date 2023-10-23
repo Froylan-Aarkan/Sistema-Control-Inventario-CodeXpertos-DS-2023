@@ -97,7 +97,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     private void guardarRegistroUsuario(Usuario usuario){
         try{
             if(UsuarioDAO.registrarUsuario(usuario, archivoFoto)){
-                Utilidades.mostrarAlertaSimple("Registro exitoso", "El alumno se registró con exito", Alert.AlertType.CONFIRMATION);
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se registró con exito", Alert.AlertType.CONFIRMATION);
                
                 Stage stage = (Stage) tfCargo.getScene().getWindow();
                 stage.close();
