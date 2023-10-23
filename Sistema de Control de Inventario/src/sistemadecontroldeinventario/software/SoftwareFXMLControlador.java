@@ -127,6 +127,31 @@ public class SoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void consultarPorEquipoComputo(ActionEvent event) {
+        if(!tvSoftware.getSelectionModel().isEmpty()){
+            try {
+                    int seleccionado = tvSoftware.getSelectionModel().getSelectedItem().getIdSoftware();
+                    System.out.println(seleccionado);
+                    FXMLLoader loaderVentanaConsultarUsuario = new FXMLLoader(getClass().getResource("ConsultarSoftwareEquiposFXML.fxml"));
+                    Parent ventanaConsultarUsuario = loaderVentanaConsultarUsuario.load();
+
+                    Scene escenarioUsuario = new Scene(ventanaConsultarUsuario);
+                    Stage stageSoftware = new Stage();
+                    stageSoftware.setScene(escenarioUsuario);
+                    stageSoftware.initModality(Modality.APPLICATION_MODAL);
+
+                    ConsultarSoftwareEquiposFXMLControlador controlador = (ConsultarSoftwareEquiposFXMLControlador) loaderVentanaConsultarUsuario.getController();
+                    controlador.inicializarUsuario(seleccionado);
+
+                    stageSoftware.showAndWait();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }else{
+            Utilidades.mostrarAlertaSimple("Selecciona un software", "Se debe seleccionar un software", Alert.AlertType.WARNING);
+        }
+            
     }
 
     @FXML
