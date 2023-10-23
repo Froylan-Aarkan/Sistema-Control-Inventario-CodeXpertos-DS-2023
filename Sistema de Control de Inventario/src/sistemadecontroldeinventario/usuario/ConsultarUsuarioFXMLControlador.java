@@ -53,7 +53,6 @@ public class ConsultarUsuarioFXMLControlador implements Initializable {
     }
     
     public void inicializarUsuario(String usuarioSeleccionado) throws IOException{
-        String usuarioConsulta = usuarioSeleccionado;
         try{
             Usuario usuario = UsuarioDAO.recuperarTodoUsuarioPorCorreo(usuarioSeleccionado);
             lblNombre.setText(usuario.getNombreCompleto());
