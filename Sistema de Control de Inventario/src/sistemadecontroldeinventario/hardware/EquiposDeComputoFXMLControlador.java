@@ -160,8 +160,6 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             if(!hardwareBD.isEmpty()){
                 listaHardware.addAll(hardwareBD);
                 tvEquiposComputo.setItems(listaHardware);
-            }else{
-                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
             }
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
