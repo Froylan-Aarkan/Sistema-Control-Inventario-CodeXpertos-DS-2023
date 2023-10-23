@@ -14,6 +14,7 @@ public class Usuario {
     private String nombreCompleto;
     private String correoInstitucional;
     private String contrasenia;
+    private byte[] foto;
     private int idCentroComputo;
 
     public Usuario() {
@@ -67,10 +68,16 @@ public class Usuario {
         this.idCentroComputo = idCentroComputo;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
     @Override
     public String toString() {
         return this.nombreCompleto;
     }
-    
-    
 }
