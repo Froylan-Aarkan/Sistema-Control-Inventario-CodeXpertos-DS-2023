@@ -6,7 +6,6 @@ package Modelo.DAO;
 
 import Modelo.ConexionBaseDeDatos;
 import Modelo.POJO.Hardware;
-import Modelo.DAO.CentroComputoDAO;
 import Utilidades.Utilidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -162,6 +161,37 @@ public class HardwareDAO {
             Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
         }
         
+        return resultadoOperacion;
+    }
+    
+    public static boolean EliminarSoftwareHardware(int idSoftware, int idHardware){
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "delete from hardwaresoftware where Hardware_idHardware = ? and Software_idSoftware = ?";
+                PreparedStatement eliminarSoftwareHardware = conexionBD.prepareStatement(consulta);
+                eliminarSoftwareHardware.setInt(1, idSoftware);
+                eliminarSoftwareHardware.setInt(2, idHardware);
+                int numFilas = eliminarSoftwareHardware.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("Error", 
+                        "Error al intentar eliminar el software del hardware ",
+                        Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e){
+                e.getMessage();
+            }
+           
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
         return resultadoOperacion;
     }
 }

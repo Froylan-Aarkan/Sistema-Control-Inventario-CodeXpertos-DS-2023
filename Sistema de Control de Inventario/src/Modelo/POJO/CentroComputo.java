@@ -66,4 +66,9 @@ public class CentroComputo {
     public void setPiso(String piso) {
         this.piso = piso;
     }
+
+    @Override
+    public String toString() {
+        return "Facultad: " + this.facultad + " - Edificio: " + this.edificio + " - Aula: " + this.aula;
+    }
 }

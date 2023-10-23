@@ -14,8 +14,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,6 +67,7 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
         // TODO
         configurarTabla();
         cargarTabla();
+        inicializarBusquedaEquiposComputo();
     }    
 
     @FXML
@@ -92,7 +97,23 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     @FXML
     private void modificarEquipoComputo(ActionEvent event) {
         if(verificarSeleccion()){
-            
+            try {
+                FXMLLoader loaderVentanaModificarEquipoDeComputo = new FXMLLoader(getClass().getResource("ModificarEquipoComputoFXML.fxml"));
+                Parent ventanaModificarEquipoDeComputo = loaderVentanaModificarEquipoDeComputo.load();
+                
+                ModificarEquipoComputoFXMLControlador controlador = loaderVentanaModificarEquipoDeComputo.getController();
+                controlador.inicializarVentana(HardwareDAO.buscarHardwarePorNumeroSerie(tvEquiposComputo.getSelectionModel().getSelectedItem().getNumeroSerie()));      
+
+                Scene escenarioModificarEquipoDeComputo = new Scene(ventanaModificarEquipoDeComputo);
+                Stage stageEquiposDeComputo = new Stage();
+                stageEquiposDeComputo.setScene(escenarioModificarEquipoDeComputo);
+                stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageEquiposDeComputo.showAndWait();
+                cargarTabla();            
+            }catch (IOException | SQLException e) {
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
         }else{
             Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a modificar.", Alert.AlertType.WARNING);
         }     
@@ -102,19 +123,18 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     private void consultarEquipoComputo(ActionEvent event) {
         if(verificarSeleccion()){
             try {
-            FXMLLoader loaderVentanaConsultarEquipoDeComputo = new FXMLLoader(getClass().getResource("ConsultarEquipoComputoFXML.fxml"));
-            Parent ventanaConsultarEquipoDeComputo = loaderVentanaConsultarEquipoDeComputo.load();
-            
-            ConsultarEquipoComputoFXMLControlador controlador = loaderVentanaConsultarEquipoDeComputo.getController();
-            controlador.inicializarVentana(HardwareDAO.buscarHardwarePorNumeroSerie(tvEquiposComputo.getSelectionModel().getSelectedItem().getNumeroSerie()));
-            
-            Scene escenarioConsultarEquipoDeComputo = new Scene(ventanaConsultarEquipoDeComputo);
-            Stage stageEquiposDeComputo = new Stage();
-            stageEquiposDeComputo.setScene(escenarioConsultarEquipoDeComputo);
-            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();
-            
-            } catch (IOException | SQLException e) {
+                FXMLLoader loaderVentanaConsultarEquipoDeComputo = new FXMLLoader(getClass().getResource("ConsultarEquipoComputoFXML.fxml"));
+                Parent ventanaConsultarEquipoDeComputo = loaderVentanaConsultarEquipoDeComputo.load();
+
+                ConsultarEquipoComputoFXMLControlador controlador = loaderVentanaConsultarEquipoDeComputo.getController();
+                controlador.inicializarVentana(HardwareDAO.buscarHardwarePorNumeroSerie(tvEquiposComputo.getSelectionModel().getSelectedItem().getNumeroSerie()));
+
+                Scene escenarioConsultarEquipoDeComputo = new Scene(ventanaConsultarEquipoDeComputo);
+                Stage stageEquiposDeComputo = new Stage();
+                stageEquiposDeComputo.setScene(escenarioConsultarEquipoDeComputo);
+                stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageEquiposDeComputo.showAndWait();            
+            } catch(IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
             }
@@ -130,7 +150,7 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
                 try {
                     if(HardwareDAO.eliminarEquipoComputo(tvEquiposComputo.getSelectionModel().getSelectedItem().getIdHardware())){
                         Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el equipo de cómputo.", Alert.AlertType.INFORMATION);
-                        cargarTabla();
+                        
                     }
                 } catch (SQLException e) {
                     Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -139,6 +159,8 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
         }else{
             Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a eliminar.", Alert.AlertType.WARNING);
         }        
+        
+        cargarTabla();
     }
     
     public void inicializarVentana(String cargoUsuario){
@@ -155,16 +177,54 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     private void cargarTabla(){
         try{
             listaHardware = FXCollections.observableArrayList();
-            ArrayList<Hardware> hardwareBD = HardwareDAO.recuperarTodoHardware();
-            
-            if(!hardwareBD.isEmpty()){
-                listaHardware.addAll(hardwareBD);
-                tvEquiposComputo.setItems(listaHardware);
-            }else{
-                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
-            }
+            ArrayList<Hardware> hardwareBD = HardwareDAO.recuperarTodoHardware();            
+
+            listaHardware.addAll(hardwareBD);
+            tvEquiposComputo.setItems(listaHardware);
+
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void inicializarBusquedaEquiposComputo(){
+        if(listaHardware.size() > 0){
+            FilteredList<Hardware> filtro = new FilteredList<>(listaHardware, p -> true);
+            
+            tfBusqueda.textProperty().addListener(new ChangeListener<String>(){
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    filtro.setPredicate(busqueda -> {
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+                        
+                        String filtroMinusculas = newValue.toLowerCase();
+                        if(busqueda.getNumeroSerie().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getEstado().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getMarca().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getModelo().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        return false;
+                    });
+                }
+                
+            });
+            
+            SortedList<Hardware> sortedRefaccion = new SortedList<>(filtro);
+            sortedRefaccion.comparatorProperty().bind(tvEquiposComputo.comparatorProperty());
+            tvEquiposComputo.setItems(sortedRefaccion);
         }
     }
     
