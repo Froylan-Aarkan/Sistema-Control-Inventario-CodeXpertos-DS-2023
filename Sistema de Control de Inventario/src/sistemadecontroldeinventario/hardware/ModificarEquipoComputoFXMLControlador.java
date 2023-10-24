@@ -4,13 +4,20 @@
  */
 package sistemadecontroldeinventario.hardware;
 
+import Modelo.DAO.CentroComputoDAO;
+import Modelo.POJO.CentroComputo;
 import Modelo.POJO.Hardware;
 import Utilidades.Utilidades;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -64,7 +71,7 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
     @FXML
     private TextField tfTarjetaMadre;
     @FXML
-    private ComboBox<?> cbArquitectura;
+    private ComboBox<String> cbArquitectura;
     @FXML
     private TextField tfProcesador;
     @FXML
@@ -73,24 +80,39 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
     private TextField tfModelo;
     @FXML
     private TextField tfMarca;
+    @FXML
+    private ComboBox<CentroComputo> cbUbicacion;
+    @FXML
+    private ComboBox<String> cbLetra;
+    @FXML
+    private ComboBox<String> cbNumero;
+    @FXML
+    private Label lbErrorUbicacion;
+    @FXML
+    private Label lbErrorLetra;
+    @FXML
+    private Label lbErrorNumero;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+           cargarCentrosComputo();
+           cargarComboBoxes();
     }    
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tfAlmacenamiento.getScene().getWindow();
-        stage.close();
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Seguro que desea cancelar los cambios y volver a la ventana anterior?")){
+            Stage stage = (Stage) tfAlmacenamiento.getScene().getWindow();
+            stage.close();
+        }        
     }
 
     @FXML
     private void cancelarOperacion(ActionEvent event) {
-        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Seguro que desea cancelar los cambios?")){
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Seguro que desea descartar los cambios?")){
             cargarDatos();
         }
     }
@@ -100,7 +122,39 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
     }
     
     private void cargarDatos(){
+        tfMarca.setText(hardwareModificacion.getMarca());
+        tfModelo.setText(hardwareModificacion.getModelo());
+        tfNumeroSerie.setText(hardwareModificacion.getNumeroSerie());
+        tfProcesador.setText(hardwareModificacion.getProcesador());
+        tfTarjetaMadre.setText(hardwareModificacion.getTarjetaMadre());
+        tfSistemaOperativo.setText(hardwareModificacion.getSistemaOperativo());
+        tfGrafica.setText(hardwareModificacion.getGrafica());
+        tfRam.setText(hardwareModificacion.getRam() + "");
+        tfDireccionMac.setText(hardwareModificacion.getDireccionMac());
+        tfDireccionIp.setText(hardwareModificacion.getDireccionIp());
+        tfAlmacenamiento.setText(hardwareModificacion.getAlmacenamiento() + "");
         
+    }
+    
+    private void cargarCentrosComputo(){
+        try {
+            ArrayList<CentroComputo> centrosComputoBD = CentroComputoDAO.recuperarTodoCentroDeComputo();
+            cbUbicacion.getItems().addAll(centrosComputoBD);
+        } catch (SQLException e) {
+            Utilidades.mostrarAlertaSimple("Error", "Algo salió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void cargarComboBoxes(){
+        cbArquitectura.getItems().addAll("x32 bits", "x64 bits", "x86 bits");
+        
+        for(int i = 65; i < 91; i++){
+            cbLetra.getItems().add(String.valueOf((char) i));
+        }
+        
+        for(int i = 1; i < 11; i++){
+            cbNumero.getItems().add(String.valueOf(i));
+        }
     }
 
     public void inicializarVentana(Hardware hardwareModificacion){
