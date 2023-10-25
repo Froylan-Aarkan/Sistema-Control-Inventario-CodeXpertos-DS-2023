@@ -43,7 +43,6 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     private TableColumn tcPosicion;
     @FXML
     private TableColumn tcEstado;
-    @FXML
     private TableColumn tcId;
     @FXML
     private Label lblSoftware;
@@ -88,7 +87,6 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     }
     
     private void configurarTabla(){
-        tcId.setCellValueFactory(new PropertyValueFactory("idHardware"));
         tcMarca.setCellValueFactory(new PropertyValueFactory("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
         tcPosicion.setCellValueFactory(new PropertyValueFactory("posicion"));
