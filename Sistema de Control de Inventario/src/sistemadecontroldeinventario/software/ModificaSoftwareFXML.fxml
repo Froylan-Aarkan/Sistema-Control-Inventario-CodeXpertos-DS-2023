@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemadecontroldeinventario.software.ModificaSoftwareFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.ModificaSoftwareFXMLControlador">
     <children>
       <Label layoutX="135.0" layoutY="14.0" text="Modificar software" textFill="#2108ff">
          <font>
@@ -30,12 +30,12 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Label fx:id="lbNombre" layoutX="53.0" layoutY="141.0" prefHeight="15.0" prefWidth="488.0" textFill="RED">
+      <Label fx:id="lbNombre" layoutX="53.0" layoutY="148.0" prefHeight="8.0" prefWidth="488.0" textFill="RED">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label fx:id="lbPeso" layoutX="54.0" layoutY="203.0" prefHeight="39.0" prefWidth="210.0" textFill="RED">
+      <Label fx:id="lbPeso" layoutX="54.0" layoutY="211.0" prefHeight="31.0" prefWidth="210.0" textFill="RED">
          <font>
             <Font size="10.0" />
          </font>

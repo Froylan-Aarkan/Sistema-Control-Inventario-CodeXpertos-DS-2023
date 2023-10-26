@@ -88,7 +88,6 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     }
     
     private void configurarTabla(){
-        tcId.setCellValueFactory(new PropertyValueFactory("idHardware"));
         tcMarca.setCellValueFactory(new PropertyValueFactory("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
         tcPosicion.setCellValueFactory(new PropertyValueFactory("posicion"));
@@ -104,7 +103,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
                 listaHardware.addAll(hardwareBD);
                 tvEquiposComputo.setItems(listaHardware);
             }else{
-                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
+                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo asociados.", Alert.AlertType.ERROR);
             }
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

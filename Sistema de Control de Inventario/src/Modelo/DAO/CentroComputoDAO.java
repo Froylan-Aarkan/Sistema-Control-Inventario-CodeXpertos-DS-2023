@@ -61,6 +61,7 @@ public class CentroComputoDAO {
                     centroComputoTemporal.setEdificio(resultadoConsulta.getString("edificio"));
                     centroComputoTemporal.setDireccion(resultadoConsulta.getString("direccion"));
                     centroComputoTemporal.setFacultad(resultadoConsulta.getString("facultad"));
+                    centroComputoTemporal.setAula(resultadoConsulta.getString("aula"));
                     centroComputoTemporal.setPiso(resultadoConsulta.getString("piso"));
                     centrosComputo.add(centroComputoTemporal);
                 }               
