@@ -11,17 +11,17 @@
 
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
    <children>
-      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
          </image>
       </ImageView>
-      <Label layoutX="375.0" layoutY="506.0" opacity="0.56" text="Sistema de control de" textFill="#004aad">
+      <Label layoutX="375.0" layoutY="506.0" opacity="0.14" text="Sistema de control de" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
       </Label>
-      <Label layoutX="541.0" layoutY="576.0" opacity="0.56" text="inventario" textFill="#004aad">
+      <Label layoutX="541.0" layoutY="576.0" opacity="0.14" text="inventario" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
