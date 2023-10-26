@@ -11,32 +11,77 @@
 
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
    <children>
-      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="525.0" layoutY="65.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
          </image>
       </ImageView>
-      <Label layoutX="374.0" layoutY="506.0" opacity="0.56" text="Sistema de control de" textFill="#004aad">
+      <Label layoutX="375.0" layoutY="506.0" opacity="0.56" text="Sistema de control de" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
       </Label>
-      <Label layoutX="555.0" layoutY="575.0" opacity="0.56" text="inventario" textFill="#004aad">
+      <Label layoutX="541.0" layoutY="576.0" opacity="0.56" text="inventario" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
       </Label>
-      <Button fx:id="btnHardware" layoutX="316.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" text="Hardware">
+      <ImageView fitHeight="245.0" fitWidth="244.0" layoutX="194.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/monitor.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="233.0" layoutY="302.0" text="Hardware" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnHardware" layoutX="194.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" opacity="0.0" prefHeight="288.0" prefWidth="244.0" text="Hardware">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="664.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaSoftware" text="Software">
+      <ImageView fitHeight="257.0" fitWidth="314.0" layoutX="938.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/software.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="991.0" layoutY="302.0" text="Software" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="938.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarVentanaSoftware" opacity="0.0" prefHeight="288.0" prefWidth="257.0" text="Software">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="1065.0" layoutY="302.0" mnemonicParsing="false" onAction="#desplegarVentanaUsuarios" text="Usuarios">
+      <ImageView fitHeight="244.0" fitWidth="257.0" layoutX="194.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/usuario.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="243.0" layoutY="643.0" text="Usuarios" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="194.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaUsuarios" opacity="0.0" prefHeight="288.0" prefWidth="244.0" text="Usuarios">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <ImageView fitHeight="244.0" fitWidth="264.0" layoutX="945.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/centrocomputo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="892.0" layoutY="643.0" text="Centros de Cómputo" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="892.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaCentrosComputo" opacity="0.0" prefHeight="288.0" prefWidth="350.0" text="Centros de Cómputo">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

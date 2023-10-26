@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sistemadecontroldeinventario.hardware.EquiposDeComputoFXMLControlador;
 
 /**
  * FXML Controller class
@@ -92,6 +91,10 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void desplegarVentanaCentrosComputo(ActionEvent event) {
     }
     
 }
