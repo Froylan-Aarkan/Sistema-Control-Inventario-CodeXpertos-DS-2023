@@ -24,7 +24,7 @@
       </Label>
       <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="518.0" layoutY="66.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
+            <Image url="@../../../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
@@ -44,7 +44,7 @@
       <TextField fx:id="tfBusqueda" layoutX="433.0" layoutY="97.0" prefHeight="31.0" prefWidth="500.0" promptText="Buscar por " style="-fx-border-color: black;" />
       <ImageView fitHeight="70.0" fitWidth="61.0" layoutX="25.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Imagenes/botonregresar_blanco.png" />
+            <Image url="@../../../Imagenes/botonregresar_blanco.png" />
          </image>
       </ImageView>
       <Button layoutX="24.0" layoutY="5.0" mnemonicParsing="false" onAction="#cerrarVentana" opacity="0.0" prefHeight="61.0" prefWidth="61.0" text="Regresar">

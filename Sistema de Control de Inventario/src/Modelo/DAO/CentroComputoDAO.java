@@ -108,4 +108,22 @@ public class CentroComputoDAO {
         
         return centroComputo;
     }
+    
+    public static boolean registrarCentroDeComputo(CentroComputo centroComputo){
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar registrar el centro de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+        }
+        
+        return resultadoOperacion;
+    }
 }

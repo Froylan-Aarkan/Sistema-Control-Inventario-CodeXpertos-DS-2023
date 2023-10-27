@@ -96,44 +96,46 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
     @FXML
     private void registrarEquipoComputo(ActionEvent event) {
         if(camposValidos()){
-            Hardware equipoComputoNuevo = new Hardware();
-            equipoComputoNuevo.setMarca(tfMarca.getText());
-            equipoComputoNuevo.setModelo(tfModelo.getText());
-            equipoComputoNuevo.setNumeroSerie(tfNumeroSerie.getText());
-            equipoComputoNuevo.setProcesador(tfProcesador.getText());
-            
-            if(cbArquitectura.getSelectionModel().isSelected(0)){
-                equipoComputoNuevo.setArquitectura(32);
-            }else if (cbArquitectura.getSelectionModel().isSelected(1)){
-                equipoComputoNuevo.setArquitectura(64);
-            }else if(cbArquitectura.getSelectionModel().isSelected(2)){
-                equipoComputoNuevo.setArquitectura(86);
-            }
-                        
-            equipoComputoNuevo.setTarjetaMadre(tfTarjetaMadre.getText());
-            equipoComputoNuevo.setSistemaOperativo(tfSistemaOperativo.getText());
-            equipoComputoNuevo.setGrafica(tfGrafica.getText());
-            equipoComputoNuevo.setDireccionMac(tfDireccionMac.getText());
-            equipoComputoNuevo.setDireccionIp(tfDireccionIp.getText());
-            equipoComputoNuevo.setAlmacenamiento(Float.parseFloat(tfAlmacenamiento.getText()));
-            equipoComputoNuevo.setRam(Float.parseFloat(tfRam.getText()));
-            
-            try {
-                if(HardwareDAO.registrarEquipoComputo(equipoComputoNuevo)){
-                    Utilidades.mostrarAlertaSimple("Equipo Registrado", "Se registró el nuevo equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
-                    
-                    Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
-                    stage.close();
+            if(Utilidades.mostrarDialogoConfirmacion("Registrar equipo de cómputo", "¿Desea registrar el equipo de cómputo?")){
+                Hardware equipoComputoNuevo = new Hardware();
+                equipoComputoNuevo.setMarca(tfMarca.getText());
+                equipoComputoNuevo.setModelo(tfModelo.getText());
+                equipoComputoNuevo.setNumeroSerie(tfNumeroSerie.getText());
+                equipoComputoNuevo.setProcesador(tfProcesador.getText());
+
+                if(cbArquitectura.getSelectionModel().isSelected(0)){
+                    equipoComputoNuevo.setArquitectura(32);
+                }else if (cbArquitectura.getSelectionModel().isSelected(1)){
+                    equipoComputoNuevo.setArquitectura(64);
+                }else if(cbArquitectura.getSelectionModel().isSelected(2)){
+                    equipoComputoNuevo.setArquitectura(86);
                 }
-            } catch (SQLException e) {
-                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
-            }
+
+                equipoComputoNuevo.setTarjetaMadre(tfTarjetaMadre.getText());
+                equipoComputoNuevo.setSistemaOperativo(tfSistemaOperativo.getText());
+                equipoComputoNuevo.setGrafica(tfGrafica.getText());
+                equipoComputoNuevo.setDireccionMac(tfDireccionMac.getText());
+                equipoComputoNuevo.setDireccionIp(tfDireccionIp.getText());
+                equipoComputoNuevo.setAlmacenamiento(Float.parseFloat(tfAlmacenamiento.getText()));
+                equipoComputoNuevo.setRam(Float.parseFloat(tfRam.getText()));
+
+                try{
+                    if(HardwareDAO.registrarEquipoComputo(equipoComputoNuevo)){
+                        Utilidades.mostrarAlertaSimple("Equipo Registrado", "Se registró el nuevo equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
+
+                        Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
+                        stage.close();
+                    }
+                } catch (SQLException e) {
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
+                }
+            }            
         }
     }
 
     @FXML
     private void cancelarOperacion(ActionEvent event) {
-        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Seguro que desea borrar todos los datos de registro?")){
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar", "¿Desea cancelar la operación y borrar los campos?")){
             tfMarca.setText("");
             tfModelo.setText("");
             tfAlmacenamiento.setText("");
@@ -180,7 +182,7 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
                 tfNumeroSerie.setStyle("-fx-border-color: red");
                 sonValidos = false;
             }else if(HardwareDAO.buscarHardwarePorNumeroSerie(tfNumeroSerie.getText()) != null){
-                lbErrorNumeroSerie.setText("Ese número de serie ya existe.");
+                lbErrorNumeroSerie.setText("Este número de serie ya existe.");
                 tfNumeroSerie.setStyle("-fx-border-color: red");
                 sonValidos = false;
             }else{

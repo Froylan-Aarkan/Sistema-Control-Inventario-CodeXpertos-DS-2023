@@ -47,7 +47,7 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return softwareBD;
@@ -83,7 +83,7 @@ public class SoftwareDAO {
             }
         }else{
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
-                    "No hay conexión con la base de datos.",
+                    "No hay conexión con la base de datos, inténtelo más tarde.",
                     Alert.AlertType.ERROR);
         }
         return resultado;
@@ -115,7 +115,7 @@ public class SoftwareDAO {
             }
         }else{
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
-                    "No hay conexión con la base de datos.",
+                    "No hay conexión con la base de datos, inténtelo más tarde.",
                     Alert.AlertType.ERROR);
         }
         
@@ -151,7 +151,7 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultado;
@@ -200,7 +200,7 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
             resultado = false;
         }

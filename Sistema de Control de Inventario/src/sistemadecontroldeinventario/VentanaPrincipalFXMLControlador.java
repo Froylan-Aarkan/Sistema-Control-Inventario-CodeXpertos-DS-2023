@@ -45,14 +45,14 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
     @FXML
     private void desplegarVentanaEquiposComputo(ActionEvent event) {
         try {
-            FXMLLoader loaderVentanaEquiposDeComputo = new FXMLLoader(getClass().getResource("hardware/EquiposDeComputoFXML.fxml"));
-            Parent ventanaEquiposDeComputo = loaderVentanaEquiposDeComputo.load();
+            FXMLLoader loaderVentanaHardware = new FXMLLoader(getClass().getResource("hardware/VentanaHardwareFXML.fxml"));
+            Parent ventanaHardware = loaderVentanaHardware.load();
             
-            Scene escenarioEquiposDeComputo = new Scene(ventanaEquiposDeComputo);
-            Stage stageEquiposDeComputo = new Stage();
-            stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
-            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();
+            Scene escenarioHardware = new Scene(ventanaHardware);
+            Stage stageHardware = new Stage();
+            stageHardware.setScene(escenarioHardware);
+            stageHardware.initModality(Modality.APPLICATION_MODAL);
+            stageHardware.showAndWait();
             
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);

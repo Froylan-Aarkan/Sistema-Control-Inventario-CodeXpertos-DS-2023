@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador">
+   <children>
+      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="518.0" layoutY="76.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="376.0" layoutY="529.0" opacity="0.14" text="Sistema de control de" textFill="#004aad">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <Label layoutX="542.0" layoutY="599.0" opacity="0.14" text="inventario" textFill="#004aad">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
+      <Label layoutX="547.0" layoutY="-10.0" text="Hardware" textFill="WHITE">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="70.0" fitWidth="61.0" layoutX="35.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/botonregresar_blanco.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="34.0" layoutY="6.0" mnemonicParsing="false" onAction="#cerrarVentana" opacity="0.0" prefHeight="61.0" prefWidth="61.0" text="Regresar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="300.0" fitWidth="385.0" layoutX="194.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/pc.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="109.0" layoutY="502.0" text="Equipos de Cómputo" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+      </Label>
+      <Button fx:id="btEquiposComputo" layoutX="109.0" layoutY="246.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" opacity="0.0" prefHeight="324.0" prefWidth="471.0" text="Equipos de Computo">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <ImageView fitHeight="259.0" fitWidth="240.0" layoutX="942.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/mouse.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="943.0" layoutY="506.0" text="Periféricos" textFill="#004aad">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+      </Label>
+      <Button layoutX="942.0" layoutY="240.0" mnemonicParsing="false" onAction="#desplegarVentanaPerifericos" opacity="0.0" prefHeight="324.0" prefWidth="240.0" text="Perifericos">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+</AnchorPane>
