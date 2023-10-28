@@ -7,8 +7,6 @@ package sistemadecontroldeinventario.hardware;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sistemadecontroldeinventario.InicioSesionFXMLControlador;
 
 /**
  * FXML Controller class
@@ -48,8 +45,7 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             Stage stageEquiposDeComputo = new Stage();
             stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();
-            
+            stageEquiposDeComputo.showAndWait();            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,6 +53,18 @@ public class VentanaHardwareFXMLControlador implements Initializable {
 
     @FXML
     private void desplegarVentanaPerifericos(ActionEvent event) {
+        try{
+            FXMLLoader loaderVentanaPerifericos = new FXMLLoader(getClass().getResource("perifericos/PerifericosFXML.fxml"));
+            Parent ventanaPerifericos = loaderVentanaPerifericos.load();
+            
+            Scene escenarioPerifericos = new Scene(ventanaPerifericos);
+            Stage stagePerifericos = new Stage();
+            stagePerifericos.setScene(escenarioPerifericos);
+            stagePerifericos.initModality(Modality.APPLICATION_MODAL);
+            stagePerifericos.showAndWait();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         
     }
 
