@@ -9,11 +9,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.hardware.ConsultarEquipoComputoFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.hardware.equiposComputo.ConsultarEquipoComputoFXMLControlador">
    <children>
       <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="518.0" layoutY="82.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
+            <Image url="@../../../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
          </image>
       </ImageView>
       <Label layoutX="376.0" layoutY="546.0" opacity="0.14" text="Sistema de control de" textFill="#004aad">
@@ -118,7 +118,7 @@
       <TextField fx:id="tfFechaIngreso" editable="false" layoutX="441.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" />
       <ImageView fitHeight="101.0" fitWidth="100.0" layoutX="634.0" layoutY="605.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Imagenes/botonregresar_azul.png" />
+            <Image url="@../../../Imagenes/botonregresar_azul.png" />
          </image>
       </ImageView>
       <Button layoutX="626.0" layoutY="604.0" mnemonicParsing="false" onAction="#cerrarVentana" opacity="0.0" prefHeight="101.0" prefWidth="117.0" text="Regresar">

@@ -43,7 +43,7 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
     }
 
     @FXML
-    private void desplegarVentanaEquiposComputo(ActionEvent event) {
+    private void desplegarVentanaHardware(ActionEvent event) {
         try {
             FXMLLoader loaderVentanaHardware = new FXMLLoader(getClass().getResource("hardware/VentanaHardwareFXML.fxml"));
             Parent ventanaHardware = loaderVentanaHardware.load();
@@ -54,8 +54,8 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
             stageHardware.initModality(Modality.APPLICATION_MODAL);
             stageHardware.showAndWait();
             
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

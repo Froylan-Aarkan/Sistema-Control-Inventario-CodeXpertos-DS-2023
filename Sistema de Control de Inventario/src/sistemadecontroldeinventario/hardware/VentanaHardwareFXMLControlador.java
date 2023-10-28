@@ -50,8 +50,8 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
             stageEquiposDeComputo.showAndWait();
             
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

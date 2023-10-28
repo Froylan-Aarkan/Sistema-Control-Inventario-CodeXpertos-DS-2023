@@ -58,7 +58,7 @@ public class HardwareDAO {
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "INSERT INTO hardware (modelo, marca, numeroSerie, procesador, almacenamiento, ram, direccionMac, direccionIp, sistemaOperativo, arquitectura, grafica, tarjetaMadre, estado, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String consulta = "INSERT INTO hardware (modelo, marca, numeroSerie, procesador, almacenamiento, ram, direccionMac, direccionIp, sistemaOperativo, arquitectura, grafica, tarjetaMadre, estado, fechaIngreso, posicion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 
                 PreparedStatement sentenciaHardware = conexionBD.prepareStatement(consulta);
                 sentenciaHardware.setString(1, equipoComputoNuevo.getModelo());
@@ -73,11 +73,13 @@ public class HardwareDAO {
                 sentenciaHardware.setInt(10, equipoComputoNuevo.getArquitectura());
                 sentenciaHardware.setString(11, equipoComputoNuevo.getGrafica());
                 sentenciaHardware.setString(12, equipoComputoNuevo.getTarjetaMadre());
-                sentenciaHardware.setString(13, "Funcional");
+                sentenciaHardware.setString(13, "Funcional");                
                 
                 LocalDateTime fechaHoraActual = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 sentenciaHardware.setString(14, fechaHoraActual.format(formatter).toString());
+                
+                sentenciaHardware.setString(15, "No aplica.");
                 
                 int filasAfectadas = sentenciaHardware.executeUpdate();
                 

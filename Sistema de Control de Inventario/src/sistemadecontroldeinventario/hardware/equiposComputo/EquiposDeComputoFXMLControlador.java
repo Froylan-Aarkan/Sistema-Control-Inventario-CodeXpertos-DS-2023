@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package sistemadecontroldeinventario.hardware;
+package sistemadecontroldeinventario.hardware.equiposComputo;
 
 import Modelo.DAO.HardwareDAO;
 import Modelo.POJO.Hardware;
@@ -34,7 +34,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.InicioSesionFXMLControlador;
-import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 
 /**
  * FXML Controller class

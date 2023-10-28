@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package sistemadecontroldeinventario.hardware;
+package sistemadecontroldeinventario.hardware.equiposComputo;
 
 import Modelo.DAO.CentroComputoDAO;
 import Modelo.DAO.HardwareDAO;
@@ -13,9 +13,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -174,7 +171,7 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
         tfDireccionMac.setText(hardwareModificacion.getDireccionMac());
         tfDireccionIp.setText(hardwareModificacion.getDireccionIp());
         tfAlmacenamiento.setText(hardwareModificacion.getAlmacenamiento() + "");
-        //TODO comboboxes
+
         switch(hardwareModificacion.getArquitectura()){
             case 32:
                 cbArquitectura.getSelectionModel().select(0);
@@ -187,20 +184,18 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 break;
         }    
         
-        System.out.println(hardwareModificacion.getPosicion());
-        System.out.println(hardwareModificacion.getIdCentroComputo());
-        
-        try{
+        if(!hardwareModificacion.getPosicion().equalsIgnoreCase("no aplica.")){
             cbLetra.getSelectionModel().select(cbLetra.getItems().indexOf(String.valueOf(hardwareModificacion.getPosicion().charAt(0))));
             cbNumero.getSelectionModel().select(cbNumero.getItems().indexOf(String.valueOf(hardwareModificacion.getPosicion().charAt(1))));
-        }catch(NullPointerException e){
-            e.printStackTrace();
         }
-        
+      
         try {
-            //TODO correcion
             CentroComputo centroSeleccion = CentroComputoDAO.recuperarCentroComputoPorId(hardwareModificacion.getIdCentroComputo());
-            cbUbicacion.getSelectionModel().select(cbUbicacion.getItems().indexOf(centroSeleccion));
+            for (CentroComputo centroComboBox : cbUbicacion.getItems()) {
+                if(centroComboBox.getIdCentroComputo() == centroSeleccion.getIdCentroComputo()){
+                    cbUbicacion.getSelectionModel().select(centroComboBox);
+                }
+            }
         }catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo salió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }catch(NullPointerException e){

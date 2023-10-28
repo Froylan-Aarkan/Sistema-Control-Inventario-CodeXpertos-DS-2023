@@ -36,7 +36,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnHardware" layoutX="203.0" layoutY="51.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" opacity="0.0" prefHeight="288.0" prefWidth="227.0" text="Hardware">
+      <Button fx:id="btnHardware" layoutX="203.0" layoutY="51.0" mnemonicParsing="false" onAction="#desplegarVentanaHardware" opacity="0.0" prefHeight="288.0" prefWidth="227.0" text="Hardware">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
