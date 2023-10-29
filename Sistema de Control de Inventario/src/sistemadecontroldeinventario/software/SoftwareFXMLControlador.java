@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +49,7 @@ public class SoftwareFXMLControlador implements Initializable {
     @FXML
     private TableColumn<Software, String> tcPeso;
     public ObservableList<Software> listaSoftware;
+    
     private String cargoUsuario;
     /**
      * Initializes the controller class.
@@ -162,12 +164,14 @@ public class SoftwareFXMLControlador implements Initializable {
             if(softwareModificacion != null){
             boolean actualizar = Utilidades.mostrarDialogoConfirmacion("Modificar registro de software", 
                     "¿Deseas modificar la información del software?");
-            if(actualizar)
-                abrirFormularioSoftwareModificar(softwareModificacion);
-            }else{
-                Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                   "Necesita seleccionar un objeto a modificar", 
-                    Alert.AlertType.WARNING);
+                if(actualizar){
+                    abrirFormularioSoftwareModificar(softwareModificacion);
+                    cargarDatosTabla();
+                }else{
+                    Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
+                       "Necesita seleccionar un objeto a modificar", 
+                        Alert.AlertType.WARNING);
+                }
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion",
@@ -175,22 +179,18 @@ public class SoftwareFXMLControlador implements Initializable {
                     Alert.AlertType.ERROR);
         }
     }
-
-    @FXML
-    private void registrarSoftware(ActionEvent event) {
-        abrirFormularioSoftware(null);
-        cargarDatosTabla();
-    }
    
+    
+    public void inicializarVentana(String cargoUsuario) {
+        this.cargoUsuario = cargoUsuario;
+    }
+    
     private Software verificarSoftwareSeleccionado(){
         int filaSeleccionada = tvSoftware.getSelectionModel().getFocusedIndex();
         return filaSeleccionada >= 0 ? listaSoftware.get(filaSeleccionada) : null;
     }
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
-    }
     
-    private void abrirFormularioSoftware(Software software){
+    private void abrirFormularioSoftware(){
         try {
             FXMLLoader loaderVentanaRegistrarEquipoDeComputo = new FXMLLoader(getClass().getResource("RegistroSoftwareFXML.fxml"));
             Parent ventanaRegistrarEquipoDeComputo = loaderVentanaRegistrarEquipoDeComputo.load();
@@ -214,7 +214,7 @@ public class SoftwareFXMLControlador implements Initializable {
             ModificaSoftwareFXMLControlador formularioModificar = 
                     loaderVentanaModificarSoftware.getController();
             
-            formularioModificar.inicializaValores(true,softwareModificar);
+            formularioModificar.inicializaValores(softwareModificar);
             
             Scene escenarioSoftware = new Scene(ventanaModificarSoftware);
             Stage stageSoftware = new Stage();
@@ -226,5 +226,10 @@ public class SoftwareFXMLControlador implements Initializable {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @FXML
+    private void registrarSoftware(ActionEvent event) {
+        abrirFormularioSoftware();
+        cargarDatosTabla();
+    }
 }
