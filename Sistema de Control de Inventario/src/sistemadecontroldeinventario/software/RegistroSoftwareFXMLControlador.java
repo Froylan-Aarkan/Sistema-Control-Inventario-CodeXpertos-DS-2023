@@ -64,46 +64,49 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
     @FXML
     private void registrarSoftware(ActionEvent event) {
         
-        if(camposValidos()){    
-            String nombre = tfNombre.getText();
-            String peso = tfPeso.getText();
-            int arquitectura = 1;
+        if(camposValidos()){
+            if(Utilidades.mostrarDialogoConfirmacion("Registrar software", "¿Desea registrar el software?")){
+                String nombre = tfNombre.getText();
+                String peso = tfPeso.getText();
+                int arquitectura = 1;
 
-            Software softwareNuevo = new Software();
-            
-            if(cbArquitectura.getSelectionModel().isSelected(0))
-                arquitectura = 32;
-            else if (cbArquitectura.getSelectionModel().isSelected(1))
-                arquitectura = 64;
-            else if (cbArquitectura.getSelectionModel().isSelected(2))
-                arquitectura = 86;
-        
-            softwareNuevo.setNombre(nombre);
-            softwareNuevo.setPeso(peso);
-            softwareNuevo.setArquitectura(arquitectura);
-            try{
-                boolean repetido = SoftwareDAO.verificarSoftwareRepetido(nombre, peso, arquitectura);
-                if(!repetido){
-                    if(SoftwareDAO.registrarSoftware(softwareNuevo)){
-                        Utilidades.mostrarAlertaSimple("Software registrado", 
-                        "El software ha sido registrado exitosamente",
-                        Alert.AlertType.INFORMATION);
-                        tfNombre.setText("");
-                        tfPeso.setText("");
-                        cbArquitectura.getSelectionModel().selectFirst();
-                    }else{
-                        Utilidades.mostrarAlertaSimple("Software no registrado", 
-                        "El registro del software ha fallado",
-                        Alert.AlertType.INFORMATION);
-                    }
-                }else{ 
-                    Utilidades.mostrarAlertaSimple("Software repetido", 
-                            "El software ya esta registrado.", Alert.AlertType.INFORMATION);
+                Software softwareNuevo = new Software();
+
+                if(cbArquitectura.getSelectionModel().isSelected(0)){
+                    arquitectura = 32;
+                }else if (cbArquitectura.getSelectionModel().isSelected(1)){
+                    arquitectura = 64;
+                }else if (cbArquitectura.getSelectionModel().isSelected(2)){
+                    arquitectura = 86;
                 }
-            }catch (SQLException sqlException) {
-                Utilidades.mostrarAlertaSimple("Error de conexión", 
-                    "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
-                    Alert.AlertType.ERROR);
+                    
+                softwareNuevo.setNombre(nombre);
+                softwareNuevo.setPeso(peso);
+                softwareNuevo.setArquitectura(arquitectura);
+                try{
+                    boolean repetido = SoftwareDAO.verificarSoftwareRepetido(nombre, peso, arquitectura);
+                    if(!repetido){
+                        if(SoftwareDAO.registrarSoftware(softwareNuevo)){
+                            Utilidades.mostrarAlertaSimple("Software registrado", 
+                            "El software ha sido registrado exitosamente",
+                            Alert.AlertType.INFORMATION);
+                            tfNombre.setText("");
+                            tfPeso.setText("");
+                            cbArquitectura.getSelectionModel().selectFirst();
+                        }else{
+                            Utilidades.mostrarAlertaSimple("Software no registrado", 
+                            "El registro del software ha fallado",
+                            Alert.AlertType.INFORMATION);
+                        }
+                    }else{ 
+                        Utilidades.mostrarAlertaSimple("Software repetido", 
+                                "El software ya esta registrado.", Alert.AlertType.INFORMATION);
+                    }
+                }catch (SQLException sqlException) {
+                    Utilidades.mostrarAlertaSimple("Error de conexión", 
+                        "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+                }
             }
         }
     }
@@ -129,18 +132,35 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
             lbNombre.setText("");
             tfNombre.setStyle("");
         }
-   
-        if(tfPeso.getText().equals("")){
+        
+        String[] unidadesDeAlmacenamiento = {"kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"};
+        
+        if(tfPeso.getText().isEmpty()){
             lbPeso.setText("No se puede dejar vacío.");
             tfPeso.setStyle("-fx-border-color: red");
             sonValidos = false;
-        }else if(!tfPeso.getText().toLowerCase().endsWith("b")){
+        }else if(tfPeso.getText().toLowerCase().endsWith("b")){
+            for (String unidad : unidadesDeAlmacenamiento) {
+                if (tfPeso.getText().toLowerCase().endsWith(unidad)) {
+                    lbPeso.setText("");
+                    tfPeso.setStyle("");
+                    sonValidos = true;
+                    break;
+                }
+            }
+            if (!sonValidos) {
+                lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
+                tfPeso.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbPeso.setText("");
+                tfPeso.setStyle("");
+                sonValidos = true;
+            }
+        }else{
             lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
             tfPeso.setStyle("-fx-border-color: red");
             sonValidos = false;
-        }else{
-            lbPeso.setText("");
-            tfPeso.setStyle("");
         }
         
 
@@ -155,13 +175,5 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
 
         return sonValidos;
     }
-    
-    private boolean esNumerico(String cadena){
-        try {
-            Float.parseFloat(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-    }
+
 }

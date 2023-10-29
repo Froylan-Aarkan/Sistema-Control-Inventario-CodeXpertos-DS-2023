@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemadecontroldeinventario.software.ModificaSoftwareFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="298.0" prefWidth="600.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.software.ModificaSoftwareFXMLControlador">
     <children>
       <Label layoutX="135.0" layoutY="14.0" text="Modificar software" textFill="#2108ff">
          <font>
@@ -19,8 +19,8 @@
       <TextField fx:id="tfPeso" layoutX="54.0" layoutY="178.0" prefHeight="25.0" prefWidth="210.0" />
       <ComboBox fx:id="cbArquitectura" layoutX="326.0" layoutY="178.0" prefHeight="25.0" prefWidth="216.0" promptText="------Elija una arquitectura------" />
       <Label layoutX="54.0" layoutY="99.0" text="Nombre:" />
-      <Label layoutX="54.0" layoutY="161.0" text="Peso" />
-      <Label layoutX="326.0" layoutY="161.0" text="Arquitectura" />
+      <Label layoutX="54.0" layoutY="161.0" text="Peso:" />
+      <Label layoutX="326.0" layoutY="161.0" text="Arquitectura:" />
       <Button layoutX="54.0" layoutY="244.0" mnemonicParsing="false" onAction="#modificarSoftware" style="-fx-background-color: #06B433;" text="Modificar" textFill="WHITE">
          <font>
             <Font size="14.0" />
@@ -43,6 +43,11 @@
       <Label fx:id="lbArquitectura" layoutX="326.0" layoutY="203.0" prefHeight="15.0" prefWidth="216.0" textFill="RED">
          <font>
             <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="83.0" layoutY="162.0" prefHeight="17.0" prefWidth="167.0" text="*Ingrese peso sin espaciado*" textFill="RED">
+         <font>
+            <Font name="System Bold" size="9.0" />
          </font>
       </Label>
    </children>
