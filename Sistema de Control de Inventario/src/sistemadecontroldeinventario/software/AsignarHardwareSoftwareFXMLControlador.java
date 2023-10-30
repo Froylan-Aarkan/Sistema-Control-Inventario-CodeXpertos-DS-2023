@@ -85,6 +85,7 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
                             HardwareDAO.asignarEquipoComputoASoftware(
                                     cbHardware.getSelectionModel().getSelectedItem().getIdHardware(),
                                     softwareAsignacion.getIdSoftware());
+                            cargarDatosTabla(cbHardware.getSelectionModel().getSelectedItem().getIdHardware());
                         }else{
                             Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
                                "Necesita seleccionar un software a relacionar", 
@@ -124,7 +125,7 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
             listaHardware.addAll(hardwareBD);
             
             for (Hardware hardware : listaHardware) {
-                cbHardware.getSelectionModel().select(hardware);
+                cbHardware.setItems(listaHardware);
             }
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

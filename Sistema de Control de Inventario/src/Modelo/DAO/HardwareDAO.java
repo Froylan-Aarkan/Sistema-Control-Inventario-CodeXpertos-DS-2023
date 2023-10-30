@@ -274,7 +274,7 @@ public class HardwareDAO {
         boolean resultado = false;
         if(conexionBD != null){
             try{
-                String consultaRelacionHardwareSoftware = "INSERT INTO hardwaresoftware(idHardware,idSoftware)  VALUES (?,?); ";
+                String consultaRelacionHardwareSoftware = "INSERT INTO hardwaresoftware(Hardware_idHardware,Software_idSoftware)  VALUES (?,?); ";
                 PreparedStatement consultaHardwareSoftware = conexionBD.prepareStatement(consultaRelacionHardwareSoftware);
                 consultaHardwareSoftware.setInt(1, idHardware);
                 consultaHardwareSoftware.setInt(2, idSoftware);

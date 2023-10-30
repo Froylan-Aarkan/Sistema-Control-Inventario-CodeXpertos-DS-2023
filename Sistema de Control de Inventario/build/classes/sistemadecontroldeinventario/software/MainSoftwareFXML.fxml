@@ -42,20 +42,24 @@
             <Font size="64.0" />
          </font>
       </Label>
-      <ImageView fitHeight="244.0" fitWidth="320.0" layoutX="937.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
-         
-      </ImageView>
+      <ImageView fitHeight="288.0" fitWidth="357.0" layoutX="951.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/hardwareSoftware.png" />
+         </image></ImageView>
       <Label layoutX="940.0" layoutY="438.0" text="Asignar equipo de" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="903.0" layoutY="192.0" mnemonicParsing="false" onAction="#desplegarVentanaAsignarHardwareSoftware" opacity="0.0" prefHeight="337.0" prefWidth="387.0" text="Asignar equipo a software">
+      <Button layoutX="901.0" layoutY="198.0" mnemonicParsing="false" onAction="#desplegarVentanaAsignarHardwareSoftware" opacity="0.0" prefHeight="337.0" prefWidth="387.0" text="Asignar equipo a software">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ImageView fitHeight="244.0" fitWidth="320.0" layoutX="118.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="244.0" fitWidth="320.0" layoutX="118.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imagenes/software.png" />
+         </image></ImageView>
       <Label layoutX="121.0" layoutY="440.0" text="Consultar software" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
