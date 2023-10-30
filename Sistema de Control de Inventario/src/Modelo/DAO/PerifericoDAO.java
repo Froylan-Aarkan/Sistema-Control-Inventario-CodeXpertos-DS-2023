@@ -101,6 +101,7 @@ public class PerifericoDAO {
                     perifericoBD.setMarca(resultadoConsulta.getString("marca"));
                     perifericoBD.setModelo(resultadoConsulta.getString("modelo"));
                     perifericoBD.setEstado(resultadoConsulta.getString("estado"));
+                    perifericoBD.setTipo(resultadoConsulta.getString("tipo"));
                     perifericoBD.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
                     perifericoBD.setInalambrico(resultadoConsulta.getBoolean("inalambrico"));
                     perifericoBD.setIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo"));
@@ -115,5 +116,38 @@ public class PerifericoDAO {
         }
         
         return perifericoBD;
+    }
+    
+    public static boolean modificarPeriferico(Periferico perifericoModificacion) throws SQLException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "UPDATE perifericos SET marca = ?, modelo = ?, numeroSerie = ?, tipo = ?, inalambrico = ?, estado = ?, CentroComputo_idCentroComputo = ? WHERE idPerifericos = ?";
+                PreparedStatement consultaPeriferico = conexionBD.prepareStatement(consulta);
+                consultaPeriferico.setString(1, perifericoModificacion.getMarca());
+                consultaPeriferico.setString(2, perifericoModificacion.getModelo());
+                consultaPeriferico.setString(3, perifericoModificacion.getNumeroSerie());
+                consultaPeriferico.setString(4, perifericoModificacion.getTipo());
+                consultaPeriferico.setBoolean(5, perifericoModificacion.isInalambrico());
+                consultaPeriferico.setString(6, perifericoModificacion.getEstado());
+                consultaPeriferico.setInt(7, perifericoModificacion.getIdCentroComputo());
+                consultaPeriferico.setInt(8, perifericoModificacion.getIdPeriferico());
+                
+                int filasAfectadas = consultaPeriferico.executeUpdate();
+                
+                if(filasAfectadas > 0){
+                    resultadoOperacion = true;
+                }                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar modificar el periférico: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
+        }
+        
+        return resultadoOperacion;
     }
 }

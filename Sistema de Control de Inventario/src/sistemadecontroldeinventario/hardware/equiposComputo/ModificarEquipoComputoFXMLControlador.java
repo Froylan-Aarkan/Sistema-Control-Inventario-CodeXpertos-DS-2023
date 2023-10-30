@@ -153,7 +153,7 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                         stage.close();
                     }
                 } catch (SQLException e) {
-                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 }
             }
         }
@@ -349,7 +349,7 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
             
             
         } catch (SQLException e) {
-            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
         return sonValidos;
     }

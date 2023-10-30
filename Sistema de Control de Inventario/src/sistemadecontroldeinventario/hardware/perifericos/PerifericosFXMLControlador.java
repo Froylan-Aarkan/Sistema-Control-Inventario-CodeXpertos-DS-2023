@@ -87,7 +87,7 @@ public class PerifericosFXMLControlador implements Initializable {
                 Parent ventanaModificarPeriferico = loaderVentanaModificarPeriferico.load();
 
                 ModificarPerifericoFXMLControlador controlador = loaderVentanaModificarPeriferico.getController();
-                controlador.inicializarVentana(tvPerifericos.getSelectionModel().getSelectedItem());
+                controlador.inicializarVentana(PerifericoDAO.buscarPerifericoPorNumeroSerie(tvPerifericos.getSelectionModel().getSelectedItem().getNumeroSerie()));
 
                 Scene escenarioModificarPeriferico = new Scene(ventanaModificarPeriferico);
                 Stage stagePerifericos = new Stage();
@@ -96,7 +96,8 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.showAndWait();
                 cargarTabla();
 
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
             }
         }else{

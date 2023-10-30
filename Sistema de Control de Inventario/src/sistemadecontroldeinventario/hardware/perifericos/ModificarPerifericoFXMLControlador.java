@@ -66,13 +66,46 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarComboBoxes();
+        
     }    
 
     @FXML
     private void modificarPeriferico(ActionEvent event) {
         //TODO verificacion de cambios
         if(camposValidos()){
-            
+            if(Utilidades.mostrarDialogoConfirmacion("Modificar periférico", "¿Desea modificar el periférico?")){
+                Periferico perifericoModificado = new Periferico();
+                perifericoModificado.setIdPeriferico(perifericoModificacion.getIdPeriferico());
+                perifericoModificado.setMarca(tfMarca.getText());
+                perifericoModificado.setModelo(tfModelo.getText());
+                perifericoModificado.setNumeroSerie(tfNumeroSerie.getText());
+                perifericoModificado.setTipo(tfTipo.getText());
+                
+                if(cbTipoConexion.getSelectionModel().isSelected(0)){
+                    perifericoModificado.setInalambrico(false);
+                }else if(cbTipoConexion.getSelectionModel().isSelected(1)){
+                    perifericoModificado.setInalambrico(true);
+                }
+                
+                perifericoModificado.setEstado(cbEstado.getSelectionModel().getSelectedItem());
+                
+                if(!cbUbicacion.getSelectionModel().isEmpty()){
+                    perifericoModificado.setIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo());
+                }else{
+                    perifericoModificado.setIdCentroComputo(0);
+                }
+                
+                try{
+                    if(PerifericoDAO.modificarPeriferico(perifericoModificado)){
+                        Utilidades.mostrarAlertaSimple("Periférico modificado", "Se modificó el periférico con éxito.", Alert.AlertType.INFORMATION);
+                        
+                        Stage stage = (Stage) tfTipo.getScene().getWindow();
+                        stage.close();
+                    }
+                }catch(SQLException e){
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                }                      
+            }
         }
     }
 
