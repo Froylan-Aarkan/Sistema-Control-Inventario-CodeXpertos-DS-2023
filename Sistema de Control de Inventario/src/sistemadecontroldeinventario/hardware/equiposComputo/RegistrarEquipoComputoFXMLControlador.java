@@ -127,7 +127,7 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
                         stage.close();
                     }
                 } catch (SQLException e) {
-                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 }
             }            
         }
@@ -147,6 +147,7 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
             tfRam.setText("");
             tfSistemaOperativo.setText("");
             tfTarjetaMadre.setText("");
+            cbArquitectura.getSelectionModel().clearSelection();
         }
     }
     
@@ -200,7 +201,7 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
             }
             
             if(cbArquitectura.getSelectionModel().isEmpty()){
-                lbErrorArquitectura.setText("Debe seleccionar una arquitectura.");
+                lbErrorArquitectura.setText("Debe seleccionar una opción");
                 cbArquitectura.setStyle("-fx-border-color: red");
                 sonValidos = false;
             }else{

@@ -7,6 +7,7 @@ package sistemadecontroldeinventario.hardware.perifericos;
 import Modelo.DAO.PerifericoDAO;
 import Modelo.POJO.Periferico;
 import Utilidades.Utilidades;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,12 +20,16 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -76,10 +81,45 @@ public class PerifericosFXMLControlador implements Initializable {
 
     @FXML
     private void modificarPeriferico(ActionEvent event) {
+        if(verificarSeleccion()){
+            try {
+                FXMLLoader loaderVentanaModificarPeriferico = new FXMLLoader(getClass().getResource("ModificarPerifericoFXML.fxml"));
+                Parent ventanaModificarPeriferico = loaderVentanaModificarPeriferico.load();
+
+                ModificarPerifericoFXMLControlador controlador = loaderVentanaModificarPeriferico.getController();
+                controlador.inicializarVentana(tvPerifericos.getSelectionModel().getSelectedItem());
+
+                Scene escenarioModificarPeriferico = new Scene(ventanaModificarPeriferico);
+                Stage stagePerifericos = new Stage();
+                stagePerifericos.setScene(escenarioModificarPeriferico);
+                stagePerifericos.initModality(Modality.APPLICATION_MODAL);
+                stagePerifericos.showAndWait();
+                cargarTabla();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Periférico no seleccionado", "No se ha seleccionado el periférico a modificar.", Alert.AlertType.WARNING);
+        }        
     }
 
     @FXML
     private void registrarPeriferico(ActionEvent event) {
+        try {
+            FXMLLoader loaderVentanaRegistrarPeriferico = new FXMLLoader(getClass().getResource("RegistrarPerifericoFXML.fxml"));
+            Parent ventanaRegistrarPeriferico = loaderVentanaRegistrarPeriferico.load();
+            
+            Scene escenarioRegistrarPeriferico = new Scene(ventanaRegistrarPeriferico);
+            Stage stagePerifericos = new Stage();
+            stagePerifericos.setScene(escenarioRegistrarPeriferico);
+            stagePerifericos.initModality(Modality.APPLICATION_MODAL);
+            stagePerifericos.showAndWait();
+            cargarTabla();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private void configurarTabla(){
@@ -141,6 +181,10 @@ public class PerifericosFXMLControlador implements Initializable {
             sortedRefaccion.comparatorProperty().bind(tvPerifericos.comparatorProperty());
             tvPerifericos.setItems(sortedRefaccion);
         }
+    }
+    
+    private boolean verificarSeleccion(){
+        return tvPerifericos.getSelectionModel().getSelectedItem() != null;
     }
     
     public void inicializarVentana(String cargoUsuario){

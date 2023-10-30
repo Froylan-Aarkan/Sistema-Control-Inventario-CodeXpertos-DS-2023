@@ -97,7 +97,7 @@ CREATE TABLE `hardware` (
   `CentroComputo_idCentroComputo` int DEFAULT NULL,
   PRIMARY KEY (`idHardware`),
   UNIQUE KEY `numeroSerie_UNIQUE` (`numeroSerie`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `hardware` (
 
 LOCK TABLES `hardware` WRITE;
 /*!40000 ALTER TABLE `hardware` DISABLE KEYS */;
-INSERT INTO `hardware` VALUES (7,'asd','zxc','Funcional','a',NULL,800,23,'a','a','a','2023-10-23 15:47:00','a',64,'qwe','a',NULL),(9,'s','d','Funcional','s',NULL,1,1,'12a','sad','assd','2023-10-23 18:09:17','asd',86,'a','askd',NULL);
+INSERT INTO `hardware` VALUES (7,'asd','zxc','Funcional','a','A9',800,23,'a','a','a','2023-10-23 15:47:00','a',64,'qwe','a',NULL),(10,'DB283','A12834A','Funcional','Intel I5','A1',60,8,'FF:FF:FF:FF:FF:FF','192.168.100.1','RX 570','2023-10-25 18:44:20','Windows 11',64,'ASUS','Intel Chipset i5',1),(16,'a','ds','Funcional','a','No aplica.',1,1,'a','a','a','2023-10-28 14:09:04','a',64,'h','a',NULL);
 /*!40000 ALTER TABLE `hardware` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,9 +171,9 @@ CREATE TABLE `perifericos` (
   `estado` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `numeroSerie` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `inalambrico` bit(1) NOT NULL,
-  `CentroComputo_idCentroComputo` int NOT NULL,
-  PRIMARY KEY (`idPerifericos`,`CentroComputo_idCentroComputo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `CentroComputo_idCentroComputo` int DEFAULT NULL,
+  PRIMARY KEY (`idPerifericos`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,6 +182,7 @@ CREATE TABLE `perifericos` (
 
 LOCK TABLES `perifericos` WRITE;
 /*!40000 ALTER TABLE `perifericos` DISABLE KEYS */;
+INSERT INTO `perifericos` VALUES (1,'Control','VAIO','Si','Funcional','asdn29e7x',_binary '',NULL);
 /*!40000 ALTER TABLE `perifericos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +199,7 @@ CREATE TABLE `software` (
   `peso` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `arquitectura` int NOT NULL,
   PRIMARY KEY (`idSoftware`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +208,6 @@ CREATE TABLE `software` (
 
 LOCK TABLES `software` WRITE;
 /*!40000 ALTER TABLE `software` DISABLE KEYS */;
-INSERT INTO `software` VALUES (1,'Word','1mb',64);
 /*!40000 ALTER TABLE `software` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `usuario` (
   `CentroComputo_idCentroComputo` int NOT NULL,
   `foto` longblob,
   PRIMARY KEY (`idUsuario`,`CentroComputo_idCentroComputo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,4 +250,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-23 19:04:45
+-- Dump completed on 2023-10-30 11:27:42

@@ -53,4 +53,67 @@ public class PerifericoDAO {
         
         return perifericosBD;
     }
+    
+    public static boolean registrarPeriferico(Periferico perifericoNuevo) throws SQLException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "INSERT INTO perifericos (marca, modelo, numeroSerie, tipo, inalambrico, estado) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement consultaPerifericos = conexionBD.prepareStatement(consulta);
+                consultaPerifericos.setString(1, perifericoNuevo.getMarca());
+                consultaPerifericos.setString(2, perifericoNuevo.getModelo());
+                consultaPerifericos.setString(3, perifericoNuevo.getNumeroSerie());
+                consultaPerifericos.setString(4, perifericoNuevo.getTipo());
+                consultaPerifericos.setBoolean(5, perifericoNuevo.isInalambrico());
+                consultaPerifericos.setString(6, "Funcional");
+                
+                int filasAfectadas = consultaPerifericos.executeUpdate();
+                
+                if(filasAfectadas > 0){
+                    resultadoOperacion = true;
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar registrar el periférico: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
+        }
+        
+        return resultadoOperacion;
+    }
+    
+    public static Periferico buscarPerifericoPorNumeroSerie(String numeroSerie) throws SQLException{
+        Periferico perifericoBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT * FROM perifericos WHERE numeroSerie = ?";
+                PreparedStatement consultaPeriferico = conexionBD.prepareStatement(consulta);
+                consultaPeriferico.setString(1, numeroSerie);
+                ResultSet resultadoConsulta = consultaPeriferico.executeQuery();
+                
+                if(resultadoConsulta.next()){
+                    perifericoBD = new Periferico();
+                    perifericoBD.setIdPeriferico(resultadoConsulta.getInt("idPerifericos"));
+                    perifericoBD.setMarca(resultadoConsulta.getString("marca"));
+                    perifericoBD.setModelo(resultadoConsulta.getString("modelo"));
+                    perifericoBD.setEstado(resultadoConsulta.getString("estado"));
+                    perifericoBD.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
+                    perifericoBD.setInalambrico(resultadoConsulta.getBoolean("inalambrico"));
+                    perifericoBD.setIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo"));
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el periférico: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
+        }
+        
+        return perifericoBD;
+    }
 }

@@ -88,8 +88,8 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             stageEquiposDeComputo.showAndWait();
             cargarTabla();
             
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
