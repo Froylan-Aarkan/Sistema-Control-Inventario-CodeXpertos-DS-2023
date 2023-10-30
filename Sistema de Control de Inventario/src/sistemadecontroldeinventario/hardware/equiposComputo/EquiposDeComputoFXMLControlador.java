@@ -12,8 +12,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,7 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sistemadecontroldeinventario.InicioSesionFXMLControlador;
 
 /**
  * FXML Controller class
@@ -148,8 +145,7 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             if(Utilidades.mostrarDialogoConfirmacion("Eliminar equipo de cómputo", "¿Desea eliminar el equipo de cómputo seleccionado?")){
                 try {
                     if(HardwareDAO.eliminarEquipoComputo(tvEquiposComputo.getSelectionModel().getSelectedItem().getIdHardware())){
-                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el equipo de cómputo.", Alert.AlertType.INFORMATION);
-                        
+                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el equipo de cómputo.", Alert.AlertType.INFORMATION);                        
                     }
                 } catch (SQLException e) {
                     Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

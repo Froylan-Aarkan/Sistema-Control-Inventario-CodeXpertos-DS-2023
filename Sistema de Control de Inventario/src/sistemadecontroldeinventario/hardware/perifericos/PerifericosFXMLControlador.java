@@ -73,10 +73,26 @@ public class PerifericosFXMLControlador implements Initializable {
 
     @FXML
     private void eliminarPeriferico(ActionEvent event) {
+        if(verificarSeleccion()){
+            if(Utilidades.mostrarDialogoConfirmacion("Eliminar periférico", "¿Desea eliminar el periférico seleccionado?")){
+                try{
+                    if(PerifericoDAO.eliminarPeriferico(tvPerifericos.getSelectionModel().getSelectedItem().getIdPeriferico())){
+                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el periférico.", Alert.AlertType.INFORMATION);
+                    }
+                }catch(SQLException e){
+                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Periférico no seleccionado", "No se ha seleccionado el periférico a modificar.", Alert.AlertType.WARNING);
+        }
+        
+        cargarTabla();
     }
 
     @FXML
     private void consultarPeriferico(ActionEvent event) {
+        
     }
 
     @FXML
