@@ -43,7 +43,7 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
     @FXML
     private Label lbArquitectura;
     
-    
+    private String cargoUsuario;
 
     ObservableList<String> ListaArquitecturas = FXCollections
             .observableArrayList("32", "64", "86");
@@ -176,4 +176,7 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
         return sonValidos;
     }
 
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

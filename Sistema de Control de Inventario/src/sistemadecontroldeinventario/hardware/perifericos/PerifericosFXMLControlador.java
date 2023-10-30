@@ -4,10 +4,12 @@
  */
 package sistemadecontroldeinventario.hardware.perifericos;
 
+import Modelo.ConexionBaseDeDatos;
 import Modelo.DAO.PerifericoDAO;
 import Modelo.POJO.Periferico;
 import Utilidades.Utilidades;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -49,6 +51,7 @@ public class PerifericosFXMLControlador implements Initializable {
     private TextField tfBusqueda;
     @FXML
     private TableView<Periferico> tvPerifericos;
+    
 
     /**
      * Initializes the controller class.
@@ -68,6 +71,37 @@ public class PerifericosFXMLControlador implements Initializable {
 
     @FXML
     private void eliminarPeriferico(ActionEvent event) {
+        Periferico perifericoEliminacion = verificarPerifericoSeleccionado();
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            if(perifericoEliminacion != null){
+            boolean eliminar = Utilidades.mostrarDialogoConfirmacion("Eliminar registro de periferico", 
+                    "¿Deseas eliminar la información del periferico?");
+            if(eliminar)
+                try{
+                    boolean resultado = PerifericoDAO.eliminarPeriferico(perifericoEliminacion.getIdPeriferico());
+                    if(resultado == true){
+                        cargarTabla(); 
+                    }else{
+                        Utilidades.mostrarAlertaSimple("Operacion fallida", 
+                                "La eliminación del periferico ha fallado",
+                                Alert.AlertType.ERROR);
+                    }
+                }catch(SQLException sqlException){
+                    Utilidades.mostrarAlertaSimple("ERROR", 
+                            "Algo ocurrió mal al intentar recuperar los perifericos registrados: " + sqlException.getMessage(),
+                            Alert.AlertType.ERROR);
+                }
+            }else{
+                Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
+                   "Necesita seleccionar un objeto a eliminar", 
+                    Alert.AlertType.WARNING);
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion",
+                    "No hay conexión con la base de datos.",
+                    Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -141,6 +175,11 @@ public class PerifericosFXMLControlador implements Initializable {
             sortedRefaccion.comparatorProperty().bind(tvPerifericos.comparatorProperty());
             tvPerifericos.setItems(sortedRefaccion);
         }
+    }
+    
+    private Periferico verificarPerifericoSeleccionado(){
+        int filaSeleccionada = tvPerifericos.getSelectionModel().getFocusedIndex();
+        return filaSeleccionada >= 0 ? listaPerifericos.get(filaSeleccionada) : null;
     }
     
     public void inicializarVentana(String cargoUsuario){

@@ -30,6 +30,8 @@ public class MainSoftwareFXMLControlador implements Initializable {
     @FXML
     private Label lbFondo;
 
+    private String cargoUsuario;
+    
     /**
      * Initializes the controller class.
      */
@@ -76,6 +78,10 @@ public class MainSoftwareFXMLControlador implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
     }
     
 }

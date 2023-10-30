@@ -267,4 +267,41 @@ public class HardwareDAO {
         
         return resultadoOperacion;
     }
+    
+    public static boolean asignarEquipoComputoASoftware(int idHardware, int idSoftware) throws SQLException{
+        Utilidades mensajeRespuesta = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = false;
+        if(conexionBD != null){
+            try{
+                String consultaRelacionHardwareSoftware = "INSERT INTO hardwaresoftware(idHardware,idSoftware)  VALUES (?,?); ";
+                PreparedStatement consultaHardwareSoftware = conexionBD.prepareStatement(consultaRelacionHardwareSoftware);
+                consultaHardwareSoftware.setInt(1, idHardware);
+                consultaHardwareSoftware.setInt(2, idSoftware);
+                int filasAfectadas = consultaHardwareSoftware.executeUpdate();
+                 
+                if(filasAfectadas > 0){
+                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
+                            "Se asignó el software al equipo de cómputo correctamente.",
+                            Alert.AlertType.INFORMATION);
+                    resultado = true;
+                }else{
+                    mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
+                            "No se pudo asignar el software al equipo de cómputo.",
+                            Alert.AlertType.ERROR);
+                }
+            }catch(SQLException sqlException){
+                mensajeRespuesta.mostrarAlertaSimple("Error",
+                        "Algo ocurrió mal al intentar recuperar los software o hardware registrados: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
+                    "No hay conexión con la base de datos.",
+                    Alert.AlertType.ERROR);
+        }
+        return resultado;
+    }
 }
