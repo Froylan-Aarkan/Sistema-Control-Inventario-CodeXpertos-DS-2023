@@ -4,17 +4,28 @@
  */
 package sistemadecontroldeinventario.software;
 
+import Modelo.ConexionBaseDeDatos;
+import Modelo.DAO.HardwareDAO;
+import Modelo.DAO.SoftwareDAO;
 import Modelo.POJO.Hardware;
 import Modelo.POJO.Software;
+import Utilidades.Utilidades;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -36,6 +47,13 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
     private ComboBox<Hardware> cbHardware;
     @FXML
     private Label lbHardware;
+    
+    public ObservableList<Software> listaSoftware;
+    
+    public ObservableList<Hardware> listaHardware;
+    
+    private String cargoUsuario;
+    
 
     /**
      * Initializes the controller class.
@@ -43,6 +61,7 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarComboBox();
     }    
 
     @FXML
@@ -53,10 +72,114 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void asignarHardwareSoftware(ActionEvent event) {
+        try{
+            if(camposValidos()){
+
+                Software softwareAsignacion = verificarSoftwareSeleccionado();
+                Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+                if(conexionBD != null){
+                    if(softwareAsignacion != null){
+                        boolean confirmacion = Utilidades.mostrarDialogoConfirmacion("Asignar software",
+                                "¿Desea asignar el software al equipo de cómputo?");
+                        if(confirmacion){
+                            HardwareDAO.asignarEquipoComputoASoftware(
+                                    cbHardware.getSelectionModel().getSelectedItem().getIdHardware(),
+                                    softwareAsignacion.getIdSoftware());
+                            cargarDatosTabla(cbHardware.getSelectionModel().getSelectedItem().getIdHardware());
+                        }else{
+                            Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
+                               "Necesita seleccionar un software a relacionar", 
+                                Alert.AlertType.WARNING);
+                        }
+                    }
+                }
+            }
+        }catch(SQLException e){
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
     private void cbNumeroSerieHardware(ActionEvent event) {
+        try{
+            Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+            if(conexionBD != null){
+                configurarTabla();
+                boolean tablaDatos = cargarDatosTabla(cbHardware.getSelectionModel().getSelectedItem().getIdHardware());
+                if(!tablaDatos){
+                    Utilidades.mostrarAlertaSimple("No hay software", 
+                        "No se encontraron software disponibles para la asignación.", 
+                        Alert.AlertType.ERROR);
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    private void inicializarComboBox(){
+        try{
+            listaHardware = FXCollections.observableArrayList();
+            ArrayList<Hardware> hardwareBD = HardwareDAO.recuperarTodoHardware();
+            
+            listaHardware.addAll(hardwareBD);
+            
+            for (Hardware hardware : listaHardware) {
+                cbHardware.setItems(listaHardware);
+            }
+        }catch(SQLException e){
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    
+    private void configurarTabla(){
+        tcNombre.setCellValueFactory(new PropertyValueFactory ("nombre"));
+        tcArquitectura.setCellValueFactory(new PropertyValueFactory("arquitectura"));
+        tcPeso.setCellValueFactory(new PropertyValueFactory("peso"));
+    }
+    
+    private boolean cargarDatosTabla(int idHardware){
+        boolean resultado = false;
+        try{
+            listaSoftware = FXCollections.observableArrayList();
+            ArrayList<Software> softwareBD = SoftwareDAO.recuperarTodoHardwareSinSoftware(idHardware);
+            if(!softwareBD.isEmpty()){
+                listaSoftware.addAll(softwareBD);
+                tvSoftware.setItems(listaSoftware);
+                resultado = true;
+            }else{
+                Utilidades.mostrarAlertaSimple("No hay software", 
+                        "No se encotnraron software disponibles para la asignación.", 
+                        Alert.AlertType.ERROR);
+                
+            }
+        }catch(SQLException | NullPointerException e){
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+        return resultado;
+    }
+    
+    private Software verificarSoftwareSeleccionado(){
+        int filaSeleccionada = tvSoftware.getSelectionModel().getFocusedIndex();
+        return filaSeleccionada >= 0 ? listaSoftware.get(filaSeleccionada) : null;
+    }
+    
+    private boolean camposValidos(){
+        boolean sonValidos = true;
         
+        if(cbHardware.getSelectionModel().isEmpty()){
+            lbHardware.setText("No se puede dejar vacío.");
+            cbHardware.setStyle("-fx-border-color: red");
+            sonValidos = false;
+        }else{
+            lbHardware.setText("");
+            cbHardware.setStyle("");
+        }
+
+        return sonValidos;
+    }
+    
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
     }
 }

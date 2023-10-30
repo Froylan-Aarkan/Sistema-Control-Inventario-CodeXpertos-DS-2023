@@ -194,5 +194,42 @@ public class SoftwareDAO {
         return resultado;
     }
     
-    
+    public static ArrayList<Software> recuperarTodoHardwareSinSoftware(int idHardware) throws SQLException{
+        ArrayList<Software> softwareBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT s.idSoftware, s.nombre, s.peso, s.arquitectura " +
+                                "FROM software s WHERE s.idSoftware "
+                                                + "NOT IN (SELECT Software_idSoftware "
+                                                + "FROM hardwaresoftware "
+                                                + "WHERE Hardware_idHardware = ?);";
+                PreparedStatement consultaSoftware = conexionBD.prepareStatement(consulta);
+                consultaSoftware.setInt(1, idHardware);
+                ResultSet resultadoConsulta = consultaSoftware.executeQuery();
+                softwareBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Software softwareTemporal = new Software();
+                    softwareTemporal.setIdSoftware(resultadoConsulta.getInt("idSoftware"));
+                    softwareTemporal.setNombre(resultadoConsulta.getString("nombre"));
+                    softwareTemporal.setPeso(resultadoConsulta.getString("peso"));
+                    softwareTemporal.setArquitectura(resultadoConsulta.getInt("arquitectura"));
+                    softwareBD.add(softwareTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar recuperar los software: " + e.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
+                    Alert.AlertType.ERROR);
+        }
+        return softwareBD;
+    }
 }

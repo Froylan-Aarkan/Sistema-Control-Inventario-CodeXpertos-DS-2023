@@ -44,6 +44,8 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
     private Label lbArquitectura;
     
     private boolean esEdicion;
+    
+    private String cargoUsuario;
 
     private Software softwareModificado;
     
@@ -200,4 +202,7 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
         cbArquitectura.getSelectionModel().select(index);
     }
     
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }
