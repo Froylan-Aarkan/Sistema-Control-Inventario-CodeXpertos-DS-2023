@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
    <children>
-      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.56" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/Logo_de_la_Universidad_Veracruzana.svg.png" />
          </image>
       </ImageView>
-      <Label layoutX="375.0" layoutY="506.0" opacity="0.56" text="Sistema de control de" textFill="#004aad">
+      <Label layoutX="375.0" layoutY="506.0" opacity="0.14" text="Sistema de control de" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
       </Label>
-      <Label layoutX="541.0" layoutY="576.0" opacity="0.56" text="inventario" textFill="#004aad">
+      <Label layoutX="541.0" layoutY="576.0" opacity="0.14" text="inventario" textFill="#004aad">
          <font>
             <Font size="64.0" />
          </font>
@@ -78,7 +77,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="892.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaCentrosComputo" opacity="0.0" prefHeight="288.0" prefWidth="350.0" text="Centros de Cómputo">
+      <Button fx:id="btnCentrosComputo" layoutX="892.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaCentrosComputo" opacity="0.0" prefHeight="288.0" prefWidth="350.0" text="Centros de Cómputo">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
