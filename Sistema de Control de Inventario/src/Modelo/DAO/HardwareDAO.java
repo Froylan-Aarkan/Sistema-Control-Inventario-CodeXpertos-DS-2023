@@ -47,7 +47,7 @@ public class HardwareDAO {
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
         }
         return hardwareBD;
     }
@@ -58,7 +58,7 @@ public class HardwareDAO {
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "INSERT INTO hardware (modelo, marca, numeroSerie, procesador, almacenamiento, ram, direccionMac, direccionIp, sistemaOperativo, arquitectura, grafica, tarjetaMadre, estado, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String consulta = "INSERT INTO hardware (modelo, marca, numeroSerie, procesador, almacenamiento, ram, direccionMac, direccionIp, sistemaOperativo, arquitectura, grafica, tarjetaMadre, estado, fechaIngreso, posicion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 
                 PreparedStatement sentenciaHardware = conexionBD.prepareStatement(consulta);
                 sentenciaHardware.setString(1, equipoComputoNuevo.getModelo());
@@ -73,11 +73,13 @@ public class HardwareDAO {
                 sentenciaHardware.setInt(10, equipoComputoNuevo.getArquitectura());
                 sentenciaHardware.setString(11, equipoComputoNuevo.getGrafica());
                 sentenciaHardware.setString(12, equipoComputoNuevo.getTarjetaMadre());
-                sentenciaHardware.setString(13, "Funcional");
+                sentenciaHardware.setString(13, "Funcional");                
                 
                 LocalDateTime fechaHoraActual = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 sentenciaHardware.setString(14, fechaHoraActual.format(formatter).toString());
+                
+                sentenciaHardware.setString(15, "No aplica.");
                 
                 int filasAfectadas = sentenciaHardware.executeUpdate();
                 
@@ -90,7 +92,7 @@ public class HardwareDAO {
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
         }
         
         return resultadoOperacion;
@@ -133,7 +135,7 @@ public class HardwareDAO {
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
         }
         
         return equipoComputoBusqueda;
@@ -158,7 +160,7 @@ public class HardwareDAO {
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde.", Alert.AlertType.ERROR);
         }
         
         return resultadoOperacion;
@@ -189,7 +191,7 @@ public class HardwareDAO {
            
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultadoOperacion;
@@ -222,8 +224,84 @@ public class HardwareDAO {
                 conexionBD.close();
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde..", Alert.AlertType.ERROR);
         }
         return hardwareBD;
+    }
+    
+    public static boolean modificarEquipoDeComputo(Hardware equipoComputo) throws SQLException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "UPDATE hardware SET marca = ?, modelo = ?, numeroSerie = ?, procesador = ?, arquitectura = ?, tarjetaMadre = ?, sistemaOperativo = ?, grafica = ?, ram = ?, direccionMac = ?, direccionIp = ?, almacenamiento = ?, CentroComputo_idCentroComputo = ?, posicion = ? WHERE idHardware = ?";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                consultaHardware.setString(1, equipoComputo.getMarca());
+                consultaHardware.setString(2, equipoComputo.getModelo());
+                consultaHardware.setString(3, equipoComputo.getNumeroSerie());
+                consultaHardware.setString(4, equipoComputo.getProcesador());
+                consultaHardware.setInt(5, equipoComputo.getArquitectura());
+                consultaHardware.setString(6, equipoComputo.getTarjetaMadre());
+                consultaHardware.setString(7, equipoComputo.getSistemaOperativo());
+                consultaHardware.setString(8, equipoComputo.getGrafica());
+                consultaHardware.setFloat(9, equipoComputo.getRam());
+                consultaHardware.setString(10, equipoComputo.getDireccionMac());
+                consultaHardware.setString(11, equipoComputo.getDireccionIp());
+                consultaHardware.setFloat(12, equipoComputo.getAlmacenamiento());
+                consultaHardware.setInt(13, equipoComputo.getIdCentroComputo());
+                consultaHardware.setString(14, equipoComputo.getPosicion());
+                consultaHardware.setInt(15, equipoComputo.getIdHardware());
+                
+                int filasAfectadas = consultaHardware.executeUpdate();
+                if(filasAfectadas > 0){
+                    resultadoOperacion = true;
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar modificar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde..", Alert.AlertType.ERROR);
+        }
+        
+        return resultadoOperacion;
+    }
+    
+    public static boolean asignarEquipoComputoASoftware(int idHardware, int idSoftware) throws SQLException{
+        Utilidades mensajeRespuesta = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultado = false;
+        if(conexionBD != null){
+            try{
+                String consultaRelacionHardwareSoftware = "INSERT INTO hardwaresoftware(Hardware_idHardware,Software_idSoftware)  VALUES (?,?); ";
+                PreparedStatement consultaHardwareSoftware = conexionBD.prepareStatement(consultaRelacionHardwareSoftware);
+                consultaHardwareSoftware.setInt(1, idHardware);
+                consultaHardwareSoftware.setInt(2, idSoftware);
+                int filasAfectadas = consultaHardwareSoftware.executeUpdate();
+                 
+                if(filasAfectadas > 0){
+                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
+                            "Se asignó el software al equipo de cómputo correctamente.",
+                            Alert.AlertType.INFORMATION);
+                    resultado = true;
+                }else{
+                    mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
+                            "No se pudo asignar el software al equipo de cómputo.",
+                            Alert.AlertType.ERROR);
+                }
+            }catch(SQLException sqlException){
+                mensajeRespuesta.mostrarAlertaSimple("Error",
+                        "Algo ocurrió mal al intentar recuperar los software o hardware registrados: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
+                    "No hay conexión con la base de datos.",
+                    Alert.AlertType.ERROR);
+        }
+        return resultado;
     }
 }

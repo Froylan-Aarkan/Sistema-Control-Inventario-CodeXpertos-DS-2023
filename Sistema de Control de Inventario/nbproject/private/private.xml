@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/Modelo/DAO/SoftwareDAO.java</file>
-            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/ConsultarCentroDeComputoController.java</file>
-            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/VentanaPrincipalFXMLControlador.java</file>
-            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/ModificarCentroDeComputoController.java</file>
+            <file>file:/D:/Coding/Repositorios%20GitHub/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/hardware/perifericos/PerifericosFXMLControlador.java</file>
+            <file>file:/D:/Coding/Repositorios%20GitHub/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Modelo/DAO/PerifericoDAO.java</file>
+            <file>file:/D:/Coding/Repositorios%20GitHub/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/hardware/perifericos/ModificarPerifericoFXMLControlador.java</file>
+            <file>file:/D:/Coding/Repositorios%20GitHub/Sistema-de-Control-de-Inventario-CodeXpertos-Desarrollo-de-Software-2023/Sistema%20de%20Control%20de%20Inventario/src/Modelo/DAO/HardwareDAO.java</file>
         </group>
     </open-files>
 </project-private>

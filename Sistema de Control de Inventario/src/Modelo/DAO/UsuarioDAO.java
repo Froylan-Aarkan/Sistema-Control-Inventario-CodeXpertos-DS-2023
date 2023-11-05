@@ -84,7 +84,7 @@ public class UsuarioDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return usuarioBD;
@@ -117,7 +117,7 @@ public class UsuarioDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return usuarioTemporal;
@@ -152,7 +152,7 @@ public class UsuarioDAO {
 
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultadoOperacion;
@@ -186,7 +186,7 @@ public class UsuarioDAO {
 
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultadoOperacion;
@@ -216,7 +216,7 @@ public class UsuarioDAO {
            
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultadoOperacion;

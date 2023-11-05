@@ -44,8 +44,11 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
     private Label lbArquitectura;
     
     private boolean esEdicion;
+    
+    private String cargoUsuario;
 
     private Software softwareModificado;
+    
     ObservableList<String> ListaArquitecturas = FXCollections
             .observableArrayList("32", "64", "86");
     
@@ -63,43 +66,50 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void modificarSoftware(ActionEvent event) {
-        /*Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
-        if(conexionBD != null){
-            if(softwareEliminacion != null){
-            boolean eliminar = Utilidades.mostrarDialogoConfirmacion("Eliminar registro de software", 
-                    "¿Deseas eliminar la información del software?");
-            if(eliminar)
-                try{
-                    boolean resultado = SoftwareDAO.eliminarSoftware(softwareEliminacion.getIdSoftware());
-                    if(resultado == true){
-                        cargarDatosTabla(); 
-                    }else{
-                        Utilidades.mostrarAlertaSimple("Operacion fallida", 
-                                "La eliminación del software ha fallado",
-                                Alert.AlertType.ERROR);
+        if(camposValidos()){
+            String arquitectura = String.valueOf(softwareModificado.getArquitectura());
+            if(tfNombre.getText() != softwareModificado.getNombre()
+                || tfPeso.getText() != softwareModificado.getPeso()
+                || cbArquitectura.getSelectionModel().getSelectedItem() != arquitectura){
+                if(Utilidades.mostrarDialogoConfirmacion("Modificar software", "¿Desea modificar el software?")){
+                    Software softwareModificadoNuevo = new Software();
+                    
+                    softwareModificadoNuevo.setIdSoftware(softwareModificado.getIdSoftware());
+                    softwareModificadoNuevo.setNombre(tfNombre.getText());
+                    softwareModificadoNuevo.setPeso(tfPeso.getText());
+                    
+                    if(cbArquitectura.getSelectionModel().isSelected(0)){
+                        softwareModificadoNuevo.setArquitectura(32);
+                    }else if (cbArquitectura.getSelectionModel().isSelected(1)){
+                        softwareModificadoNuevo.setArquitectura(64);
+                    }else if(cbArquitectura.getSelectionModel().isSelected(2)){
+                        softwareModificadoNuevo.setArquitectura(86);
                     }
-                }catch(SQLException sqlException){
-                    Utilidades.mostrarAlertaSimple("ERROR", 
-                            "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
-                            Alert.AlertType.ERROR);
+                    
+                    try{
+                        boolean repetido = SoftwareDAO.verificarSoftwareRepetido(softwareModificadoNuevo.getNombre(),
+                                softwareModificadoNuevo.getPeso(), softwareModificadoNuevo.getArquitectura());
+                        if(!repetido){
+                        
+                            if(SoftwareDAO.modificarSoftware(softwareModificadoNuevo)){
+                                Utilidades.mostrarAlertaSimple("Equipo modificado", 
+                                        "Se modificó el equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
+                        
+                                Stage stage = (Stage) tfNombre.getScene().getWindow();
+                                stage.close();
+                            }
+                        }
+                    } catch (SQLException e) {
+                        Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
+                    }
                 }
             }else{
-                Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                   "Necesita seleccionar un objeto a eliminar", 
-                    Alert.AlertType.WARNING);
+                Utilidades.mostrarAlertaSimple("Software repetido",
+                            "El software que intenta registrar ya se encuentra registrado en la base de datos.",
+                            Alert.AlertType.INFORMATION);
             }
-        }else{
-            Utilidades.mostrarAlertaSimple("Error de conexion",
-                    "No hay conexión con la base de datos.",
-                    Alert.AlertType.ERROR);
-        }*/
+        }
     }
-    
-    private void mostrarDatosSoftwareModificar(Software softwareEdicion){
-        
-    }
-    
-    
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
@@ -122,17 +132,34 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
             tfNombre.setStyle("");
         }
    
-        if(tfPeso.getText().equals("")){
+        String[] unidadesDeAlmacenamiento = {"kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"};
+        
+        if(tfPeso.getText().isEmpty()){
             lbPeso.setText("No se puede dejar vacío.");
             tfPeso.setStyle("-fx-border-color: red");
             sonValidos = false;
-        }else if(!tfPeso.getText().toLowerCase().endsWith("b")){
+        }else if(tfPeso.getText().toLowerCase().endsWith("b")){
+            for (String unidad : unidadesDeAlmacenamiento) {
+                if (tfPeso.getText().toLowerCase().endsWith(unidad)) {
+                    lbPeso.setText("");
+                    tfPeso.setStyle("");
+                    sonValidos = true;
+                    break;
+                }
+            }
+            if (!sonValidos) {
+                lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
+                tfPeso.setStyle("-fx-border-color: red");
+                sonValidos = false;
+            }else{
+                lbPeso.setText("");
+                tfPeso.setStyle("");
+                sonValidos = true;
+            }
+        }else{
             lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
             tfPeso.setStyle("-fx-border-color: red");
             sonValidos = false;
-        }else{
-            lbPeso.setText("");
-            tfPeso.setStyle("");
         }
         
 
@@ -147,33 +174,35 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
         
         return sonValidos;
     }
-    
-    private boolean esNumerico(String cadena){
-        try {
-            Float.parseFloat(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-    }
 
-    void inicializaValores(boolean b, Software softwareModificar) {
+    void inicializaValores(Software softwareModificar) {
         esEdicion = softwareModificar != null;
         if(esEdicion){
             cargarSoftwareModificar(softwareModificar);
         }
     }
     
-    private void cargarSoftwareModificar(Software softwareEditado){
-        tfNombre.setText(softwareEditado.getNombre());
-        tfPeso.setText(softwareEditado.getPeso());
+    private void cargarSoftwareModificar(Software softwareModificado){
+        this.softwareModificado = softwareModificado;
+        tfNombre.setText(softwareModificado.getNombre());
+        tfPeso.setText(softwareModificado.getPeso());
+        int arquitectura = softwareModificado.getArquitectura();
+        int index = 0;
         
-        /*if(cbArquitectura.getSelectionModel().isSelected(0))
-            
-        cbArquitectura.setItems(ListaArquitecturas);
-        ObservableList<String> itemsArquitectura = cbArquitectura.getItems();
-        String arquitecturaSeleccionada = Integer.toString(softwareEditado.getArquitectura());
-        cbArquitectura.getSelectionModel().select(itemsArquitectura.indexOf(arquitecturaSeleccionada));*/
+        switch (arquitectura){
+            case 32: 
+                break;
+            case 64:
+                index = 1;
+                break;
+            case 86:
+                index = 2;
+                break;
+        }        
+        cbArquitectura.getSelectionModel().select(index);
     }
     
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

@@ -47,7 +47,7 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return softwareBD;
@@ -83,7 +83,7 @@ public class SoftwareDAO {
             }
         }else{
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
-                    "No hay conexión con la base de datos.",
+                    "No hay conexión con la base de datos, inténtelo más tarde.",
                     Alert.AlertType.ERROR);
         }
         return resultado;
@@ -95,9 +95,9 @@ public class SoftwareDAO {
         boolean resultado = false;
         if(conexionBD != null){
             try {
-                String sentencia = "INSERT INTO software(nombre,peso,arquitectura)"
+                String consultaRegistrar = "INSERT INTO software(nombre,peso,arquitectura)"
                         + " VALUES (?,?,?);";
-                PreparedStatement sentenciaNuevoSoftware = conexionBD.prepareStatement(sentencia);
+                PreparedStatement sentenciaNuevoSoftware = conexionBD.prepareStatement(consultaRegistrar);
                 sentenciaNuevoSoftware.setString(1, softwareNuevo.getNombre());
                 sentenciaNuevoSoftware.setString(2, softwareNuevo.getPeso());
                 sentenciaNuevoSoftware.setInt(3, softwareNuevo.getArquitectura());
@@ -115,7 +115,7 @@ public class SoftwareDAO {
             }
         }else{
             mensajeRespuesta.mostrarAlertaSimple("Error de conexion",
-                    "No hay conexión con la base de datos.",
+                    "No hay conexión con la base de datos, inténtelo más tarde.",
                     Alert.AlertType.ERROR);
         }
         
@@ -128,18 +128,17 @@ public class SoftwareDAO {
         boolean resultado = false;
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idSoftware,nombre,peso,arquitectura FROM software "
+                String consultaVerificar = "SELECT idSoftware,nombre,peso,arquitectura FROM software "
                                 + "WHERE nombre = ? AND peso = ? AND arquitectura = ?;";
                 
-                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consulta);
+                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consultaVerificar);
                 prepararVerificarSoftware.setString(1, nombre);
                 prepararVerificarSoftware.setString(2, peso);
                 prepararVerificarSoftware.setInt(3, arquitectura);
                 ResultSet numeroFilas = prepararVerificarSoftware.executeQuery();
                 if(numeroFilas.next()){
-                    mensajeRespuesta.mostrarAlertaSimple("Software repetido",
-                            "El software que intenta registrar ya se encuentra registrado en la base de datos.",
-                            Alert.AlertType.INFORMATION);
+                    Utilidades.mostrarAlertaSimple("Software repetido", 
+                                "El software ya esta registrado.", Alert.AlertType.INFORMATION);
                     resultado = true;
                 }
             }catch(SQLException sqlException){
@@ -151,7 +150,7 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
         }
         return resultado;
@@ -164,10 +163,9 @@ public class SoftwareDAO {
         
         if(conexionBaseDatos != null){
             try{
-                String sentencia = "UPDATE software "
-                        + "SET nombre = ?, peso = ?, arquitectura = ? "
-                        + "WHERE idAlumno = ?";
-                PreparedStatement prepararSentencia = conexionBaseDatos.prepareStatement(sentencia);
+                String sentenciaModificar = "UPDATE software SET nombre = ?, peso = ?, arquitectura = ? "
+                        + "WHERE idSoftware = ?; ";
+                PreparedStatement prepararSentencia = conexionBaseDatos.prepareStatement(sentenciaModificar);
                 prepararSentencia.setString(1, softwareModificar.getNombre());
                 prepararSentencia.setString(2, softwareModificar.getPeso());
                 prepararSentencia.setInt(3, softwareModificar.getArquitectura());
@@ -175,21 +173,9 @@ public class SoftwareDAO {
                 prepararSentencia.setInt(4, softwareModificar.getIdSoftware());
                 
                 int numeroFilas = prepararSentencia.executeUpdate();
-                /*boolean repetido = verificarSoftwareRepetido(softwareModificar);
-                if(repetido){
-                    resultado = false;
-                }else{
-                    if(numeroFilas > 0){
-                        mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
-                                "Se modificó el software correctamente.",
-                                Alert.AlertType.INFORMATION);
-                    }else{
-                        mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
-                                "No se pudo modificar el software.",
-                                Alert.AlertType.ERROR);
-                        resultado = false;
-                    }
-                }*/
+                if(numeroFilas > 0){
+                    resultado = true;
+                }
             }catch(SQLException sqlException){
                 mensajeRespuesta.mostrarAlertaSimple("Error",
                         "Algo ocurrió mal al intentar modificar los software: " + sqlException.getMessage(),
@@ -200,11 +186,50 @@ public class SoftwareDAO {
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", 
-                    "No hay conexion con la base de datos.", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
                     Alert.AlertType.ERROR);
             resultado = false;
         }
    
         return resultado;
+    }
+    
+    public static ArrayList<Software> recuperarTodoHardwareSinSoftware(int idHardware) throws SQLException{
+        ArrayList<Software> softwareBD = null;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT s.idSoftware, s.nombre, s.peso, s.arquitectura " +
+                                "FROM software s WHERE s.idSoftware "
+                                                + "NOT IN (SELECT Software_idSoftware "
+                                                + "FROM hardwaresoftware "
+                                                + "WHERE Hardware_idHardware = ?);";
+                PreparedStatement consultaSoftware = conexionBD.prepareStatement(consulta);
+                consultaSoftware.setInt(1, idHardware);
+                ResultSet resultadoConsulta = consultaSoftware.executeQuery();
+                softwareBD = new ArrayList<>();
+                
+                while(resultadoConsulta.next()){
+                    Software softwareTemporal = new Software();
+                    softwareTemporal.setIdSoftware(resultadoConsulta.getInt("idSoftware"));
+                    softwareTemporal.setNombre(resultadoConsulta.getString("nombre"));
+                    softwareTemporal.setPeso(resultadoConsulta.getString("peso"));
+                    softwareTemporal.setArquitectura(resultadoConsulta.getInt("arquitectura"));
+                    softwareBD.add(softwareTemporal);
+                }
+                
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar recuperar los software: " + e.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
+                    Alert.AlertType.ERROR);
+        }
+        return softwareBD;
     }
 }

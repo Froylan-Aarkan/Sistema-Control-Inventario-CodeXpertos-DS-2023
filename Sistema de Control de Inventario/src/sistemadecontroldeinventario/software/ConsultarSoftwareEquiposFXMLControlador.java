@@ -43,11 +43,10 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     private TableColumn tcPosicion;
     @FXML
     private TableColumn tcEstado;
-    @FXML
-    private TableColumn tcId;
-    @FXML
-    private Label lblSoftware;
+
     private int idConsulta;
+    
+    private String cargoUsuario;
     
 
     /**
@@ -115,4 +114,9 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
          cargarTabla();
         
     }
+    
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
+    
 }
