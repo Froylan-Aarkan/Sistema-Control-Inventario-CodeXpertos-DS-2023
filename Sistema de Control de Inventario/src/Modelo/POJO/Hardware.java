@@ -176,4 +176,9 @@ public class Hardware {
     public void setCentroComputo(String centroComputo) {
         this.centroComputo = centroComputo;
     }
+
+    @Override
+    public String toString() {
+        return this.numeroSerie;
+    }
 }
