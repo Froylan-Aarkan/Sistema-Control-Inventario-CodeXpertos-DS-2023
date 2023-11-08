@@ -140,7 +140,7 @@ public class UsuarioFXMLControlador implements Initializable {
                     controlador.inicializarUsuario(usuarioSeleccionado);
 
                     stageSoftware.showAndWait();
-
+                    cargarDatosTabla();
             }catch(IOException e){
                 e.getMessage();
             }
@@ -161,7 +161,7 @@ public class UsuarioFXMLControlador implements Initializable {
                 stageSoftware.initModality(Modality.APPLICATION_MODAL);
 
                 stageSoftware.showAndWait();
-              
+                cargarDatosTabla();
         }catch(IOException e){
             e.getMessage();
         }
