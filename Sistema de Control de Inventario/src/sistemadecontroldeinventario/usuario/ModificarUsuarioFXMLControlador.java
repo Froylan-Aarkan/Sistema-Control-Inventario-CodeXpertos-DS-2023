@@ -53,6 +53,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     
     private File archivoFoto;
     private String usuarioModificar;
+    private String correoAntiguo;
 
     /**
      * Initializes the controller class.
@@ -60,21 +61,44 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        
     }    
 
     @FXML
     private void modificarUsuario(ActionEvent event) {
         if(camposValidos()){
-            Usuario usuarioRegistro = new Usuario();
+            if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
+                System.out.println("No se valida correo");
+                Usuario usuarioRegistro = new Usuario();
                 usuarioRegistro.setNombreCompleto(tfnombre.getText());
                 usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
                 usuarioRegistro.setCargo(tfCargo.getText());
                 usuarioRegistro.setContrasenia(tfContrasenia.getText());
 
                 guardarModificaciónUsuario(usuarioRegistro); 
+            }else{
+                System.out.println("Se valida correo");
+                try{
+                    boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                    if(!repetido){
+                        Usuario usuarioRegistro = new Usuario();
+                        usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                        usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                        usuarioRegistro.setCargo(tfCargo.getText());
+                        usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                        
+                        guardarModificaciónUsuario(usuarioRegistro);
+                    }    
+                }catch(SQLException e){
+                    e.getMessage();
+                }
+            }
         }else{
             Utilidades.mostrarAlertaSimple("Campos vacios", "No se pueden dejar campos vacios", Alert.AlertType.WARNING);
         }
+        
+        
     }
 
     private void guardarModificaciónUsuario(Usuario usuario){
@@ -124,6 +148,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
             Usuario usuario = UsuarioDAO.recuperarTodoUsuarioPorCorreo(usuarioSeleccionado);
             tfnombre.setText(usuario.getNombreCompleto());
             tfCorreo.setText(usuario.getCorreoInstitucional());
+            correoAntiguo = usuario.getCorreoInstitucional();
             tfContrasenia.setText(usuario.getContrasenia());
             tfCargo.setText(usuario.getCargo());
             
@@ -132,7 +157,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                 ivFoto.setImage(img);
             }
             
-            tfCorreo.setDisable(true);
+            //tfCorreo.setDisable(true);
         }catch(SQLException e){
             e.getMessage();
         }
