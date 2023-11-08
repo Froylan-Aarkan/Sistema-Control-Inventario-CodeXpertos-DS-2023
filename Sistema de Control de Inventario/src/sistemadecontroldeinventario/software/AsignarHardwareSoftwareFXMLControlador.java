@@ -148,10 +148,7 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
                 tvSoftware.setItems(listaSoftware);
                 resultado = true;
             }else{
-                Utilidades.mostrarAlertaSimple("No hay software", 
-                        "No se encotnraron software disponibles para la asignación.", 
-                        Alert.AlertType.ERROR);
-                
+                tvSoftware.getItems().clear();
             }
         }catch(SQLException | NullPointerException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
