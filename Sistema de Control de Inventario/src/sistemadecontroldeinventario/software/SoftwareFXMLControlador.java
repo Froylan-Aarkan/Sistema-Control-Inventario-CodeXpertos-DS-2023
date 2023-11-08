@@ -98,28 +98,22 @@ public class SoftwareFXMLControlador implements Initializable {
             Software softwareEliminacion = verificarSoftwareSeleccionado();
             Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
             if(conexionBD != null){
-                if(softwareEliminacion != null){
-                boolean eliminar = Utilidades.mostrarDialogoConfirmacion("Eliminar registro de software", 
-                        "¿Deseas eliminar la información del software?");
-                if(eliminar)
-                    try{
-                        boolean resultado = SoftwareDAO.eliminarSoftware(softwareEliminacion.getIdSoftware());
-                        if(resultado == true){
-                            cargarDatosTabla(); 
-                        }else{
-                            Utilidades.mostrarAlertaSimple("Operacion fallida", 
-                                    "La eliminación del software ha fallado",
+                if(softwareEliminacion != null){                
+                    if(Utilidades.mostrarDialogoConfirmacion("Eliminar registro de software", "¿Deseas eliminar la información del software?")){
+                        try{
+                            if(SoftwareDAO.eliminarSoftware(softwareEliminacion.getIdSoftware())){
+                                cargarDatosTabla(); 
+                            }else{
+                                Utilidades.mostrarAlertaSimple("Operacion fallida", 
+                                        "La eliminación del software ha fallado",
+                                        Alert.AlertType.ERROR);
+                            }
+                        }catch(SQLException sqlException){
+                            Utilidades.mostrarAlertaSimple("ERROR", 
+                                    "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
                                     Alert.AlertType.ERROR);
                         }
-                    }catch(SQLException sqlException){
-                        Utilidades.mostrarAlertaSimple("ERROR", 
-                                "Algo ocurrió mal al intentar recuperar los software registrados: " + sqlException.getMessage(),
-                                Alert.AlertType.ERROR);
                     }
-                }else{
-                    Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                       "Necesita seleccionar un objeto a eliminar", 
-                        Alert.AlertType.WARNING);
                 }
             }else{
                 Utilidades.mostrarAlertaSimple("Error de conexion",
@@ -167,15 +161,9 @@ public class SoftwareFXMLControlador implements Initializable {
             Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
             if(conexionBD != null){
                 if(softwareModificacion != null){
-                boolean actualizar = Utilidades.mostrarDialogoConfirmacion("Modificar registro de software", 
-                        "¿Deseas modificar la información del software?");
-                    if(actualizar){
+                    if(Utilidades.mostrarDialogoConfirmacion("Modificar registro de software","¿Deseas modificar la información del software?")){
                         abrirFormularioSoftwareModificar(softwareModificacion);
                         cargarDatosTabla();
-                    }else{
-                        Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                           "Necesita seleccionar un objeto a modificar", 
-                            Alert.AlertType.WARNING);
                     }
                 }
             }else{
