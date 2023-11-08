@@ -64,13 +64,17 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
 
     @FXML
     private void modificarUsuario(ActionEvent event) {
-        Usuario usuarioRegistro = new Usuario();
-            usuarioRegistro.setNombreCompleto(tfnombre.getText());
-            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-            usuarioRegistro.setCargo(tfCargo.getText());
-            usuarioRegistro.setContrasenia(tfContrasenia.getText());
+        if(camposValidos()){
+            Usuario usuarioRegistro = new Usuario();
+                usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                usuarioRegistro.setCargo(tfCargo.getText());
+                usuarioRegistro.setContrasenia(tfContrasenia.getText());
 
-            guardarModificaciónUsuario(usuarioRegistro); 
+                guardarModificaciónUsuario(usuarioRegistro); 
+        }else{
+            Utilidades.mostrarAlertaSimple("Campos vacios", "No se pueden dejar campos vacios", Alert.AlertType.WARNING);
+        }
     }
 
     private void guardarModificaciónUsuario(Usuario usuario){
@@ -127,10 +131,34 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                 Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
                 ivFoto.setImage(img);
             }
+            
+            tfCorreo.setDisable(true);
         }catch(SQLException e){
             e.getMessage();
         }
         
+    }
+    
+    private boolean camposValidos(){
+        boolean sonValidos = true;
+        
+        if(tfnombre.getText().equals("")){
+            sonValidos = false;
+        }
+   
+        if(tfCorreo.getText().equals("")){
+            sonValidos = false;
+        }
+        
+        if(tfContrasenia.getText().equals("")){
+            sonValidos = false;
+        }
+        
+        if(tfCargo.getText().equals("")){
+            sonValidos = false;
+        }
+
+        return sonValidos;
     }
     
 }

@@ -221,4 +221,36 @@ public class UsuarioDAO {
         }
         return resultadoOperacion;
     }
+    
+    public static boolean verificarUsuarioRepetido(String correo) throws SQLException{
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        boolean resultadoOperacion = false;
+        if(conexionBD != null){
+            try {
+                String consulta = "select correoInstitucional FROM usuario where correoInstitucional=?";
+                
+                PreparedStatement prepararVerificarSoftware = conexionBD.prepareStatement(consulta);
+                prepararVerificarSoftware.setString(1, correo);
+
+                ResultSet numeroFilas = prepararVerificarSoftware.executeQuery();
+                if(numeroFilas.next()){
+                    Utilidades.mostrarAlertaSimple("Usuario repetido",
+                            "El usuario con correo "+correo+" ya existe en la base de datos",
+                            Alert.AlertType.INFORMATION);
+                    resultadoOperacion = true;
+                }
+            }catch(SQLException sqlException){
+                Utilidades.mostrarAlertaSimple("Error", 
+                        "Algo ocurrió mal al intentar buscar los usuarios repetidos: " + sqlException.getMessage(),
+                        Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexion con la base de datos.", 
+                    Alert.AlertType.ERROR);
+        }
+        return resultadoOperacion;
+    }
 }
