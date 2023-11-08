@@ -43,10 +43,10 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     private TableColumn tcPosicion;
     @FXML
     private TableColumn tcEstado;
-
+    private TableColumn tcId;
+    @FXML
+    private Label lblSoftware;
     private int idConsulta;
-    
-    private String cargoUsuario;
     
 
     /**
@@ -102,7 +102,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
                 listaHardware.addAll(hardwareBD);
                 tvEquiposComputo.setItems(listaHardware);
             }else{
-                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo asociados.", Alert.AlertType.ERROR);
+                Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
             }
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -114,9 +114,4 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
          cargarTabla();
         
     }
-    
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
-    }
-    
 }

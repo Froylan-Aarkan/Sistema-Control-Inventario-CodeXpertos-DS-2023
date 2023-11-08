@@ -76,22 +76,37 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     }
 
     @FXML
-    private void registrarUsuario(ActionEvent event) {
-        
-            Usuario usuarioRegistro = new Usuario();
-            usuarioRegistro.setNombreCompleto(tfnombre.getText());
-            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-            usuarioRegistro.setCargo(tfCargo.getText());
-            usuarioRegistro.setContrasenia(tfContrasenia.getText());
-            if(archivoFoto != null){
+    private void registrarUsuario(ActionEvent event)  {
+        if(camposValidos()){
+            if(tfCorreo.getText().toLowerCase().endsWith("@uv.mx")){
                 try{
-                    usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
+                    boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                    if(!repetido){
+                        Usuario usuarioRegistro = new Usuario();
+                        usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                        usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                        usuarioRegistro.setCargo(tfCargo.getText());
+                        usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                        if(archivoFoto != null){
+                            try{
+                                usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
 
-                }catch(IOException e){
+                            }catch(IOException e){
+                                e.getMessage();
+                            }
+                        }
+                        guardarRegistroUsuario(usuarioRegistro);
+                    }    
+                }catch(SQLException e){
                     e.getMessage();
                 }
+            }else{
+                Utilidades.mostrarAlertaSimple("Correo inválido", "El correo debe ser de la UV (@uv.mx)", Alert.AlertType.WARNING);
             }
-            guardarRegistroUsuario(usuarioRegistro);    
+                
+        }else{
+            Utilidades.mostrarAlertaSimple("Campos inválidos", "No se pueden dejar campos vacios", Alert.AlertType.WARNING);
+        }
     }
     
     private void guardarRegistroUsuario(Usuario usuario){
@@ -127,6 +142,33 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private boolean camposValidos(){
+        boolean sonValidos = true;
+        
+        if(tfnombre.getText().equals("")){
+            sonValidos = false;
+        }
+   
+        if(tfCorreo.getText().equals("")){
+            sonValidos = false;
+        }
+        
+        if(tfContrasenia.getText().equals("")){
+            sonValidos = false;
+        }
+        
+        if(tfCargo.getText().equals("")){
+            sonValidos = false;
+        }
+        
+        if(ivFoto.getImage() == null){
+            sonValidos = false;
+        }
+
+
+        return sonValidos;
     }
     
 }
