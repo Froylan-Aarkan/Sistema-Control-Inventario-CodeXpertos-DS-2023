@@ -109,16 +109,89 @@ public class CentroComputoDAO {
         return centroComputo;
     }
     
-    public static boolean registrarCentroDeComputo(CentroComputo centroComputo){
+    
+    //Fernando
+    public int RegistrarCentroComputo(CentroComputo centroComputo) throws SQLException{
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String query = "INSERT INTO centrocomputo (facultad, direccion, aula, edificio, piso) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement statement = conexionBD.prepareStatement(query);
+                statement.setString(1, centroComputo.getFacultad());
+                statement.setString(2, centroComputo.getDireccion());
+                statement.setString(3, centroComputo.getAula());
+                statement.setString(4, centroComputo.getEdificio());
+                statement.setString(5, centroComputo.getPiso());
+                statement.executeUpdate();
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmación");
+                alert.setHeaderText("Registro exitoso");
+                alert.setContentText("El centro de cómputo fue creado exitosamente");
+                alert.showAndWait();
+            }catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+        
+        
+        return 0;
+    }
+    
+    public ArrayList<CentroComputo> recuperarCentroComputo() throws SQLException{
+        ArrayList<CentroComputo> centrosComputo = new ArrayList<>();
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        try{
+            String query = "SELECT * FROM centrocomputo";
+            PreparedStatement statement = conexionBD.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                do{
+                    int idCentroComputo = resultSet.getInt("idCentroComputo");
+                    String facultad = resultSet.getString("facultad");
+                    String direccion = resultSet.getString("direccion");
+                    String aula = resultSet.getString("aula");
+                    String edificio = resultSet.getString("edificio");
+                    String piso = resultSet.getString("piso");
+                    CentroComputo centrosDeComputo = new CentroComputo();
+                    centrosDeComputo.setIdCentroComputo(idCentroComputo);
+                    centrosDeComputo.setFacultad(facultad);
+                    centrosDeComputo.setDireccion(direccion);
+                    centrosDeComputo.setAula(aula);
+                    centrosDeComputo.setEdificio(edificio);
+                    centrosDeComputo.setPiso(piso);
+                    centrosComputo.add(centrosDeComputo);
+                }while(resultSet.next());
+            }else{
+                throw new SQLException("no hay centros de cómputo");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+                conexionBD.close();
+        }
+        return centrosComputo;
+    }
+    
+    public static boolean eliminarCentroComputo(int idCentroComputo) throws SQLException{
         boolean resultadoOperacion = false;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "";
-                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                String consulta = "DELETE FROM centrocomputo WHERE idCentroComputo = ?";
+                PreparedStatement consultaCC = conexionBD.prepareStatement(consulta);
+                consultaCC.setInt(1, idCentroComputo);
+                int filasAfectadas = consultaCC.executeUpdate();
+                
+                if(filasAfectadas > 0){
+                    resultadoOperacion = true;
+                }
             }catch(SQLException e){
-                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar registrar el centro de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
-                e.printStackTrace();
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar eliminar el centro de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexion con la base de datos.", Alert.AlertType.ERROR);
@@ -126,4 +199,36 @@ public class CentroComputoDAO {
         
         return resultadoOperacion;
     }
+    
+    public static boolean modificarCentroComputo (CentroComputo centroComputo) throws SQLException{
+        int id = centroComputo.getIdCentroComputo();
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "update centrocomputo set facultad = ?, direccion = ?, aula = ?, edificio = ?, piso = ? where idCentroComputo = ?";
+                PreparedStatement modificarCentroComputo = conexionBD.prepareStatement(consulta);
+                modificarCentroComputo.setString(1, centroComputo.getFacultad());
+                modificarCentroComputo.setString(2, centroComputo.getDireccion());
+                modificarCentroComputo.setString(3, centroComputo.getAula());
+                modificarCentroComputo.setString(4, centroComputo.getEdificio());
+                modificarCentroComputo.setString(5, centroComputo.getPiso());
+                modificarCentroComputo.setInt(6, centroComputo.getIdCentroComputo());
+                int numFilas = modificarCentroComputo.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("error", " "+ id , Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar eliminar el centro de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }
+        return resultadoOperacion;
+    }
+    
 }
