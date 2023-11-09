@@ -168,7 +168,6 @@ public class UsuarioFXMLControlador implements Initializable {
     
 }
 
-    @FXML
     private void actualizarTabla(ActionEvent event) {
         cargarDatosTabla();
     }

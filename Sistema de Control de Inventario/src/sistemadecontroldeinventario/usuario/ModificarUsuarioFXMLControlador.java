@@ -115,6 +115,18 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     }
     @FXML
     private void cancelarOperacion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar operación", "Desea cancelar la operación y borrar los campos?")){
+            try{
+                Usuario usuario = UsuarioDAO.recuperarTodoUsuarioPorCorreo(usuarioModificar);
+                tfnombre.setText(usuario.getNombreCompleto());
+                tfCorreo.setText(usuario.getCorreoInstitucional());
+                correoAntiguo = usuario.getCorreoInstitucional();
+                tfContrasenia.setText(usuario.getContrasenia());
+                tfCargo.setText(usuario.getCargo());
+            }catch(SQLException e){
+                e.getMessage();
+            }
+        }
     }
 
     @FXML

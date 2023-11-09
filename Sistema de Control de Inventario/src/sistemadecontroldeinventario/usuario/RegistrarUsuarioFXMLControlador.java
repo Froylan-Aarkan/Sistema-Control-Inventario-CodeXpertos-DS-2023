@@ -67,6 +67,13 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     
     @FXML
     private void cancelarOperacion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar operación", "Desea cancelar la operación y borrar los campos?")){
+            tfnombre.clear();
+            tfCargo.clear();
+            tfContrasenia.clear();
+            tfCorreo.clear();
+            ivFoto.setImage(null);
+        }
     }
 
     @FXML
