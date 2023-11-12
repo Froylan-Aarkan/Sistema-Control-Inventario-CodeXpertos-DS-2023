@@ -47,6 +47,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     @FXML
     private Label lblSoftware;
     private int idConsulta;
+    private boolean tablaVacia = false;
     
 
     /**
@@ -103,15 +104,22 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
                 tvEquiposComputo.setItems(listaHardware);
             }else{
                 Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
+                tablaVacia = true;
             }
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
     
-    public void inicializarUsuario(int idSoftware) {
+    public boolean inicializarUsuario(int idSoftware) {
          idConsulta = idSoftware;
          cargarTabla();
-        
+
+        if(tablaVacia){
+                return true;
+        }
+        return false;
     }
+    
+    
 }

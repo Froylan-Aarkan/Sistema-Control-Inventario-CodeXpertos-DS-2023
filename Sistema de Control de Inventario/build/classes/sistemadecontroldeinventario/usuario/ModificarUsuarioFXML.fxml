@@ -81,5 +81,6 @@
       </Label>
       <TextField fx:id="tfContrasenia" layoutX="274.0" layoutY="524.0" prefHeight="31.0" prefWidth="300.0" />
       <ImageView fx:id="ivFoto" fitHeight="205.0" fitWidth="282.0" layoutX="542.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="640.0" layoutY="323.0" mnemonicParsing="false" onAction="#subirFoto" text="Subir imagen" />
    </children>
 </AnchorPane>

@@ -192,6 +192,42 @@ public class UsuarioDAO {
         return resultadoOperacion;
     }
     
+    public static boolean modificarUsuarioFoto(Usuario usuario, File foto, String usuarioModificar) throws FileNotFoundException{
+        boolean resultadoOperacion = false;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "update usuario set nombreCompleto = ?, correoInstitucional=?, cargo=?, contrasenia= ?, foto = ? where correoInstitucional = ? ";
+                PreparedStatement modificarUsuario = conexionBD.prepareStatement(consulta);
+                modificarUsuario.setString(1, usuario.getNombreCompleto());
+                modificarUsuario.setString(2, usuario.getCorreoInstitucional());
+                modificarUsuario.setString(3, usuario.getCargo());
+                modificarUsuario.setString(4, usuario.getContrasenia());
+                FileInputStream fotoUsuario = new FileInputStream(foto);
+                modificarUsuario.setBlob(5, fotoUsuario);
+                modificarUsuario.setString(6, usuarioModificar);
+                int numFilas = modificarUsuario.executeUpdate();
+                
+                if(numFilas > 0){
+                    resultadoOperacion = true;
+                }else{
+                    Utilidades.mostrarAlertaSimple("Error", 
+                        "Error al intentar modificar el usuario ",
+                        Alert.AlertType.ERROR);
+                    conexionBD.close();
+                }
+            }catch(SQLException e ){
+                    e.getMessage();
+            }
+
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", 
+                    "No hay conexión con la base de datos, inténtelo más tarde.", 
+                    Alert.AlertType.ERROR);
+        }
+        return resultadoOperacion;
+    }
+    
     public static boolean eliminarUsuario(String correo){
         boolean resultadoOperacion = false;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();

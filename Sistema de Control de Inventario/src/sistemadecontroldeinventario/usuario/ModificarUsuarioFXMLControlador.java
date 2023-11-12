@@ -54,6 +54,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     private File archivoFoto;
     private String usuarioModificar;
     private String correoAntiguo;
+    private Boolean modificoImagen = false;
 
     /**
      * Initializes the controller class.
@@ -61,49 +62,96 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        
     }    
 
     @FXML
     private void modificarUsuario(ActionEvent event) {
         if(camposValidos()){
-            if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
-                System.out.println("No se valida correo");
-                Usuario usuarioRegistro = new Usuario();
-                usuarioRegistro.setNombreCompleto(tfnombre.getText());
-                usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                usuarioRegistro.setCargo(tfCargo.getText());
-                usuarioRegistro.setContrasenia(tfContrasenia.getText());
-
-                guardarModificaciónUsuario(usuarioRegistro); 
+            if(modificoImagen){
+                if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
+                    Usuario usuarioRegistro = new Usuario();
+                    usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                    usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                    usuarioRegistro.setCargo(tfCargo.getText());
+                    usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                    try{
+                        usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
+                    }catch(IOException e){
+                        e.getMessage();
+                    }
+                    guardarModificaciónUsuarioFoto(usuarioRegistro); 
+                }else{
+                    try{
+                        boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                        if(!repetido){
+                            Usuario usuarioRegistro = new Usuario();
+                            usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                            usuarioRegistro.setCargo(tfCargo.getText());
+                            usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                            try{
+                                usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
+                            }catch(IOException e){
+                                e.getMessage();
+                            }
+                            guardarModificaciónUsuarioFoto(usuarioRegistro);
+                        }    
+                    }catch(SQLException e){
+                        e.getMessage();
+                    }
+                }
             }else{
-                System.out.println("Se valida correo");
-                try{
-                    boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
-                    if(!repetido){
-                        Usuario usuarioRegistro = new Usuario();
-                        usuarioRegistro.setNombreCompleto(tfnombre.getText());
-                        usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                        usuarioRegistro.setCargo(tfCargo.getText());
-                        usuarioRegistro.setContrasenia(tfContrasenia.getText());
-                        
-                        guardarModificaciónUsuario(usuarioRegistro);
-                    }    
-                }catch(SQLException e){
-                    e.getMessage();
+                if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
+                    Usuario usuarioRegistro = new Usuario();
+                    usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                    usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                    usuarioRegistro.setCargo(tfCargo.getText());
+                    usuarioRegistro.setContrasenia(tfContrasenia.getText());
+
+                    guardarModificaciónUsuario(usuarioRegistro); 
+                }else{
+                    try{
+                        boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                        if(!repetido){
+                            Usuario usuarioRegistro = new Usuario();
+                            usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                            usuarioRegistro.setCargo(tfCargo.getText());
+                            usuarioRegistro.setContrasenia(tfContrasenia.getText());
+
+                            guardarModificaciónUsuario(usuarioRegistro);
+                        }    
+                    }catch(SQLException e){
+                        e.getMessage();
+                    }
                 }
             }
         }else{
             Utilidades.mostrarAlertaSimple("Campos vacios", "No se pueden dejar campos vacios", Alert.AlertType.WARNING);
         }
+
         
+        
+
         
     }
 
     private void guardarModificaciónUsuario(Usuario usuario){
         try{
             if(UsuarioDAO.modificarUsuario(usuario, usuarioModificar)){
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
+                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                stage.close();
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RegistrarUsuarioFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void guardarModificaciónUsuarioFoto(Usuario usuario){
+        try{
+            if(UsuarioDAO.modificarUsuarioFoto(usuario, archivoFoto, usuarioModificar)){
                 Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
                 Stage stage = (Stage) tfCargo.getScene().getWindow();
                 stage.close();
@@ -135,7 +183,9 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
         stage.close();
     }
 
+    @FXML
     private void subirFoto(ActionEvent event) {
+        
         FileChooser dialogoImagen = new FileChooser();
         dialogoImagen.setTitle("Selecciona una foto");
         FileChooser.ExtensionFilter filtroImg = new FileChooser.ExtensionFilter("Archivos JPG (*.jpg)", "*.JPG");
@@ -148,9 +198,12 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                 BufferedImage bufferImg = ImageIO.read(archivoFoto);
                 Image imagenFoto = SwingFXUtils.toFXImage(bufferImg, null);
                 ivFoto.setImage(imagenFoto);
+                modificoImagen = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            modificoImagen = false;
         }
     }
     
