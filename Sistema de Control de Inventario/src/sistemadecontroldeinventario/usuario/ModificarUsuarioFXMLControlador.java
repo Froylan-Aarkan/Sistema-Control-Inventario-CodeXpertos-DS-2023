@@ -20,11 +20,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,18 +46,19 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @FXML
     private TextField tfnombre;
     @FXML
-    private TextField tfCargo;
-    @FXML
     private TextField tfCorreo;
     @FXML
     private TextField tfContrasenia;
     @FXML
     private ImageView ivFoto;
-    
+    @FXML
+    private ComboBox<String> cbCargo;
     private File archivoFoto;
     private String usuarioModificar;
     private String correoAntiguo;
     private Boolean modificoImagen = false;
+    private ObservableList<String> listaCargos;
+    
 
     /**
      * Initializes the controller class.
@@ -62,6 +66,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cargarComboBox();
     }    
 
     @FXML
@@ -72,7 +77,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                     Usuario usuarioRegistro = new Usuario();
                     usuarioRegistro.setNombreCompleto(tfnombre.getText());
                     usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                    usuarioRegistro.setCargo(tfCargo.getText());
+                    usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
                     usuarioRegistro.setContrasenia(tfContrasenia.getText());
                     try{
                         usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
@@ -87,7 +92,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                             Usuario usuarioRegistro = new Usuario();
                             usuarioRegistro.setNombreCompleto(tfnombre.getText());
                             usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                            usuarioRegistro.setCargo(tfCargo.getText());
+                            usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
                             usuarioRegistro.setContrasenia(tfContrasenia.getText());
                             try{
                                 usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
@@ -105,7 +110,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                     Usuario usuarioRegistro = new Usuario();
                     usuarioRegistro.setNombreCompleto(tfnombre.getText());
                     usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                    usuarioRegistro.setCargo(tfCargo.getText());
+                    usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
                     usuarioRegistro.setContrasenia(tfContrasenia.getText());
 
                     guardarModificaciónUsuario(usuarioRegistro); 
@@ -116,7 +121,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                             Usuario usuarioRegistro = new Usuario();
                             usuarioRegistro.setNombreCompleto(tfnombre.getText());
                             usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                            usuarioRegistro.setCargo(tfCargo.getText());
+                            usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
                             usuarioRegistro.setContrasenia(tfContrasenia.getText());
 
                             guardarModificaciónUsuario(usuarioRegistro);
@@ -140,7 +145,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
         try{
             if(UsuarioDAO.modificarUsuario(usuario, usuarioModificar)){
                 Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
-                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }
             
@@ -153,7 +158,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
         try{
             if(UsuarioDAO.modificarUsuarioFoto(usuario, archivoFoto, usuarioModificar)){
                 Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
-                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }
             
@@ -170,7 +175,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                 tfCorreo.setText(usuario.getCorreoInstitucional());
                 correoAntiguo = usuario.getCorreoInstitucional();
                 tfContrasenia.setText(usuario.getContrasenia());
-                tfCargo.setText(usuario.getCargo());
+                cbCargo.getSelectionModel().select(usuario.getCargo());
             }catch(SQLException e){
                 e.getMessage();
             }
@@ -179,7 +184,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tfCargo.getScene().getWindow();
+        Stage stage = (Stage) cbCargo.getScene().getWindow();
         stage.close();
     }
 
@@ -190,7 +195,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
         dialogoImagen.setTitle("Selecciona una foto");
         FileChooser.ExtensionFilter filtroImg = new FileChooser.ExtensionFilter("Archivos JPG (*.jpg)", "*.JPG");
         dialogoImagen.getExtensionFilters().add(filtroImg);
-        Stage escenarioActual = (Stage) tfCargo.getScene().getWindow();
+        Stage escenarioActual = (Stage) cbCargo.getScene().getWindow();
         archivoFoto = dialogoImagen.showOpenDialog(escenarioActual);
         
         if(archivoFoto != null){
@@ -215,14 +220,13 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
             tfCorreo.setText(usuario.getCorreoInstitucional());
             correoAntiguo = usuario.getCorreoInstitucional();
             tfContrasenia.setText(usuario.getContrasenia());
-            tfCargo.setText(usuario.getCargo());
+            cbCargo.getSelectionModel().select(usuario.getCargo());
             
             if(usuario.getFoto()!=null){
                 Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
                 ivFoto.setImage(img);
             }
-            
-            //tfCorreo.setDisable(true);
+
         }catch(SQLException e){
             e.getMessage();
         }
@@ -244,11 +248,17 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
             sonValidos = false;
         }
         
-        if(tfCargo.getText().equals("")){
+        if(cbCargo.getSelectionModel().isEmpty()){
             sonValidos = false;
         }
 
         return sonValidos;
+    }
+    
+    private void cargarComboBox(){
+        listaCargos = FXCollections.observableArrayList();
+        listaCargos.addAll("Administrador", "Encargado", "Docente");
+        cbCargo.setItems(listaCargos);
     }
     
 }
