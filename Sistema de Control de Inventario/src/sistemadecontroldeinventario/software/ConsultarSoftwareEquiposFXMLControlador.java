@@ -48,6 +48,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     private Label lblSoftware;
     private int idConsulta;
     private boolean tablaVacia = false;
+    private String softwareLbl;
     
 
     /**
@@ -57,6 +58,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         configurarTabla();
+        
         
     }    
 
@@ -88,6 +90,8 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
     }
     
     private void configurarTabla(){
+        
+        
         tcMarca.setCellValueFactory(new PropertyValueFactory("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
         tcPosicion.setCellValueFactory(new PropertyValueFactory("posicion"));
@@ -111,14 +115,19 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
         }
     }
     
-    public boolean inicializarUsuario(int idSoftware) {
+    public boolean inicializarSoftware(int idSoftware, String software) {
          idConsulta = idSoftware;
+         softwareLbl = software;
+         cargarLbl(softwareLbl);
          cargarTabla();
-
         if(tablaVacia){
-                return true;
+            return true;
         }
         return false;
+    }
+    
+    public void cargarLbl(String softwareLbl){
+        lblSoftware.setText(softwareLbl);
     }
     
     

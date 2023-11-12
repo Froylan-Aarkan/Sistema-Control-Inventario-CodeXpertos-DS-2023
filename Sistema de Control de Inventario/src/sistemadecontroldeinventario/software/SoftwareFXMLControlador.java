@@ -136,6 +136,7 @@ public class SoftwareFXMLControlador implements Initializable {
         if(!tvSoftware.getSelectionModel().isEmpty()){
             try {
                     int seleccionado = tvSoftware.getSelectionModel().getSelectedItem().getIdSoftware();
+                    String software = tvSoftware.getSelectionModel().getSelectedItem().getNombre();
                     FXMLLoader loaderVentanaConsultarUsuario = new FXMLLoader(getClass().getResource("ConsultarSoftwareEquiposFXML.fxml"));
                     Parent ventanaConsultarUsuario = loaderVentanaConsultarUsuario.load();
 
@@ -145,7 +146,8 @@ public class SoftwareFXMLControlador implements Initializable {
                     stageSoftware.initModality(Modality.APPLICATION_MODAL);
 
                     ConsultarSoftwareEquiposFXMLControlador controlador = (ConsultarSoftwareEquiposFXMLControlador) loaderVentanaConsultarUsuario.getController();
-                    if(!controlador.inicializarUsuario(seleccionado)){
+                    
+                    if(!controlador.inicializarSoftware(seleccionado, software)){
                         stageSoftware.showAndWait();
                     }else{
                         //Utilidades.mostrarAlertaSimple("No hay equipos de cómputo", "Aun no hay equipos de cómputo registrados.", Alert.AlertType.ERROR);
