@@ -57,7 +57,7 @@
             <Font size="41.0" />
          </font>
       </Label>
-      <Label  layoutX="213.0" layoutY="81.0" prefHeight="59.0" prefWidth="174.0">
+      <Label fx:id="lblSoftware" layoutX="213.0" layoutY="81.0" prefHeight="59.0" prefWidth="879.0">
          <font>
             <Font size="31.0" />
          </font>

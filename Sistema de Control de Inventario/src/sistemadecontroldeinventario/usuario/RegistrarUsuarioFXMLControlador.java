@@ -16,9 +16,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +34,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -47,12 +56,13 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     @FXML
     private TextField tfnombre;
     @FXML
-    private TextField tfCargo;
-    @FXML
     private TextField tfCorreo;
     @FXML
     private TextField tfContrasenia;
     private File archivoFoto;
+    @FXML
+    private ComboBox<String> cbCargo;
+    private ObservableList<String> listaCargos;
 
     /**
      * Initializes the controller class.
@@ -60,18 +70,25 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        cargarComboBox();
     }    
 
     
     
     @FXML
     private void cancelarOperacion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar operación", "Desea cancelar la operación y borrar los campos?")){
+            tfnombre.clear();
+            cbCargo.setSelectionModel(null);
+            tfContrasenia.clear();
+            tfCorreo.clear();
+            ivFoto.setImage(null);
+        }
     }
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tfCargo.getScene().getWindow();
+        Stage stage = (Stage) cbCargo.getScene().getWindow();
         stage.close();
     }
 
@@ -85,7 +102,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
                         Usuario usuarioRegistro = new Usuario();
                         usuarioRegistro.setNombreCompleto(tfnombre.getText());
                         usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                        usuarioRegistro.setCargo(tfCargo.getText());
+                        usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem().toString());
                         usuarioRegistro.setContrasenia(tfContrasenia.getText());
                         if(archivoFoto != null){
                             try{
@@ -114,7 +131,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
             if(UsuarioDAO.registrarUsuario(usuario, archivoFoto)){
                 Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se registró con exito", Alert.AlertType.CONFIRMATION);
                
-                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }
             
@@ -130,7 +147,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
         dialogoImagen.setTitle("Selecciona una foto");
         FileChooser.ExtensionFilter filtroImg = new FileChooser.ExtensionFilter("Archivos JPG (*.jpg)", "*.JPG");
         dialogoImagen.getExtensionFilters().add(filtroImg);
-        Stage escenarioActual = (Stage) tfCargo.getScene().getWindow();
+        Stage escenarioActual = (Stage) cbCargo.getScene().getWindow();
         archivoFoto = dialogoImagen.showOpenDialog(escenarioActual);
         
         if(archivoFoto != null){
@@ -159,7 +176,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
             sonValidos = false;
         }
         
-        if(tfCargo.getText().equals("")){
+        if(cbCargo.getSelectionModel().isEmpty()){
             sonValidos = false;
         }
         
@@ -171,4 +188,11 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
         return sonValidos;
     }
     
+    private void cargarComboBox(){
+        listaCargos = FXCollections.observableArrayList();
+        listaCargos.add("Administrador");
+        listaCargos.add("Encargado");
+        listaCargos.add("Docente");
+        cbCargo.setItems(listaCargos);
+    }
 }

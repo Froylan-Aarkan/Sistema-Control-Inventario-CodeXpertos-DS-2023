@@ -20,11 +20,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,17 +46,19 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @FXML
     private TextField tfnombre;
     @FXML
-    private TextField tfCargo;
-    @FXML
     private TextField tfCorreo;
     @FXML
     private TextField tfContrasenia;
     @FXML
     private ImageView ivFoto;
-    
+    @FXML
+    private ComboBox<String> cbCargo;
     private File archivoFoto;
     private String usuarioModificar;
     private String correoAntiguo;
+    private Boolean modificoImagen = false;
+    private ObservableList<String> listaCargos;
+    
 
     /**
      * Initializes the controller class.
@@ -61,43 +66,78 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        
+        cargarComboBox();
     }    
 
     @FXML
     private void modificarUsuario(ActionEvent event) {
         if(camposValidos()){
-            if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
-                System.out.println("No se valida correo");
-                Usuario usuarioRegistro = new Usuario();
-                usuarioRegistro.setNombreCompleto(tfnombre.getText());
-                usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                usuarioRegistro.setCargo(tfCargo.getText());
-                usuarioRegistro.setContrasenia(tfContrasenia.getText());
-
-                guardarModificaciónUsuario(usuarioRegistro); 
+            if(modificoImagen){
+                if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
+                    Usuario usuarioRegistro = new Usuario();
+                    usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                    usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                    usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
+                    usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                    try{
+                        usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
+                    }catch(IOException e){
+                        e.getMessage();
+                    }
+                    guardarModificaciónUsuarioFoto(usuarioRegistro); 
+                }else{
+                    try{
+                        boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                        if(!repetido){
+                            Usuario usuarioRegistro = new Usuario();
+                            usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                            usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
+                            usuarioRegistro.setContrasenia(tfContrasenia.getText());
+                            try{
+                                usuarioRegistro.setFoto(Files.readAllBytes(archivoFoto.toPath()));
+                            }catch(IOException e){
+                                e.getMessage();
+                            }
+                            guardarModificaciónUsuarioFoto(usuarioRegistro);
+                        }    
+                    }catch(SQLException e){
+                        e.getMessage();
+                    }
+                }
             }else{
-                System.out.println("Se valida correo");
-                try{
-                    boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
-                    if(!repetido){
-                        Usuario usuarioRegistro = new Usuario();
-                        usuarioRegistro.setNombreCompleto(tfnombre.getText());
-                        usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
-                        usuarioRegistro.setCargo(tfCargo.getText());
-                        usuarioRegistro.setContrasenia(tfContrasenia.getText());
-                        
-                        guardarModificaciónUsuario(usuarioRegistro);
-                    }    
-                }catch(SQLException e){
-                    e.getMessage();
+                if(tfCorreo.getText().equalsIgnoreCase(correoAntiguo)){
+                    Usuario usuarioRegistro = new Usuario();
+                    usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                    usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                    usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
+                    usuarioRegistro.setContrasenia(tfContrasenia.getText());
+
+                    guardarModificaciónUsuario(usuarioRegistro); 
+                }else{
+                    try{
+                        boolean repetido = UsuarioDAO.verificarUsuarioRepetido(tfCorreo.getText());
+                        if(!repetido){
+                            Usuario usuarioRegistro = new Usuario();
+                            usuarioRegistro.setNombreCompleto(tfnombre.getText());
+                            usuarioRegistro.setCorreoInstitucional(tfCorreo.getText());
+                            usuarioRegistro.setCargo(cbCargo.getSelectionModel().getSelectedItem());
+                            usuarioRegistro.setContrasenia(tfContrasenia.getText());
+
+                            guardarModificaciónUsuario(usuarioRegistro);
+                        }    
+                    }catch(SQLException e){
+                        e.getMessage();
+                    }
                 }
             }
         }else{
             Utilidades.mostrarAlertaSimple("Campos vacios", "No se pueden dejar campos vacios", Alert.AlertType.WARNING);
         }
+
         
+        
+
         
     }
 
@@ -105,7 +145,20 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
         try{
             if(UsuarioDAO.modificarUsuario(usuario, usuarioModificar)){
                 Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
-                Stage stage = (Stage) tfCargo.getScene().getWindow();
+                Stage stage = (Stage) cbCargo.getScene().getWindow();
+                stage.close();
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RegistrarUsuarioFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void guardarModificaciónUsuarioFoto(Usuario usuario){
+        try{
+            if(UsuarioDAO.modificarUsuarioFoto(usuario, archivoFoto, usuarioModificar)){
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
+                Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }
             
@@ -115,20 +168,34 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     }
     @FXML
     private void cancelarOperacion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cancelar operación", "Desea cancelar la operación y borrar los campos?")){
+            try{
+                Usuario usuario = UsuarioDAO.recuperarTodoUsuarioPorCorreo(usuarioModificar);
+                tfnombre.setText(usuario.getNombreCompleto());
+                tfCorreo.setText(usuario.getCorreoInstitucional());
+                correoAntiguo = usuario.getCorreoInstitucional();
+                tfContrasenia.setText(usuario.getContrasenia());
+                cbCargo.getSelectionModel().select(usuario.getCargo());
+            }catch(SQLException e){
+                e.getMessage();
+            }
+        }
     }
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tfCargo.getScene().getWindow();
+        Stage stage = (Stage) cbCargo.getScene().getWindow();
         stage.close();
     }
 
+    @FXML
     private void subirFoto(ActionEvent event) {
+        
         FileChooser dialogoImagen = new FileChooser();
         dialogoImagen.setTitle("Selecciona una foto");
         FileChooser.ExtensionFilter filtroImg = new FileChooser.ExtensionFilter("Archivos JPG (*.jpg)", "*.JPG");
         dialogoImagen.getExtensionFilters().add(filtroImg);
-        Stage escenarioActual = (Stage) tfCargo.getScene().getWindow();
+        Stage escenarioActual = (Stage) cbCargo.getScene().getWindow();
         archivoFoto = dialogoImagen.showOpenDialog(escenarioActual);
         
         if(archivoFoto != null){
@@ -136,9 +203,12 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
                 BufferedImage bufferImg = ImageIO.read(archivoFoto);
                 Image imagenFoto = SwingFXUtils.toFXImage(bufferImg, null);
                 ivFoto.setImage(imagenFoto);
+                modificoImagen = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            modificoImagen = false;
         }
     }
     
@@ -150,14 +220,13 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
             tfCorreo.setText(usuario.getCorreoInstitucional());
             correoAntiguo = usuario.getCorreoInstitucional();
             tfContrasenia.setText(usuario.getContrasenia());
-            tfCargo.setText(usuario.getCargo());
+            cbCargo.getSelectionModel().select(usuario.getCargo());
             
             if(usuario.getFoto()!=null){
                 Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
                 ivFoto.setImage(img);
             }
-            
-            //tfCorreo.setDisable(true);
+
         }catch(SQLException e){
             e.getMessage();
         }
@@ -179,11 +248,17 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
             sonValidos = false;
         }
         
-        if(tfCargo.getText().equals("")){
+        if(cbCargo.getSelectionModel().isEmpty()){
             sonValidos = false;
         }
 
         return sonValidos;
+    }
+    
+    private void cargarComboBox(){
+        listaCargos = FXCollections.observableArrayList();
+        listaCargos.addAll("Administrador", "Encargado", "Docente");
+        cbCargo.setItems(listaCargos);
     }
     
 }
