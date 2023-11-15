@@ -113,5 +113,9 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+    }
     
 }

@@ -74,24 +74,21 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
     private void asignarHardwareSoftware(ActionEvent event) {
         try{
             if(camposValidos()){
-
-                Software softwareAsignacion = verificarSoftwareSeleccionado();
-                Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
-                if(conexionBD != null){
-                    if(softwareAsignacion != null){
-                        boolean confirmacion = Utilidades.mostrarDialogoConfirmacion("Asignar software",
-                                "¿Desea asignar el software al equipo de cómputo?");
-                        if(confirmacion){
-                            HardwareDAO.asignarEquipoComputoASoftware(
-                                    cbHardware.getSelectionModel().getSelectedItem().getIdHardware(),
-                                    softwareAsignacion.getIdSoftware());
-                            cargarDatosTabla(cbHardware.getSelectionModel().getSelectedItem().getIdHardware());
-                        }else{
-                            Utilidades.mostrarAlertaSimple("Seleccion obligatoria", 
-                               "Necesita seleccionar un software a relacionar", 
-                                Alert.AlertType.WARNING);
+                if(!tvSoftware.getSelectionModel().isEmpty()){
+                    Software softwareAsignacion = verificarSoftwareSeleccionado();
+                    Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+                    if(conexionBD != null){
+                        if(softwareAsignacion != null){
+                            if(Utilidades.mostrarDialogoConfirmacion("Asignar software","¿Desea asignar el software al equipo de cómputo?")){
+                                HardwareDAO.asignarEquipoComputoASoftware(
+                                        cbHardware.getSelectionModel().getSelectedItem().getIdHardware(),
+                                        softwareAsignacion.getIdSoftware());
+                                cargarDatosTabla(cbHardware.getSelectionModel().getSelectedItem().getIdHardware());
+                            }
                         }
                     }
+                }else{
+                    Utilidades.mostrarAlertaSimple("Seleccion obligatoria", "Necesita seleccionar un software a relacionar", Alert.AlertType.WARNING);
                 }
             }
         }catch(SQLException e){
@@ -148,10 +145,7 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
                 tvSoftware.setItems(listaSoftware);
                 resultado = true;
             }else{
-                Utilidades.mostrarAlertaSimple("No hay software", 
-                        "No se encotnraron software disponibles para la asignación.", 
-                        Alert.AlertType.ERROR);
-                
+                tvSoftware.getItems().clear();
             }
         }catch(SQLException | NullPointerException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

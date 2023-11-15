@@ -4,6 +4,8 @@
  */
 package Modelo.POJO;
 
+import java.util.Objects;
+
 /**
  *
  * @author froyl
@@ -83,6 +85,56 @@ public class Periferico {
 
     public void setIdCentroComputo(int idCentroComputo) {
         this.idCentroComputo = idCentroComputo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.idPeriferico;
+        hash = 53 * hash + Objects.hashCode(this.tipo);
+        hash = 53 * hash + Objects.hashCode(this.marca);
+        hash = 53 * hash + Objects.hashCode(this.modelo);
+        hash = 53 * hash + Objects.hashCode(this.estado);
+        hash = 53 * hash + Objects.hashCode(this.numeroSerie);
+        hash = 53 * hash + (this.inalambrico ? 1 : 0);
+        hash = 53 * hash + this.idCentroComputo;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Periferico other = (Periferico) obj;
+        if (this.idPeriferico != other.idPeriferico) {
+            return false;
+        }
+        if (this.inalambrico != other.inalambrico) {
+            return false;
+        }
+        if (this.idCentroComputo != other.idCentroComputo) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.marca, other.marca)) {
+            return false;
+        }
+        if (!Objects.equals(this.modelo, other.modelo)) {
+            return false;
+        }
+        if (!Objects.equals(this.estado, other.estado)) {
+            return false;
+        }
+        return Objects.equals(this.numeroSerie, other.numeroSerie);
     }
     
 }

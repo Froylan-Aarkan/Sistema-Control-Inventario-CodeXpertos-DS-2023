@@ -133,6 +133,8 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 equipoComputoModificado.setDireccionMac(tfDireccionMac.getText());
                 equipoComputoModificado.setDireccionIp(tfDireccionIp.getText());
                 equipoComputoModificado.setAlmacenamiento(Float.valueOf(tfAlmacenamiento.getText()));
+                equipoComputoModificado.setEstado(hardwareModificacion.getEstado());
+                equipoComputoModificado.setFechaIngreso(hardwareModificacion.getFechaIngreso());
 
                 if(cbArquitectura.getSelectionModel().isSelected(0)){
                     equipoComputoModificado.setArquitectura(32);
@@ -144,16 +146,26 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 
                 equipoComputoModificado.setIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo());
                 equipoComputoModificado.setPosicion(cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem());
-                //TODO validacion de cambios
+                
                 try {
-                    if(HardwareDAO.modificarEquipoDeComputo(equipoComputoModificado)){
-                        Utilidades.mostrarAlertaSimple("Equipo modificado", "Se modificó el equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
-                        
-                        Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
-                        stage.close();
-                    }
+                    equipoComputoModificado.setCentroComputo(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo()));
                 } catch (SQLException e) {
                     Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                }
+
+                if(!hardwareModificacion.equals(equipoComputoModificado)){
+                    try {
+                        if(HardwareDAO.modificarEquipoDeComputo(equipoComputoModificado)){
+                            Utilidades.mostrarAlertaSimple("Equipo modificado", "Se modificó el equipo de cómputo con éxito.", Alert.AlertType.INFORMATION);
+
+                            Stage stage = (Stage) tfDireccionIp.getScene().getWindow();
+                            stage.close();
+                        }
+                    } catch (SQLException e) {
+                        Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }else{
+                    Utilidades.mostrarAlertaSimple("No hay cambios", "No se detectaron cambios al equipo de computo.", Alert.AlertType.WARNING);
                 }
             }
         }
