@@ -95,16 +95,20 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
                     perifericoModificado.setIdCentroComputo(0);
                 }
                 
-                try{
-                    if(PerifericoDAO.modificarPeriferico(perifericoModificado)){
-                        Utilidades.mostrarAlertaSimple("Periférico modificado", "Se modificó el periférico con éxito.", Alert.AlertType.INFORMATION);
-                        
-                        Stage stage = (Stage) tfTipo.getScene().getWindow();
-                        stage.close();
-                    }
-                }catch(SQLException e){
-                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
-                }                      
+                if(!perifericoModificacion.equals(perifericoModificado)){
+                    try{
+                        if(PerifericoDAO.modificarPeriferico(perifericoModificado)){
+                            Utilidades.mostrarAlertaSimple("Periférico modificado", "Se modificó el periférico con éxito.", Alert.AlertType.INFORMATION);
+
+                            Stage stage = (Stage) tfTipo.getScene().getWindow();
+                            stage.close();
+                        }
+                    }catch(SQLException e){
+                        Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                    }                  
+                }else{
+                    Utilidades.mostrarAlertaSimple("No hay cambios", "No se detectaron cambios al periférico.", Alert.AlertType.WARNING);
+                }                
             }
         }
     }

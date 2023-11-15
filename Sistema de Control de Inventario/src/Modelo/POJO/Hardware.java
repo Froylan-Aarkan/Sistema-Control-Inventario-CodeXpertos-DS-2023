@@ -5,6 +5,7 @@
 package Modelo.POJO;
 
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  *
@@ -181,4 +182,95 @@ public class Hardware {
     public String toString() {
         return this.numeroSerie;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.idHardware;
+        hash = 97 * hash + Objects.hashCode(this.modelo);
+        hash = 97 * hash + Objects.hashCode(this.numeroSerie);
+        hash = 97 * hash + Objects.hashCode(this.estado);
+        hash = 97 * hash + Objects.hashCode(this.procesador);
+        hash = 97 * hash + Objects.hashCode(this.posicion);
+        hash = 97 * hash + Float.floatToIntBits(this.almacenamiento);
+        hash = 97 * hash + Float.floatToIntBits(this.ram);
+        hash = 97 * hash + Objects.hashCode(this.direccionMac);
+        hash = 97 * hash + Objects.hashCode(this.direccionIp);
+        hash = 97 * hash + Objects.hashCode(this.grafica);
+        hash = 97 * hash + Objects.hashCode(this.fechaIngreso);
+        hash = 97 * hash + Objects.hashCode(this.sistemaOperativo);
+        hash = 97 * hash + this.arquitectura;
+        hash = 97 * hash + Objects.hashCode(this.marca);
+        hash = 97 * hash + Objects.hashCode(this.tarjetaMadre);
+        hash = 97 * hash + this.idCentroComputo;
+        hash = 97 * hash + Objects.hashCode(this.centroComputo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hardware other = (Hardware) obj;
+        if (this.idHardware != other.idHardware) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.almacenamiento) != Float.floatToIntBits(other.almacenamiento)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.ram) != Float.floatToIntBits(other.ram)) {
+            return false;
+        }
+        if (this.arquitectura != other.arquitectura) {
+            return false;
+        }
+        if (this.idCentroComputo != other.idCentroComputo) {
+            return false;
+        }
+        if (!Objects.equals(this.modelo, other.modelo)) {
+            return false;
+        }
+        if (!Objects.equals(this.numeroSerie, other.numeroSerie)) {
+            return false;
+        }
+        if (!Objects.equals(this.estado, other.estado)) {
+            return false;
+        }
+        if (!Objects.equals(this.procesador, other.procesador)) {
+            return false;
+        }
+        if (!Objects.equals(this.posicion, other.posicion)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccionMac, other.direccionMac)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccionIp, other.direccionIp)) {
+            return false;
+        }
+        if (!Objects.equals(this.grafica, other.grafica)) {
+            return false;
+        }
+        if (!Objects.equals(this.sistemaOperativo, other.sistemaOperativo)) {
+            return false;
+        }
+        if (!Objects.equals(this.marca, other.marca)) {
+            return false;
+        }
+        if (!Objects.equals(this.tarjetaMadre, other.tarjetaMadre)) {
+            return false;
+        }
+        if (!Objects.equals(this.centroComputo, other.centroComputo)) {
+            return false;
+        }
+        return Objects.equals(this.fechaIngreso, other.fechaIngreso);
+    }
+
 }

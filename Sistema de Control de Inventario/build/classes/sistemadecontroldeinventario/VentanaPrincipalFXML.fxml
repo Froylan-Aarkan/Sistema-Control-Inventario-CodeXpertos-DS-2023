@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.VentanaPrincipalFXMLControlador">
    <children>
       <ImageView fitHeight="443.0" fitWidth="330.0" layoutX="517.0" layoutY="65.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -25,60 +31,72 @@
             <Font size="64.0" />
          </font>
       </Label>
-      <ImageView fitHeight="227.0" fitWidth="244.0" layoutX="203.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="227.0" fitWidth="244.0" layoutX="262.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/motherboard.png" />
          </image>
       </ImageView>
-      <Label layoutX="234.0" layoutY="298.0" text="Hardware" textFill="#004aad">
+      <Label layoutX="293.0" layoutY="294.0" text="Hardware" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnHardware" layoutX="203.0" layoutY="51.0" mnemonicParsing="false" onAction="#desplegarVentanaHardware" opacity="0.0" prefHeight="288.0" prefWidth="227.0" text="Hardware">
+      <Button fx:id="btnHardware" layoutX="262.0" layoutY="47.0" mnemonicParsing="false" onAction="#desplegarVentanaHardware" opacity="0.0" prefHeight="288.0" prefWidth="227.0" text="Hardware">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ImageView fitHeight="257.0" fitWidth="314.0" layoutX="938.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="257.0" fitWidth="314.0" layoutX="823.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/software.png" />
          </image>
       </ImageView>
-      <Label layoutX="991.0" layoutY="302.0" text="Software" textFill="#004aad">
+      <Label layoutX="876.0" layoutY="298.0" text="Software" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="938.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarVentanaSoftware" opacity="0.0" prefHeight="288.0" prefWidth="257.0" text="Software">
+      <Button layoutX="823.0" layoutY="51.0" mnemonicParsing="false" onAction="#desplegarVentanaSoftware" opacity="0.0" prefHeight="288.0" prefWidth="257.0" text="Software">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="244.0" fitWidth="257.0" layoutX="194.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="244.0" fitWidth="257.0" layoutX="254.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/usuario.png" />
          </image>
       </ImageView>
-      <Label layoutX="243.0" layoutY="643.0" text="Usuarios" textFill="#004aad">
+      <Label layoutX="303.0" layoutY="640.0" text="Usuarios" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="194.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaUsuarios" opacity="0.0" prefHeight="288.0" prefWidth="244.0" text="Usuarios">
+      <Button layoutX="254.0" layoutY="394.0" mnemonicParsing="false" onAction="#desplegarVentanaUsuarios" opacity="0.0" prefHeight="288.0" prefWidth="244.0" text="Usuarios">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="244.0" fitWidth="264.0" layoutX="945.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="244.0" fitWidth="264.0" layoutX="830.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/centrocomputo.png" />
          </image>
       </ImageView>
-      <Label layoutX="892.0" layoutY="643.0" text="Centros de Cómputo" textFill="#004aad">
+      <Label layoutX="777.0" layoutY="638.0" text="Centros de Cómputo" textFill="#004aad">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnCentrosComputo" layoutX="892.0" layoutY="397.0" mnemonicParsing="false" onAction="#desplegarVentanaCentrosComputo" opacity="0.0" prefHeight="288.0" prefWidth="350.0" text="Centros de Cómputo">
+      <Button fx:id="btnCentrosComputo" layoutX="777.0" layoutY="392.0" mnemonicParsing="false" onAction="#desplegarVentanaCentrosComputo" opacity="0.0" prefHeight="288.0" prefWidth="350.0" text="Centros de Cómputo">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="1173.0" layoutY="32.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="113.0" prefWidth="100.0" style="-fx-background-color: #C3D9EA;">
+         <graphic>
+            <ImageView fitHeight="122.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/cerrarsesion_rojo.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
