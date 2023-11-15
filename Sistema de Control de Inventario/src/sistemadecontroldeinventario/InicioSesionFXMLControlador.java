@@ -63,8 +63,8 @@ public class InicioSesionFXMLControlador implements Initializable {
             stageVentanaPrincipal.setScene(escenaVentanaPrincipal);
             controladorVentanaPrincipal.inicializarVentana(usuarioSesion.getCargo());
             stageVentanaPrincipal.show();
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
