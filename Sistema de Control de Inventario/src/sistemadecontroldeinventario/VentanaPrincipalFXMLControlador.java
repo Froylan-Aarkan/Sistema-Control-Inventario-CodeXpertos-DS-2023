@@ -4,6 +4,7 @@
  */
 package sistemadecontroldeinventario;
 
+import Utilidades.Utilidades;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -116,6 +118,19 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarSesion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", "¿Seguro que desea cerrar sesión?")){
+            try {
+                FXMLLoader loaderInicioSesion = new FXMLLoader(getClass().getResource("InicioSesionFXML.fxml"));
+                Parent inicioSesion = loaderInicioSesion.load();
+
+                Scene escenaVentanaPrincipal = new Scene(inicioSesion);
+                Stage stageInicioSesion = (Stage) btnCentrosComputo.getScene().getWindow();
+                stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.show();
+            } catch (IOException e) {
+                Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+            }
+        }        
     }
     
 }

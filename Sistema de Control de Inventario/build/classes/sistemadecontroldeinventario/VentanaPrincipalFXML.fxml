@@ -89,11 +89,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="1173.0" layoutY="32.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="113.0" prefWidth="100.0" style="-fx-background-color: #C3D9EA;">
+      <Button contentDisplay="TOP" layoutX="1244.0" layoutY="9.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="113.0" prefWidth="100.0" style="-fx-background-color: #C3D9EA;" text="Cerrar sesión" textFill="#007d3d">
          <graphic>
-            <ImageView fitHeight="122.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="86.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Imagenes/cerrarsesion_rojo.png" />
+                  <Image url="@../Imagenes/cerrarsesion_verde.png" />
                </image>
             </ImageView>
          </graphic>
