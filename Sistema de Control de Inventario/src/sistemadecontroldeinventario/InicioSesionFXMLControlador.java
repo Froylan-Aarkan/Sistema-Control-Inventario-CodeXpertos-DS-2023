@@ -61,6 +61,7 @@ public class InicioSesionFXMLControlador implements Initializable {
             Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
             Stage stageVentanaPrincipal = (Stage) tfUsuario.getScene().getWindow();
             stageVentanaPrincipal.setScene(escenaVentanaPrincipal);
+            stageVentanaPrincipal.setResizable(false);
             controladorVentanaPrincipal.inicializarVentana(usuarioSesion.getCargo());
             stageVentanaPrincipal.show();
         } catch (IOException e) {
