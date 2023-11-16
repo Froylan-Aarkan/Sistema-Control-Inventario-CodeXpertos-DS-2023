@@ -31,15 +31,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.InicioSesionFXMLControlador;
+import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 /**
  * FXML Controller class
  *
  * @author Elian
  */
 public class UsuarioFXMLControlador implements Initializable {
-
-
+    private String cargoUsuario;
     private ObservableList<Usuario> listaUsuarios;
+    
     @FXML
     private TableView<Usuario> tvUsuarios;
     @FXML
@@ -60,8 +61,20 @@ public class UsuarioFXMLControlador implements Initializable {
     
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tvUsuarios.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderVentanaPrincipal = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/VentanaPrincipalFXML.fxml"));
+            Parent ventanaPrincipal = loaderVentanaPrincipal.load();
+            VentanaPrincipalFXMLControlador controlador = loaderVentanaPrincipal.getController();                  
+            Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
+            Stage stage = (Stage) tvUsuarios.getScene().getWindow();
+            stage.setScene(escenaVentanaPrincipal);
+            stage.setResizable(false);
+            stage.setTitle("Ventana Principal");
+            controlador.inicializarVentana(cargoUsuario);
+            stage.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }       
     }
     
     private void configurarTabla(){
@@ -177,5 +190,7 @@ public class UsuarioFXMLControlador implements Initializable {
         cargarDatosTabla();
     }
         
-
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

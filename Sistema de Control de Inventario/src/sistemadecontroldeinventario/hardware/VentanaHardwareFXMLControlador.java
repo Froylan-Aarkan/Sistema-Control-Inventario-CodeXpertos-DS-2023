@@ -4,6 +4,7 @@
  */
 package sistemadecontroldeinventario.hardware;
 
+import Utilidades.Utilidades;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,9 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
+import sistemadecontroldeinventario.hardware.equiposComputo.EquiposDeComputoFXMLControlador;
+import sistemadecontroldeinventario.hardware.perifericos.PerifericosFXMLControlador;
 
 /**
  * FXML Controller class
@@ -23,9 +27,10 @@ import javafx.stage.Stage;
  * @author froyl
  */
 public class VentanaHardwareFXMLControlador implements Initializable {
-
+    private String cargoUsuario;
+    
     @FXML
-    private Button btEquiposComputo;
+    private Button btnEquiposComputo;
 
     /**
      * Initializes the controller class.
@@ -40,12 +45,14 @@ public class VentanaHardwareFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaEquiposDeComputo = new FXMLLoader(getClass().getResource("equiposComputo/EquiposDeComputoFXML.fxml"));
             Parent ventanaEquiposDeComputo = loaderVentanaEquiposDeComputo.load();
-            
+            EquiposDeComputoFXMLControlador controlador = loaderVentanaEquiposDeComputo.getController();
             Scene escenarioEquiposDeComputo = new Scene(ventanaEquiposDeComputo);
-            Stage stageEquiposDeComputo = new Stage();
+            Stage stageEquiposDeComputo = (Stage) btnEquiposComputo.getScene().getWindow();
             stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
-            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();            
+            stageEquiposDeComputo.setResizable(false);
+            stageEquiposDeComputo.setTitle("Equipos de cómputo");
+            controlador.inicializarVentana(cargoUsuario);
+            stageEquiposDeComputo.show();            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,12 +63,14 @@ public class VentanaHardwareFXMLControlador implements Initializable {
         try{
             FXMLLoader loaderVentanaPerifericos = new FXMLLoader(getClass().getResource("perifericos/PerifericosFXML.fxml"));
             Parent ventanaPerifericos = loaderVentanaPerifericos.load();
-            
+            PerifericosFXMLControlador controlador = loaderVentanaPerifericos.getController();
             Scene escenarioPerifericos = new Scene(ventanaPerifericos);
-            Stage stagePerifericos = new Stage();
+            Stage stagePerifericos = (Stage) btnEquiposComputo.getScene().getWindow();
             stagePerifericos.setScene(escenarioPerifericos);
-            stagePerifericos.initModality(Modality.APPLICATION_MODAL);
-            stagePerifericos.showAndWait();
+            stagePerifericos.setResizable(false);
+            stagePerifericos.setTitle("Periféricos");
+            controlador.inicializarVentana(cargoUsuario);
+            stagePerifericos.show();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -70,8 +79,25 @@ public class VentanaHardwareFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) btEquiposComputo.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderVentanaPrincipal = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/VentanaPrincipalFXML.fxml"));
+            Parent ventanaPrincipal = loaderVentanaPrincipal.load();
+
+            VentanaPrincipalFXMLControlador controlador = loaderVentanaPrincipal.getController();       
+            
+            Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
+            Stage stage = (Stage) btnEquiposComputo.getScene().getWindow();
+            stage.setScene(escenaVentanaPrincipal);
+            stage.setResizable(false);
+            stage.setTitle("Ventana Principal");
+            controlador.inicializarVentana(cargoUsuario);
+            stage.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }       
     }
     
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

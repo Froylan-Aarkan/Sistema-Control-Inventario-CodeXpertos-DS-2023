@@ -52,7 +52,7 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Button fx:id="btEquiposComputo" layoutX="109.0" layoutY="246.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" opacity="0.0" prefHeight="324.0" prefWidth="471.0" text="Equipos de Computo">
+      <Button fx:id="btnEquiposComputo" layoutX="109.0" layoutY="246.0" mnemonicParsing="false" onAction="#desplegarVentanaEquiposComputo" opacity="0.0" prefHeight="324.0" prefWidth="471.0" text="Equipos de Computo">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

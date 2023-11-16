@@ -10,6 +10,7 @@ import Modelo.DAO.SoftwareDAO;
 import Modelo.POJO.Hardware;
 import Modelo.POJO.Software;
 import Utilidades.Utilidades;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +20,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 
 /**
  * FXML Controller class
@@ -66,8 +71,20 @@ public class AsignarHardwareSoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tvSoftware.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/software/MainSoftwareFXML.fxml"));
+            Parent ventanaSoftware = loaderVentanaSoftware.load();
+            MainSoftwareFXMLControlador controlador = loaderVentanaSoftware.getController();
+            Scene escenarioSoftware = new Scene(ventanaSoftware);
+            Stage stageSoftware = (Stage) tvSoftware.getScene().getWindow();
+            stageSoftware.setScene(escenarioSoftware);
+            stageSoftware.setTitle("Software");
+            stageSoftware.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
+            stageSoftware.show();            
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML

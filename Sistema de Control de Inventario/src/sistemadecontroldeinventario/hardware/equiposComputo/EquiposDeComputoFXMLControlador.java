@@ -31,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
 
 /**
  * FXML Controller class
@@ -68,8 +69,20 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tfBusqueda.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderHardware = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/hardware/VentanaHardwareFXML.fxml"));
+            Parent hardware = loaderHardware.load();
+            VentanaHardwareFXMLControlador controlador = loaderHardware.getController();
+            Scene escenaVentanaHardware = new Scene(hardware);
+            Stage stage = (Stage) tvEquiposComputo.getScene().getWindow();
+            stage.setScene(escenaVentanaHardware);
+            stage.setResizable(false);
+            stage.setTitle("Hardware");
+            controlador.inicializarVentana(cargoUsuario);
+            stage.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }       
     }
 
     @FXML

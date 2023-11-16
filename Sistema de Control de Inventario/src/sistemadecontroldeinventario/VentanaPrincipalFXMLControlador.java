@@ -20,6 +20,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
+import sistemadecontroldeinventario.software.MainSoftwareFXMLControlador;
+import sistemadecontroldeinventario.usuario.UsuarioFXMLControlador;
 
 /**
  * FXML Controller class
@@ -42,24 +45,21 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         // TODO
     } 
     
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
-    }
-
     @FXML
     private void desplegarVentanaHardware(ActionEvent event) {
         try {
             FXMLLoader loaderVentanaHardware = new FXMLLoader(getClass().getResource("hardware/VentanaHardwareFXML.fxml"));
             Parent ventanaHardware = loaderVentanaHardware.load();
-            
+            VentanaHardwareFXMLControlador controlador = loaderVentanaHardware.getController();
             Scene escenarioHardware = new Scene(ventanaHardware);
-            Stage stageHardware = new Stage();
+            Stage stageHardware = (Stage) btnHardware.getScene().getWindow();
             stageHardware.setScene(escenarioHardware);
-            stageHardware.initModality(Modality.APPLICATION_MODAL);
-            stageHardware.showAndWait();
-            
+            stageHardware.setTitle("Hardware");
+            stageHardware.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
+            stageHardware.show();            
         } catch (IOException e) {
-            e.printStackTrace();
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
@@ -68,15 +68,16 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().getResource("software/MainSoftwareFXML.fxml"));
             Parent ventanaSoftware = loaderVentanaSoftware.load();
-            
+            MainSoftwareFXMLControlador controlador = loaderVentanaSoftware.getController();
             Scene escenarioSoftware = new Scene(ventanaSoftware);
-            Stage stageSoftware = new Stage();
+            Stage stageSoftware = (Stage) btnCentrosComputo.getScene().getWindow();
             stageSoftware.setScene(escenarioSoftware);
-            stageSoftware.initModality(Modality.APPLICATION_MODAL);
-            stageSoftware.showAndWait();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+            stageSoftware.setTitle("Software");
+            stageSoftware.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
+            stageSoftware.show();            
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
@@ -85,15 +86,16 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaUsuario = new FXMLLoader(getClass().getResource("usuario/UsuarioFXML.fxml"));
             Parent ventanaUsuario = loaderVentanaUsuario.load();
-            
+            UsuarioFXMLControlador controlador = loaderVentanaUsuario.getController();
             Scene escenarioUsuario = new Scene(ventanaUsuario);
-            Stage stageUsuario = new Stage();
+            Stage stageUsuario = (Stage) btnCentrosComputo.getScene().getWindow();
             stageUsuario.setScene(escenarioUsuario);
-            stageUsuario.initModality(Modality.APPLICATION_MODAL);
-            stageUsuario.showAndWait();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+            stageUsuario.setTitle("Usuarios");
+            stageUsuario.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
+            stageUsuario.show();            
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
@@ -104,15 +106,11 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
             Parent ventanaCentrosDeComputo = loaderVentanaCentrosDeComputo.load();
             
             Scene escenarioCentrosDeComputo = new Scene(ventanaCentrosDeComputo);
-            Stage stageCentrosDeComputo = new Stage();
+            Stage stageCentrosDeComputo = (Stage) btnCentrosComputo.getScene().getWindow();
             stageCentrosDeComputo.setScene(escenarioCentrosDeComputo);
-            stageCentrosDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageCentrosDeComputo.showAndWait();
-            
-            Stage stage = (Stage) btnCentrosComputo.getScene().getWindow();
-            stage.close();
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+            stageCentrosDeComputo.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
@@ -132,5 +130,8 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
             }
         }        
     }
-    
+  
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

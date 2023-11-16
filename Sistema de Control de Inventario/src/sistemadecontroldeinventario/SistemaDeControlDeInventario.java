@@ -24,6 +24,7 @@ public class SistemaDeControlDeInventario extends Application {
         
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Iniciar Sesión");
         stage.show();
     }
 

@@ -4,21 +4,21 @@
  */
 package sistemadecontroldeinventario.software;
 
+import Utilidades.Utilidades;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sistemadecontroldeinventario.InicioSesionFXMLControlador;
+import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 
 /**
  * FXML Controller class
@@ -42,8 +42,20 @@ public class MainSoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) lbFondo.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderVentanaPrincipal = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/VentanaPrincipalFXML.fxml"));
+            Parent ventanaPrincipal = loaderVentanaPrincipal.load();
+            VentanaPrincipalFXMLControlador controlador = loaderVentanaPrincipal.getController();
+            Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
+            Stage stage = (Stage) lbFondo.getScene().getWindow();
+            stage.setScene(escenaVentanaPrincipal);
+            stage.setResizable(false);
+            stage.setTitle("Ventana Principal");
+            controlador.inicializarVentana(cargoUsuario);
+            stage.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -51,15 +63,16 @@ public class MainSoftwareFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().getResource("SoftwareFXML.fxml"));
             Parent ventanaSoftware = loaderVentanaSoftware.load();
-            
+            SoftwareFXMLControlador controlador = loaderVentanaSoftware.getController();
             Scene escenarioSoftware = new Scene(ventanaSoftware);
-            Stage stageSoftware = new Stage();
+            Stage stageSoftware = (Stage) lbFondo.getScene().getWindow();
             stageSoftware.setScene(escenarioSoftware);
-            stageSoftware.initModality(Modality.APPLICATION_MODAL);
-            stageSoftware.showAndWait();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+            stageSoftware.setResizable(false);
+            stageSoftware.setTitle("Software");
+            controlador.inicializarVentana(cargoUsuario);
+            stageSoftware.show();            
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
 
@@ -68,15 +81,16 @@ public class MainSoftwareFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaSoftware = new FXMLLoader(getClass().getResource("AsignarHardwareSoftwareFXML.fxml"));
             Parent ventanaSoftware = loaderVentanaSoftware.load();
-            
+            AsignarHardwareSoftwareFXMLControlador controlador = loaderVentanaSoftware.getController();
             Scene escenarioSoftware = new Scene(ventanaSoftware);
-            Stage stageSoftware = new Stage();
+            Stage stageSoftware = (Stage) lbFondo.getScene().getWindow();
             stageSoftware.setScene(escenarioSoftware);
-            stageSoftware.initModality(Modality.APPLICATION_MODAL);
-            stageSoftware.showAndWait();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
+            stageSoftware.setResizable(false);
+            stageSoftware.setTitle("Asignar Software");
+            controlador.inicializarVentana(cargoUsuario);
+            stageSoftware.show();           
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
     

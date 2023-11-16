@@ -13,7 +13,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,8 +87,20 @@ public class SoftwareFXMLControlador implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) tvSoftware.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderMainSoftware = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/software/MainSoftwareFXML.fxml"));
+            Parent mainSoftware = loaderMainSoftware.load();
+            MainSoftwareFXMLControlador controlador = loaderMainSoftware.getController();
+            Scene escenaMainSoftware = new Scene(mainSoftware);
+            Stage stage = (Stage) tvSoftware.getScene().getWindow();
+            stage.setScene(escenaMainSoftware);
+            stage.setResizable(false);
+            stage.setTitle("Software");
+            controlador.inicializarVentana(cargoUsuario);
+            stage.show();
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -178,11 +189,6 @@ public class SoftwareFXMLControlador implements Initializable {
             Utilidades.mostrarAlertaSimple("Seleccion obligatoria", "Necesita seleccionar un objeto a modificar", Alert.AlertType.WARNING);
         }
     }
-   
-    
-    public void inicializarVentana(String cargoUsuario) {
-        this.cargoUsuario = cargoUsuario;
-    }
     
     private Software verificarSoftwareSeleccionado(){
         int filaSeleccionada = tvSoftware.getSelectionModel().getFocusedIndex();
@@ -230,5 +236,9 @@ public class SoftwareFXMLControlador implements Initializable {
     private void registrarSoftware(ActionEvent event) {
         abrirFormularioSoftware();
         cargarDatosTabla();
+    }
+    
+    public void inicializarVentana(String cargoUsuario) {
+        this.cargoUsuario = cargoUsuario;
     }
 }
