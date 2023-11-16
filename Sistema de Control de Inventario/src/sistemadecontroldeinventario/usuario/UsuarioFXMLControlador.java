@@ -84,14 +84,19 @@ public class UsuarioFXMLControlador implements Initializable {
     @FXML
     private void eliminarUsuario(ActionEvent event) {
         if(!tvUsuarios.getSelectionModel().isEmpty()){
-            String usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem().getCorreoInstitucional();
-            
-            if(Utilidades.mostrarDialogoConfirmacion("Confirmar eliminación", "Desea eliminar al usuario con correo "+usuarioSeleccionado+" ?")){
-                UsuarioDAO.eliminarUsuario(usuarioSeleccionado);
-                Utilidades.mostrarAlertaSimple("Usuario eliminado", "El usuario se eliminó con éxito", Alert.AlertType.CONFIRMATION);
-                cargarDatosTabla();
-                
-            }
+            if(!tvUsuarios.getSelectionModel().getSelectedItem().getNombreCompleto().equalsIgnoreCase("TestAdministrador")){
+               
+                String usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem().getCorreoInstitucional();
+
+                if(Utilidades.mostrarDialogoConfirmacion("Confirmar eliminación", "Desea eliminar al usuario con correo "+usuarioSeleccionado+" ?")){
+                    UsuarioDAO.eliminarUsuario(usuarioSeleccionado);
+                    Utilidades.mostrarAlertaSimple("Usuario eliminado", "El usuario se eliminó con éxito", Alert.AlertType.CONFIRMATION);
+                    cargarDatosTabla();
+
+                }
+            }else{
+                Utilidades.mostrarAlertaSimple("Error al eliminar", "No se puede eliminar el administrador", Alert.AlertType.ERROR);
+            }    
             
         }else{
             Utilidades.mostrarAlertaSimple("Selecciona un usuario", "Se debe seleccionar un usuario", Alert.AlertType.WARNING);
