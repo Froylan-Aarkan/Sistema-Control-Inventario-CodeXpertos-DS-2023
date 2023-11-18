@@ -75,5 +75,14 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
+      <Button layoutX="1249.0" layoutY="2.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Imagenes/cerrarsesion_blanco.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

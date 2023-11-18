@@ -81,5 +81,14 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button layoutX="1265.0" layoutY="1.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Imagenes/cerrarsesion_blanco.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

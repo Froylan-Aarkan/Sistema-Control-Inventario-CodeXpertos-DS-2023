@@ -213,6 +213,25 @@ public class PerifericosFXMLControlador implements Initializable {
         }
     }
     
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", "¿Seguro que desea cerrar sesión?")){
+            try {
+                FXMLLoader loaderInicioSesion = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/InicioSesionFXML.fxml"));
+                Parent inicioSesion = loaderInicioSesion.load();
+
+                Scene escenaVentanaPrincipal = new Scene(inicioSesion);
+                Stage stageInicioSesion = (Stage) tvPerifericos.getScene().getWindow();
+                stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.setResizable(false);
+                stageInicioSesion.setTitle("Iniciar sesión");
+                stageInicioSesion.show();
+            } catch (IOException e) {
+                Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+            }
+        }      
+    }
+    
     private boolean verificarSeleccion(){
         return tvPerifericos.getSelectionModel().getSelectedItem() != null;
     }

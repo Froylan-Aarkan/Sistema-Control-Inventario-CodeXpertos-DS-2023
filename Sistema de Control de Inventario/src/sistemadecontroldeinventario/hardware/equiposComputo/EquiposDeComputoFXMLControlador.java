@@ -171,8 +171,23 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
         cargarTabla();
     }
     
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", "¿Seguro que desea cerrar sesión?")){
+            try {
+                FXMLLoader loaderInicioSesion = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/InicioSesionFXML.fxml"));
+                Parent inicioSesion = loaderInicioSesion.load();
+
+                Scene escenaVentanaPrincipal = new Scene(inicioSesion);
+                Stage stageInicioSesion = (Stage) tvEquiposComputo.getScene().getWindow();
+                stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.setResizable(false);
+                stageInicioSesion.setTitle("Iniciar sesión");
+                stageInicioSesion.show();
+            } catch (IOException e) {
+                Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+            }
+        }        
     }
     
     private void configurarTabla(){
@@ -238,5 +253,9 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     
     private boolean verificarSeleccion(){
         return tvEquiposComputo.getSelectionModel().getSelectedItem() != null;
+    }
+    
+     public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
     }
 }

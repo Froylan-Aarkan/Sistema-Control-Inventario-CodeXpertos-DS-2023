@@ -8,8 +8,6 @@ import Utilidades.Utilidades;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
 import sistemadecontroldeinventario.software.MainSoftwareFXMLControlador;
@@ -124,6 +121,8 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
                 Scene escenaVentanaPrincipal = new Scene(inicioSesion);
                 Stage stageInicioSesion = (Stage) btnCentrosComputo.getScene().getWindow();
                 stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.setResizable(false);
+                stageInicioSesion.setTitle("Iniciar sesión");
                 stageInicioSesion.show();
             } catch (IOException e) {
                 Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
