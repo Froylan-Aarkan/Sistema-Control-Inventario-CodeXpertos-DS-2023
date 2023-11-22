@@ -33,7 +33,7 @@
             <Font size="64.0" />
          </font>
       </Label>
-      <TableView fx:id="tvEquiposComputo" layoutX="133.0" layoutY="149.0" prefHeight="450.0" prefWidth="1100.0">
+      <TableView fx:id="tvEquiposComputo" layoutX="133.0" layoutY="149.0" prefHeight="450.0" prefWidth="1100.0" style="-fx-border-color: #6ABCDC;">
         <columns>
           <TableColumn fx:id="tcModelo" prefWidth="314.0" resizable="false" text="Modelo" />
           <TableColumn fx:id="tcMarca" prefWidth="299.0" resizable="false" text="Marca" />
@@ -51,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="631.0" layoutY="656.0" mnemonicParsing="false" onAction="#eliminarSoftwareEquipo" prefHeight="40.0" prefWidth="104.0" text="Eliminar" />
+      <Button layoutX="631.0" layoutY="656.0" mnemonicParsing="false" onAction="#eliminarSoftwareEquipo" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE" />
       <Label layoutX="24.0" layoutY="81.0" prefHeight="59.0" prefWidth="174.0" text="Software:">
          <font>
             <Font size="41.0" />

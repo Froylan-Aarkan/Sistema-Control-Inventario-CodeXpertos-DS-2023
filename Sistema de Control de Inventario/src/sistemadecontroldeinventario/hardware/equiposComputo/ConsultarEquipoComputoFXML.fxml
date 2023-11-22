@@ -26,13 +26,13 @@
             <Font size="64.0" />
          </font>
       </Label>
-      <TextField fx:id="tfRam" editable="false" layoutX="844.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfRam" editable="false" layoutX="844.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="844.0" layoutY="334.0" text="RAM (GB)">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfAlmacenamiento" editable="false" layoutX="844.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfAlmacenamiento" editable="false" layoutX="844.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="844.0" layoutY="438.0" text="Almacenamiento (GB)">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -43,8 +43,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfDireccionIp" editable="false" layoutX="441.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfDireccionMac" editable="false" layoutX="44.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfDireccionIp" editable="false" layoutX="441.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfDireccionMac" editable="false" layoutX="44.0" layoutY="459.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="44.0" layoutY="438.0" text="Dirección MAC">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -55,14 +55,14 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfGrafica" editable="false" layoutX="441.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfGrafica" editable="false" layoutX="441.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="44.0" layoutY="334.0" text="Sistema operativo">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfSistemaOperativo" editable="false" layoutX="44.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfTarjetaMadre" editable="false" layoutX="844.0" layoutY="259.0" prefHeight="31.0" prefWidth="500.0" />
+      <TextField fx:id="tfSistemaOperativo" editable="false" layoutX="44.0" layoutY="359.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfTarjetaMadre" editable="false" layoutX="844.0" layoutY="259.0" prefHeight="31.0" prefWidth="500.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="844.0" layoutY="235.0" text="Tarjeta Madre">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -73,7 +73,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfProcesador" editable="false" layoutX="44.0" layoutY="259.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfProcesador" editable="false" layoutX="44.0" layoutY="259.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="45.0" layoutY="235.0" text="Procesador">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -94,10 +94,10 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNumeroSerie" editable="false" layoutX="844.0" layoutY="159.0" prefHeight="31.0" prefWidth="500.0" />
-      <TextField fx:id="tfModelo" editable="false" layoutX="442.0" layoutY="159.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfMarca" editable="false" layoutX="44.0" layoutY="159.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfArquitectura" editable="false" layoutX="442.0" layoutY="259.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfNumeroSerie" editable="false" layoutX="844.0" layoutY="159.0" prefHeight="31.0" prefWidth="500.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfModelo" editable="false" layoutX="442.0" layoutY="159.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfMarca" editable="false" layoutX="44.0" layoutY="159.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfArquitectura" editable="false" layoutX="442.0" layoutY="259.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
       <Label layoutX="256.0" layoutY="-11.0" text="Consultar Equipo de Cómputo" textFill="WHITE">
          <font>
@@ -109,13 +109,13 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfEstado" editable="false" layoutX="44.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfEstado" editable="false" layoutX="44.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="443.0" layoutY="539.0" text="Fecha de ingreso">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfFechaIngreso" editable="false" layoutX="441.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfFechaIngreso" editable="false" layoutX="441.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <ImageView fitHeight="101.0" fitWidth="100.0" layoutX="634.0" layoutY="605.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../Imagenes/botonregresar_azul.png" />
@@ -126,7 +126,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="tfUbicacion" editable="false" layoutX="844.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfUbicacion" editable="false" layoutX="844.0" layoutY="559.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="843.0" layoutY="539.0" text="Ubicación">
          <font>
             <Font name="System Bold" size="15.0" />

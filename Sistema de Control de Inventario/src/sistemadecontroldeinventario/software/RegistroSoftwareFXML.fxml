@@ -15,8 +15,8 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNombre" layoutX="54.0" layoutY="116.0" prefHeight="25.0" prefWidth="488.0" />
-      <TextField fx:id="tfPeso" layoutX="54.0" layoutY="178.0" prefHeight="25.0" prefWidth="210.0" />
+      <TextField fx:id="tfNombre" layoutX="54.0" layoutY="116.0" prefHeight="25.0" prefWidth="488.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfPeso" layoutX="54.0" layoutY="178.0" prefHeight="25.0" prefWidth="210.0" style="-fx-border-color: #6ABCDC;" />
       <ComboBox fx:id="cbArquitectura" layoutX="326.0" layoutY="178.0" prefHeight="31.0" prefWidth="216.0" promptText="------Elija una arquitectura------" />
       <Label layoutX="54.0" layoutY="99.0" text="Nombre:" />
       <Label layoutX="54.0" layoutY="161.0" text="Peso:" />

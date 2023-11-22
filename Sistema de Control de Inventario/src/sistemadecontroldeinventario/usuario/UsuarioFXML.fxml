@@ -42,7 +42,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView fx:id="tvUsuarios" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
+      <TableView fx:id="tvUsuarios" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0" style="-fx-border-color: #6ABCDC;">
          <columns>
             <TableColumn fx:id="tcNombre" prefWidth="381.0" text="Nombre completo" />
             <TableColumn fx:id="tcCorreo" prefWidth="270.0" text="Correo Institucional" />

@@ -56,9 +56,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="tfMarca" layoutX="34.0" layoutY="209.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfModelo" layoutX="432.0" layoutY="209.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfNumeroSerie" layoutX="834.0" layoutY="209.0" prefHeight="31.0" prefWidth="500.0" />
+      <TextField fx:id="tfMarca" layoutX="34.0" layoutY="209.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfModelo" layoutX="432.0" layoutY="209.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfNumeroSerie" layoutX="834.0" layoutY="209.0" prefHeight="31.0" prefWidth="500.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="35.0" layoutY="188.0" text="Marca">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -79,7 +79,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfProcesador" layoutX="34.0" layoutY="309.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfProcesador" layoutX="34.0" layoutY="309.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <ComboBox fx:id="cbArquitectura" layoutX="432.0" layoutY="309.0" prefHeight="31.0" prefWidth="218.0" promptText="Seleccionar arquitectura" />
       <Label layoutX="432.0" layoutY="285.0" text="Arquitectura">
          <font>
@@ -91,14 +91,14 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfTarjetaMadre" layoutX="834.0" layoutY="309.0" prefHeight="31.0" prefWidth="500.0" />
-      <TextField fx:id="tfSistemaOperativo" layoutX="34.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfTarjetaMadre" layoutX="834.0" layoutY="309.0" prefHeight="31.0" prefWidth="500.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfSistemaOperativo" layoutX="34.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="34.0" layoutY="384.0" text="Sistema operativo">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfGrafica" layoutX="431.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfGrafica" layoutX="431.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="431.0" layoutY="384.0" text="Gráfica">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -109,8 +109,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfDireccionMac" layoutX="34.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfDireccionIp" layoutX="431.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfDireccionMac" layoutX="34.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
+      <TextField fx:id="tfDireccionIp" layoutX="431.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="431.0" layoutY="488.0" text="Dirección IP">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -131,13 +131,13 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfAlmacenamiento" layoutX="834.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfAlmacenamiento" layoutX="834.0" layoutY="509.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label layoutX="834.0" layoutY="384.0" text="RAM (GB)">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfRam" layoutX="834.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" />
+      <TextField fx:id="tfRam" layoutX="834.0" layoutY="409.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <Label fx:id="lbErrorRam" layoutX="835.0" layoutY="437.0" textFill="RED" />
       <Label fx:id="lbErrorAlmacenamiento" layoutX="835.0" layoutY="536.0" textFill="RED" />
    </children>
