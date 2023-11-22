@@ -42,7 +42,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView fx:id="tvSoftware" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0">
+      <TableView fx:id="tvSoftware" layoutX="237.0" layoutY="119.0" prefHeight="418.0" prefWidth="902.0" style="-fx-border-color: #6ABCDC;">
          <columns>
             <TableColumn fx:id="tcNombre" prefWidth="400.0" text="Nombre" />
             <TableColumn fx:id="tcPeso" prefWidth="251.0" text="Peso" />
@@ -66,5 +66,14 @@
          <font>
             <Font size="23.0" />
          </font></Button>
+      <Button layoutX="1254.0" layoutY="-2.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Imagenes/cerrarsesion_blanco.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

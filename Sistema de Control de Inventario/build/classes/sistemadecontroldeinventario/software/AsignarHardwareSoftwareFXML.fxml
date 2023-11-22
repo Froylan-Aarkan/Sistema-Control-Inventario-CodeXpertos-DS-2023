@@ -42,7 +42,7 @@
                <Font size="64.0" />
             </font>
          </Label>
-         <TableView fx:id="tvSoftware" layoutX="614.0" layoutY="157.0" prefHeight="418.0" prefWidth="713.0">
+         <TableView fx:id="tvSoftware" layoutX="614.0" layoutY="157.0" prefHeight="418.0" prefWidth="713.0" style="-fx-border-color: #6ABCDC;">
          <columns>
             <TableColumn fx:id="tcNombre" prefWidth="391.0" text="Nombre" />
             <TableColumn fx:id="tcPeso" minWidth="0.0" prefWidth="195.0" text="Peso" />
@@ -60,7 +60,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="614.0" layoutY="127.0" text="Software:" textFill="#2115ff">
+      <Label layoutX="614.0" layoutY="127.0" text="Software no instalado:" textFill="#2115ff">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

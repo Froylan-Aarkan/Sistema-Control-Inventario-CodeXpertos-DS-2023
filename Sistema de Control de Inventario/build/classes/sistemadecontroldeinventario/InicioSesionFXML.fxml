@@ -26,7 +26,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="tfUsuario" layoutX="448.0" layoutY="278.0" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: black;">
+      <TextField fx:id="tfUsuario" layoutX="448.0" layoutY="278.0" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;">
          <font>
             <Font size="14.0" />
          </font>
@@ -44,12 +44,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <PasswordField fx:id="pfContrasenia" layoutX="448.0" layoutY="369.0" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: black;">
+      <PasswordField fx:id="pfContrasenia" layoutX="448.0" layoutY="369.0" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </PasswordField>
-      <Button layoutX="534.0" layoutY="440.0" mnemonicParsing="false" onAction="#iniciarSesion" style="-fx-background-color: #00A651;" text="Iniciar sesión" textFill="WHITE">
+      <Button layoutX="534.0" layoutY="440.0" mnemonicParsing="false" onAction="#iniciarSesion" styleClass="botonInicioSesion" stylesheets="@InicioSesionCascadeStyleSheet.css" text="Iniciar sesión" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
