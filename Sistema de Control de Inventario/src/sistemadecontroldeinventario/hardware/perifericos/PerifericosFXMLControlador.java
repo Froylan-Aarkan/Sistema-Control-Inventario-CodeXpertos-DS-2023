@@ -110,7 +110,7 @@ public class PerifericosFXMLControlador implements Initializable {
                 FXMLLoader loaderVentanaConsultarPeriferico = new FXMLLoader(getClass().getResource("ConsultarPerifericoFXML.fxml"));
                 Parent ventanaConsultarPeriferico = loaderVentanaConsultarPeriferico.load();
 
-                ModificarPerifericoFXMLControlador controlador = loaderVentanaConsultarPeriferico.getController();
+                ConsultarPerifericoFXMLControlador controlador = loaderVentanaConsultarPeriferico.getController();
                 controlador.inicializarVentana(PerifericoDAO.buscarPerifericoPorNumeroSerie(tvPerifericos.getSelectionModel().getSelectedItem().getNumeroSerie()));
 
                 Scene escenarioConsultarPeriferico = new Scene(ventanaConsultarPeriferico);

@@ -66,6 +66,7 @@
          <font>
             <Font size="23.0" />
          </font></Button>
+<<<<<<< Updated upstream
       <Button layoutX="1273.0" layoutY="-2.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
          <graphic>
             <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
@@ -75,5 +76,7 @@
             </ImageView>
          </graphic>
       </Button>
+=======
+>>>>>>> Stashed changes
    </children>
 </AnchorPane>
