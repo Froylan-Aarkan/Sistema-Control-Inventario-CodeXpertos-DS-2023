@@ -95,9 +95,11 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             Stage stageEquiposDeComputo = new Stage();
             stageEquiposDeComputo.setScene(escenarioRegistrarEquipoDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+            stageEquiposDeComputo.setResizable(false);
+            stageEquiposDeComputo.setTitle("Registrar equipo de cómputo");
             stageEquiposDeComputo.showAndWait();
             cargarTabla();
-            
+            inicializarBusquedaEquiposComputo();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,8 +119,11 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
                 Stage stageEquiposDeComputo = new Stage();
                 stageEquiposDeComputo.setScene(escenarioModificarEquipoDeComputo);
                 stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageEquiposDeComputo.setResizable(false);
+                stageEquiposDeComputo.setTitle("Modificar equipo de cómputo");
                 stageEquiposDeComputo.showAndWait();
-                cargarTabla();            
+                cargarTabla();    
+                inicializarBusquedaEquiposComputo();
             }catch (IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -142,7 +147,11 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
                 Stage stageEquiposDeComputo = new Stage();
                 stageEquiposDeComputo.setScene(escenarioConsultarEquipoDeComputo);
                 stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-                stageEquiposDeComputo.showAndWait();            
+                stageEquiposDeComputo.showAndWait();
+                stageEquiposDeComputo.setResizable(false);
+                stageEquiposDeComputo.setTitle("Consultar equipo de cómputo");
+                cargarTabla();    
+                inicializarBusquedaEquiposComputo();
             } catch(IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -168,7 +177,8 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a eliminar.", Alert.AlertType.WARNING);
         }        
         
-        cargarTabla();
+        cargarTabla();    
+        inicializarBusquedaEquiposComputo();
     }
     
     @FXML
