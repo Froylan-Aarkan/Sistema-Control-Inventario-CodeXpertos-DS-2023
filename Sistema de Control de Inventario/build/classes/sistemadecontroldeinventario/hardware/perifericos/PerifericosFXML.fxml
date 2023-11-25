@@ -83,7 +83,11 @@
             <Font size="23.0" />
          </font>
       </Button>
+<<<<<<< Updated upstream
       <TextField fx:id="tfBusqueda" layoutX="434.0" layoutY="107.0" prefHeight="31.0" prefWidth="500.0" promptText="Buscar" style="-fx-border-color: #6ABCDC;" />
+=======
+      <TextField fx:id="tfBusqueda" layoutX="434.0" layoutY="107.0" prefHeight="31.0" prefWidth="500.0" promptText="Buscar por " style="-fx-border-color: black;" />
+>>>>>>> Stashed changes
       <Button layoutX="1258.0" layoutY="2.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
          <graphic>
             <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">

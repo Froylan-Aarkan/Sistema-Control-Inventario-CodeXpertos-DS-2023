@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/InformacionCentroDeComputo.fxml</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/ConsultarCentroDeComputo.fxml</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/ConsultarCentroDeComputoController.java</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/RegistrarCentroDeComputo.fxml</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/hardware/perifericos/PerifericosFXMLControlador.java</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/CentroComputo/ModificarCentroDeComputo.fxml</file>
+            <file>file:/C:/Users/Dell/Documents/DesarrolloDeSoftware/Sistema-de-Control-de-Inventario/Sistema%20de%20Control%20de%20Inventario/src/sistemadecontroldeinventario/hardware/perifericos/ConsultarPerifericoFXMLControlador.java</file>
+        </group>
     </open-files>
 </project-private>
