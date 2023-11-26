@@ -101,6 +101,7 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
             cargarTabla();
             inicializarBusquedaEquiposComputo();
         } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
