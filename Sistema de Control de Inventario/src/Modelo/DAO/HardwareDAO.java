@@ -77,7 +77,7 @@ public class HardwareDAO {
                 
                 LocalDateTime fechaHoraActual = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                sentenciaHardware.setString(14, fechaHoraActual.format(formatter).toString());
+                sentenciaHardware.setString(14, fechaHoraActual.format(formatter));
                 
                 sentenciaHardware.setString(15, "No aplica.");
                 
