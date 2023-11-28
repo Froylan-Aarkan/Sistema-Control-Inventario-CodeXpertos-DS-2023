@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.CentroComputo.ConsultarCentroDeComputoController;
 import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
 import sistemadecontroldeinventario.software.MainSoftwareFXMLControlador;
 import sistemadecontroldeinventario.usuario.UsuarioFXMLControlador;
@@ -33,6 +34,10 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
     private Button btnHardware;
     @FXML
     private Button btnCentrosComputo;
+    @FXML
+    private Button btnSoftware;
+    @FXML
+    private Button btnUsuarios;
 
     /**
      * Initializes the controller class.
@@ -101,10 +106,13 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
         try {
             FXMLLoader loaderVentanaCentrosDeComputo = new FXMLLoader(getClass().getResource("CentroComputo/ConsultarCentroDeComputo.fxml"));
             Parent ventanaCentrosDeComputo = loaderVentanaCentrosDeComputo.load();
-            
+            ConsultarCentroDeComputoController controlador = loaderVentanaCentrosDeComputo.getController();
             Scene escenarioCentrosDeComputo = new Scene(ventanaCentrosDeComputo);
             Stage stageCentrosDeComputo = (Stage) btnCentrosComputo.getScene().getWindow();
             stageCentrosDeComputo.setScene(escenarioCentrosDeComputo);
+            stageCentrosDeComputo.setTitle("Centros de cómputo");
+            stageCentrosDeComputo.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
             stageCentrosDeComputo.show();
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
@@ -132,5 +140,15 @@ public class VentanaPrincipalFXMLControlador implements Initializable {
   
     public void inicializarVentana(String cargoUsuario){
         this.cargoUsuario = cargoUsuario;
+        
+        if(cargoUsuario.equalsIgnoreCase("encargado")){
+            btnUsuarios.setVisible(false);
+            btnCentrosComputo.setLayoutX(508);
+            btnCentrosComputo.setLayoutY(393);
+        }else if(cargoUsuario.equalsIgnoreCase("administrador")){
+            btnSoftware.setVisible(false);
+            btnHardware.setLayoutX(508);
+            btnHardware.setLayoutY(47);
+        }
     }
 }

@@ -22,14 +22,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.InicioSesionFXMLControlador;
+import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 
 /**
  * FXML Controller class
  *
  * @author Elotlan
  */
-public class InformacionCentroDeComputoController implements Initializable {
-
+public class InformacionCentroDeComputoController implements Initializable {    
     @FXML
     private TextField tfDireccion;
     @FXML
@@ -41,7 +41,7 @@ public class InformacionCentroDeComputoController implements Initializable {
     @FXML
     private TextField tfPiso;
     @FXML
-    private Button btnCancelar;
+    private Button btnSalir;
 
     /**
      * Initializes the controller class.
@@ -73,22 +73,9 @@ public class InformacionCentroDeComputoController implements Initializable {
     }
 
     @FXML
-    private void clicCancelar(ActionEvent event) {
-        try {
-            FXMLLoader loaderVentanaCentrosDeComputo = new FXMLLoader(getClass().getResource("ConsultarCentroDeComputo.fxml"));
-            Parent ventanaCentrosDeComputo = loaderVentanaCentrosDeComputo.load();
-            
-            Scene escenarioCentrosDeComputo = new Scene(ventanaCentrosDeComputo);
-            Stage stageCentrosDeComputo = new Stage();
-            stageCentrosDeComputo.setScene(escenarioCentrosDeComputo);
-            stageCentrosDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageCentrosDeComputo.showAndWait();
-            
-            Stage stage = (Stage) btnCancelar.getScene().getWindow();
-            stage.close();
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void clicCancelar(ActionEvent event) {         
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
     
 }

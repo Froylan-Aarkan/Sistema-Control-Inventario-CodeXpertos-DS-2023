@@ -16,13 +16,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -41,7 +39,8 @@ import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
  * @author Elotlan
  */
 public class ConsultarCentroDeComputoController implements Initializable {
-
+    private String cargoUsuario;
+    
     @FXML
     private TableView<CentroComputo> tbCentroComputo;
     @FXML
@@ -104,15 +103,15 @@ public class ConsultarCentroDeComputoController implements Initializable {
         try {
             FXMLLoader loaderVentanaPrincipal = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/VentanaPrincipalFXML.fxml"));
             Parent ventanaPrincipal = loaderVentanaPrincipal.load();
-            VentanaPrincipalFXMLControlador controladorVentanaPrincipal = loaderVentanaPrincipal.getController();
+            VentanaPrincipalFXMLControlador controlador = loaderVentanaPrincipal.getController();
             
             Scene escenaVentanaPrincipal = new Scene(ventanaPrincipal);
-            Stage stageVentanaPrincipal = new Stage();
+            Stage stageVentanaPrincipal = (Stage) btnConsultar.getScene().getWindow();
             stageVentanaPrincipal.setScene(escenaVentanaPrincipal);
+            stageVentanaPrincipal.setResizable(false);
+            stageVentanaPrincipal.setTitle("Ventana Principal");
+            controlador.inicializarVentana(cargoUsuario);
             stageVentanaPrincipal.show();
-            
-            Stage stage = (Stage) btnSalir.getScene().getWindow();
-            stage.close();
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -128,10 +127,7 @@ public class ConsultarCentroDeComputoController implements Initializable {
             Stage stageEquiposDeComputo = new Stage();
             stageEquiposDeComputo.setScene(escenarioRegistrarEquipoDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();
-            
-            Stage stage = (Stage) btnRegistrar.getScene().getWindow();
-            stage.close();
+            stageEquiposDeComputo.showAndWait();            
         } catch (IOException ex) {
             Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -152,9 +148,6 @@ public class ConsultarCentroDeComputoController implements Initializable {
                 stageInformacionCentroDeComputo.setScene(escenarioInformacionCentroDeComputo);
                 stageInformacionCentroDeComputo.initModality(Modality.APPLICATION_MODAL);
                 stageInformacionCentroDeComputo.showAndWait();
-
-                Stage stage = (Stage) btnConsultar.getScene().getWindow();
-                stage.close();
             } catch (IOException ex) {
                 Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -178,9 +171,6 @@ public class ConsultarCentroDeComputoController implements Initializable {
                 stageInformacionCentroDeComputo.setScene(escenarioInformacionCentroDeComputo);
                 stageInformacionCentroDeComputo.initModality(Modality.APPLICATION_MODAL);
                 stageInformacionCentroDeComputo.showAndWait();
-
-                Stage stage = (Stage) btnConsultar.getScene().getWindow();
-                stage.close();
             } catch (IOException ex) {
                 Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -206,8 +196,38 @@ public class ConsultarCentroDeComputoController implements Initializable {
         mostrarTabla();
     }
     
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", "¿Seguro que desea cerrar sesión?")){
+            try {
+                FXMLLoader loaderInicioSesion = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/InicioSesionFXML.fxml"));
+                Parent inicioSesion = loaderInicioSesion.load();
+
+                Scene escenaVentanaPrincipal = new Scene(inicioSesion);
+                Stage stageInicioSesion = (Stage) btnRegistrar.getScene().getWindow();
+                stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.setResizable(false);
+                stageInicioSesion.setTitle("Iniciar sesión");
+                stageInicioSesion.show();
+            } catch (IOException e) {
+                Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+            }
+        }        
+    }
+    
     private boolean verificarSeleccion(){
         return tbCentroComputo.getSelectionModel().getSelectedItem() != null;
     }
     
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+        
+        if(cargoUsuario.equalsIgnoreCase("administrador")){
+            btnModificar.setVisible(false);
+            btnConsultar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegistrar.setLayoutX(619);
+            btnRegistrar.setLayoutY(703);
+        }
+    }   
 }

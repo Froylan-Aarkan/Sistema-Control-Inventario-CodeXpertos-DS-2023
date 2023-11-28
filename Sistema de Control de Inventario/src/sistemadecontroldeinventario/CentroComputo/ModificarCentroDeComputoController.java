@@ -8,7 +8,6 @@ package sistemadecontroldeinventario.CentroComputo;
 import Modelo.DAO.CentroComputoDAO;
 import Modelo.POJO.CentroComputo;
 import Utilidades.Utilidades;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -44,11 +43,11 @@ public class ModificarCentroDeComputoController implements Initializable {
     @FXML
     private TextField tfAula;
     @FXML
-    private Button btnCancelar;
-    @FXML
     private TextField tfPiso;
     @FXML
     private Button btnModificar;
+    @FXML
+    private Button btnSalir;
 
     /**
      * Initializes the controller class.
@@ -77,19 +76,8 @@ public class ModificarCentroDeComputoController implements Initializable {
     
     @FXML
     private void clicCancelar(ActionEvent event){
-        try {
-            FXMLLoader loaderVentanaCentrosDeComputo = new FXMLLoader(getClass().getResource("ConsultarCentroDeComputo.fxml"));
-            Parent ventanaCentrosDeComputo = loaderVentanaCentrosDeComputo.load();
-            
-            Scene escenarioCentrosDeComputo = new Scene(ventanaCentrosDeComputo);
-            Stage stageCentrosDeComputo = new Stage();
-            stageCentrosDeComputo.setScene(escenarioCentrosDeComputo);
-            stageCentrosDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageCentrosDeComputo.showAndWait();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

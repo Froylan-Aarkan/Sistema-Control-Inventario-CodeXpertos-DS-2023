@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.InicioSesionFXMLControlador;
-import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
 
 /**
  * FXML Controller class
@@ -47,22 +46,14 @@ public class RegistrarCentroDeComputoController implements Initializable {
     @FXML
     private Button btnRegistrar;
     @FXML
-    private Button btnCancelar;
-
-    Usuario usuarioActivo = new Usuario();
+    private Button btnSalir;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    public void RecibirUsuario(Usuario usuario){
-        usuarioActivo = usuario;
-    }
-
-    
+    }        
     
     @FXML
     private void clicRegistrar(ActionEvent event) throws SQLException {
@@ -91,22 +82,8 @@ public class RegistrarCentroDeComputoController implements Initializable {
     
     @FXML
     private void clicCancelar(ActionEvent event) {
-        try {
-            FXMLLoader loaderVentanaCentrosDeComputo = new FXMLLoader(getClass().getResource("ConsultarCentroDeComputo.fxml"));
-            Parent ventanaCentrosDeComputo = loaderVentanaCentrosDeComputo.load();
-            
-            Scene escenarioCentrosDeComputo = new Scene(ventanaCentrosDeComputo);
-            Stage stageCentrosDeComputo = new Stage();
-            stageCentrosDeComputo.setScene(escenarioCentrosDeComputo);
-            stageCentrosDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageCentrosDeComputo.showAndWait();
-            
-            Stage stage = (Stage) btnRegistrar.getScene().getWindow();
-            stage.close();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
     
     private boolean validarCamposVacios(){

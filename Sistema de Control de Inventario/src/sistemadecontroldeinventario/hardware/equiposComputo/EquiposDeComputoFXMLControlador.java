@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -55,6 +56,14 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     private TableColumn tcNumeroSerie;
     @FXML
     private TableColumn tcEstado;
+    @FXML
+    private Button btnRegistrar;
+    @FXML
+    private Button btnModificar;
+    @FXML
+    private Button btnConsultar;
+    @FXML
+    private Button btnEliminar;
 
     /**
      * Initializes the controller class.
@@ -268,5 +277,13 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
     
      public void inicializarVentana(String cargoUsuario){
         this.cargoUsuario = cargoUsuario;
+        
+        if(cargoUsuario.equalsIgnoreCase("administrador")){
+            btnModificar.setVisible(false);
+            btnConsultar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegistrar.setLayoutX(619);
+            btnRegistrar.setLayoutY(692);
+        }
     }
 }

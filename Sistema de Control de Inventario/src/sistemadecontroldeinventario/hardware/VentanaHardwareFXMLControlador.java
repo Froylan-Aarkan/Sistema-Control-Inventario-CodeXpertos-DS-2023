@@ -34,6 +34,8 @@ public class VentanaHardwareFXMLControlador implements Initializable {
     private Button btnEquiposComputo;
     @FXML
     private Button btnBitacora;
+    @FXML
+    private Button btnPerifericos;
 
     /**
      * Initializes the controller class.
@@ -57,6 +59,7 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             controlador.inicializarVentana(cargoUsuario);
             stageEquiposDeComputo.show();            
         } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
@@ -75,6 +78,7 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             controlador.inicializarVentana(cargoUsuario);
             stagePerifericos.show();
         }catch(IOException e){
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
         
@@ -97,6 +101,7 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             stage.show();
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }       
     }
     
@@ -115,13 +120,10 @@ public class VentanaHardwareFXMLControlador implements Initializable {
                 stageInicioSesion.show();
             } catch (IOException e) {
                 Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+                e.printStackTrace();
             }
         }        
     }
-    
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
-    }  
 
     @FXML
     private void desplegarBitacora(ActionEvent event) {
@@ -137,7 +139,19 @@ public class VentanaHardwareFXMLControlador implements Initializable {
             controlador.inicializarVentana(cargoUsuario);
             stagePerifericos.show();
         }catch(IOException e){
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
+    
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+        
+        if(cargoUsuario.equalsIgnoreCase("administrador")){
+            btnBitacora.setVisible(false);
+            btnPerifericos.setVisible(false);
+            btnEquiposComputo.setLayoutX(514);
+            btnEquiposComputo.setLayoutY(194);
+        }
+    }  
 }
