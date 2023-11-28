@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import sistemadecontroldeinventario.VentanaPrincipalFXMLControlador;
+import sistemadecontroldeinventario.bitacora.SeleccionarDispositivoFXMLController;
 import sistemadecontroldeinventario.hardware.equiposComputo.EquiposDeComputoFXMLControlador;
 import sistemadecontroldeinventario.hardware.perifericos.PerifericosFXMLControlador;
 
@@ -31,6 +32,8 @@ public class VentanaHardwareFXMLControlador implements Initializable {
     
     @FXML
     private Button btnEquiposComputo;
+    @FXML
+    private Button btnBitacora;
 
     /**
      * Initializes the controller class.
@@ -119,4 +122,22 @@ public class VentanaHardwareFXMLControlador implements Initializable {
     public void inicializarVentana(String cargoUsuario){
         this.cargoUsuario = cargoUsuario;
     }  
+
+    @FXML
+    private void desplegarBitacora(ActionEvent event) {
+        try{
+            FXMLLoader loaderVentanaPerifericos = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/bitacora/SeleccionarDispositivoFXML.fxml"));
+            Parent ventanaPerifericos = loaderVentanaPerifericos.load();
+            SeleccionarDispositivoFXMLController controlador = loaderVentanaPerifericos.getController();
+            Scene escenarioPerifericos = new Scene(ventanaPerifericos);
+            Stage stagePerifericos = (Stage) btnEquiposComputo.getScene().getWindow();
+            stagePerifericos.setScene(escenarioPerifericos);
+            stagePerifericos.setResizable(false);
+            stagePerifericos.setTitle("Bitacora");
+            controlador.inicializarVentana(cargoUsuario);
+            stagePerifericos.show();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 }

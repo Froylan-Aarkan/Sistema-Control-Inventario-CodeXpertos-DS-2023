@@ -61,6 +61,7 @@ public class ConsultarPerifericoFXMLControlador implements Initializable {
         tfModelo.setText(perifericoConsulta.getModelo());
         tfNumeroSerie.setText(perifericoConsulta.getNumeroSerie());
         tfTipo.setText(perifericoConsulta.getTipo());
+        tfEstado.setText(perifericoConsulta.getEstado());
         if(perifericoConsulta.isInalambrico()){
             tfTipoConexion.setText("Inalámbrico");
         }else{

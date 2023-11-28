@@ -10,13 +10,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="898.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.CentroComputo.ConsultarCentroDeComputoController">
+<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="898.0" style="-fx-background-color: #C3D9EA;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadecontroldeinventario.bitacora.SeleccionarDispositivoFXMLController">
    <children>
-      <TableView fx:id="tbCentroComputo" layoutX="281.0" layoutY="132.0" prefHeight="390.0" prefWidth="817.0">
+      <TableView fx:id="tbDispositivo" layoutX="281.0" layoutY="132.0" prefHeight="390.0" prefWidth="817.0">
         <columns>
-          <TableColumn fx:id="colAula" prefWidth="162.0" text="Aula" />
-          <TableColumn fx:id="colFacultad" minWidth="0.0" prefWidth="572.0" text="Facultad" />
-            <TableColumn fx:id="colEdificio" prefWidth="75.0" text="Edificio" />
+          <TableColumn fx:id="colModelo" prefWidth="240.0" text="Modelo" />
+          <TableColumn fx:id="colNumeroSerie" minWidth="0.0" prefWidth="373.0" text="Numero de serie" />
+            <TableColumn fx:id="colEstado" prefWidth="196.0" text="Estado" />
         </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00aa45" height="80.0" layoutY="675.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
@@ -26,30 +26,18 @@
             <Image url="@../../Imagenes/botonregresar_blanco.png" />
          </image>
       </ImageView>
-      <Label layoutX="385.0" layoutY="-11.0" text="Centros de Cómputo" textFill="WHITE">
+      <Label layoutX="385.0" layoutY="-11.0" text="Seleccionar dispositivo" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font></Label>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="142.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btnRegistrar" layoutX="168.0" layoutY="703.0" mnemonicParsing="false" onAction="#clicRegistrar" text="Registrar" style="-fx-background-color: #058125;" textFill="WHITE">
+      <Button fx:id="btnRegistrar" layoutX="435.0" layoutY="690.0" mnemonicParsing="false" onAction="#clicRegistrar" style="-fx-background-color: #058125;" text="Registrar bitacora" textFill="WHITE">
           <font>
             <Font size="23.0" />
          </font>
          </Button>
          
-      <Button fx:id="btnConsultar" layoutX="509.0" layoutY="707.0" mnemonicParsing="false" onAction="#clicConsultar" text="Consultar" style="-fx-background-color: #058125;" textFill="WHITE">
-          <font>
-            <Font size="23.0" />
-         </font>
-         </Button>
-      
-      <Button fx:id="btnModificar" layoutX="849.0" layoutY="708.0" mnemonicParsing="false" onAction="#clicModificar" text="Modificar" style="-fx-background-color: #058125;" textFill="WHITE">
-          <font>
-            <Font size="23.0" />
-         </font>
-         </Button>
-      
-      <Button fx:id="btnEliminar" layoutX="1178.0" layoutY="703.0" mnemonicParsing="false" onAction="#clicEliminar" text="Eliminar" style="-fx-background-color: #058125;" textFill="WHITE">
+         <Button fx:id="btnConsultar" layoutX="706.0" layoutY="690.0" mnemonicParsing="false" onAction="#clicConsultar" style="-fx-background-color: #058125;" text="Consultar bitacora" textFill="WHITE">
           <font>
             <Font size="23.0" />
          </font>

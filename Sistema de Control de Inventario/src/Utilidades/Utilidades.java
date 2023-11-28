@@ -36,4 +36,18 @@ public class Utilidades {
         
         return respuesta.get() == ButtonType.OK;
     }
+    
+    public static boolean mostrarDialogoContinuar(String titulo, String mensaje){
+        Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        alertaConfirmacion.setTitle(titulo);
+        alertaConfirmacion.setContentText(mensaje);
+        alertaConfirmacion.setHeaderText(null);
+        Optional<ButtonType> respuesta = alertaConfirmacion.showAndWait();
+        
+        if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
