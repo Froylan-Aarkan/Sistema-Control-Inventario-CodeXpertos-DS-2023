@@ -64,9 +64,9 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNombre" layoutX="137.0" layoutY="384.0" prefHeight="35.0" prefWidth="410.0" />
-      <TextField fx:id="tfCorreo" layoutX="810.0" layoutY="379.0" prefHeight="35.0" prefWidth="410.0" />
-      <TextField fx:id="tfPassword" layoutX="137.0" layoutY="527.0" prefHeight="35.0" prefWidth="410.0" />
-      <TextField fx:id="tfCargo" layoutX="810.0" layoutY="532.0" prefHeight="35.0" prefWidth="410.0" />
+      <TextField fx:id="tfNombre" editable="false" layoutX="137.0" layoutY="384.0" prefHeight="35.0" prefWidth="410.0" />
+      <TextField fx:id="tfCorreo" editable="false" layoutX="810.0" layoutY="379.0" prefHeight="35.0" prefWidth="410.0" />
+      <TextField fx:id="tfPassword" editable="false" layoutX="137.0" layoutY="527.0" prefHeight="35.0" prefWidth="410.0" />
+      <TextField fx:id="tfCargo" editable="false" layoutX="810.0" layoutY="532.0" prefHeight="35.0" prefWidth="410.0" />
    </children>
 </AnchorPane>
