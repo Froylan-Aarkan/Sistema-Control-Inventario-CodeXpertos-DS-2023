@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
 
 /**
  * FXML Controller class
@@ -127,8 +128,20 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
 
     @FXML
     private void clicSalir(ActionEvent event) {
-        Stage stage = (Stage) btnSalir.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loaderVentanaHardware = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/hardware/VentanaHardwareFXML.fxml"));
+            Parent ventanaHardware = loaderVentanaHardware.load();
+            VentanaHardwareFXMLControlador controlador = loaderVentanaHardware.getController();
+            Scene escenarioHardware = new Scene(ventanaHardware);
+            Stage stageHardware = (Stage) tbDispositivo.getScene().getWindow();
+            stageHardware.setScene(escenarioHardware);
+            stageHardware.setTitle("Hardware");
+            stageHardware.setResizable(false);
+            controlador.inicializarVentana(cargoUsuario);
+            stageHardware.show();            
+        } catch (IOException e) {
+            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        }
     }
     
     private boolean verificarSeleccion(){

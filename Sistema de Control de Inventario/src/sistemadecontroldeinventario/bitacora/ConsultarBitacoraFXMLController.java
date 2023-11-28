@@ -67,7 +67,8 @@ public class ConsultarBitacoraFXMLController implements Initializable {
 
     @FXML
     private void clicCancelar(ActionEvent event) {
-        
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
