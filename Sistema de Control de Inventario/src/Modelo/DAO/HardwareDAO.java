@@ -304,4 +304,27 @@ public class HardwareDAO {
         }
         return resultado;
     }
+    
+    public static int buscarIdHardwarePorPosicion(int idCentroComputo, String posicion){
+        int idHardware = 0;
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT idHardware FROM hardware WHERE CentroComputo_idCentroComputo = ? AND posicion = ?";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                consultaHardware.setInt(1, idCentroComputo);
+                consultaHardware.setString(2, posicion);
+                ResultSet resultadoConsulta = consultaHardware.executeQuery();
+                if(resultadoConsulta.next()){
+                    idHardware = resultadoConsulta.getInt("idHardware");
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde..", Alert.AlertType.ERROR);
+        }
+        
+        return idHardware;
+    }
 }

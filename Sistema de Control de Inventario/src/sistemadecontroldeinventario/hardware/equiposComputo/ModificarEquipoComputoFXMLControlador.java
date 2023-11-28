@@ -359,6 +359,16 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 tfAlmacenamiento.setStyle("");
             }
             
+            if(HardwareDAO.buscarIdHardwarePorPosicion(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo(), cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem()) > 0){
+               lbErrorLetra.setText("Esa posición ya esta ocupada.");
+               cbLetra.setStyle("");
+               cbNumero.setStyle("");
+                sonValidos = false;
+            }else{
+                lbErrorLetra.setText("");
+               cbLetra.setStyle("");
+               cbNumero.setStyle(""); 
+            }
             
         } catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

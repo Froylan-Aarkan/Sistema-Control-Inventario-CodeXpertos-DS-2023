@@ -52,8 +52,6 @@ public class PerifericosFXMLControlador implements Initializable {
     @FXML
     private TableColumn tcEstado;
     @FXML
-    private TextField tfBusqueda;
-    @FXML
     private TableView<Periferico> tvPerifericos;
 
     /**
@@ -63,7 +61,6 @@ public class PerifericosFXMLControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarTabla();
-        inicializarBusquedaPerifericos();
     }    
 
     @FXML
@@ -97,7 +94,7 @@ public class PerifericosFXMLControlador implements Initializable {
                 }
             }
         }else{
-            Utilidades.mostrarAlertaSimple("Periférico no seleccionado", "No se ha seleccionado el periférico a modificar.", Alert.AlertType.WARNING);
+            Utilidades.mostrarAlertaSimple("Periférico no seleccionado", "No se ha seleccionado el periférico a eliminar.", Alert.AlertType.WARNING);
         }
         
         cargarTabla();
@@ -121,11 +118,12 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.setTitle("Consultar periférico");
                 stagePerifericos.showAndWait();
                 cargarTabla();
-                inicializarBusquedaPerifericos();
             }catch(IOException | SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
             }
+        }else{
+            Utilidades.mostrarAlertaSimple("Periférico no seleccionado", "No se ha seleccionado el periférico a consultar.", Alert.AlertType.WARNING);
         }
     }
 
@@ -147,7 +145,6 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.setResizable(false);
                 stagePerifericos.setTitle("Modificar periférico");
                 cargarTabla();
-                inicializarBusquedaPerifericos();
             } catch (IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -171,7 +168,6 @@ public class PerifericosFXMLControlador implements Initializable {
             stagePerifericos.setResizable(false);
             stagePerifericos.setTitle("Registrar periférico");
             cargarTabla();
-            inicializarBusquedaPerifericos();
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -195,47 +191,6 @@ public class PerifericosFXMLControlador implements Initializable {
 
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
-    
-    private void inicializarBusquedaPerifericos(){
-        if(listaPerifericos.size() > 0){
-            FilteredList<Periferico> filtro = new FilteredList<>(listaPerifericos, p -> true);
-            
-            tfBusqueda.textProperty().addListener(new ChangeListener<String>(){
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    filtro.setPredicate(busqueda -> {
-                        if(newValue == null || newValue.isEmpty()){
-                            return true;
-                        }
-                        
-                        String filtroMinusculas = newValue.toLowerCase();
-                        if(busqueda.getNumeroSerie().toLowerCase().contains(filtroMinusculas)){
-                            return true;
-                        }
-                        
-                        if(busqueda.getEstado().toLowerCase().contains(filtroMinusculas)){
-                            return true;
-                        }
-                        
-                        if(busqueda.getMarca().toLowerCase().contains(filtroMinusculas)){
-                            return true;
-                        }
-                        
-                        if(busqueda.getModelo().toLowerCase().contains(filtroMinusculas)){
-                            return true;
-                        }
-                        
-                        return false;
-                    });
-                }
-                
-            });
-            
-            SortedList<Periferico> sortedRefaccion = new SortedList<>(filtro);
-            sortedRefaccion.comparatorProperty().bind(tvPerifericos.comparatorProperty());
-            tvPerifericos.setItems(sortedRefaccion);
         }
     }
     
