@@ -75,10 +75,10 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
             if(idSeleccionado > 0 ){
                 if(Utilidades.mostrarDialogoConfirmacion("Eliminar software de equipo", "¿Desea eliminar el software del equipo?")){
                     if(HardwareDAO.EliminarSoftwareHardware( idSeleccionado, idConsulta)){
-                        Utilidades.mostrarAlertaSimple("Software eliminado", "Se ha eliminado correctamente el software del equipo", Alert.AlertType.CONFIRMATION);
+                        Utilidades.mostrarAlertaSimple("Software eliminado", "Se ha eliminado correctamente el software del equipo", Alert.AlertType.INFORMATION);
                     }
                 }else{
-                    Utilidades.mostrarAlertaSimple("Eliminacion cancelada", "Eliminación de software cancelada", Alert.AlertType.CONFIRMATION);
+                    Utilidades.mostrarAlertaSimple("Eliminacion cancelada", "Eliminación de software cancelada", Alert.AlertType.INFORMATION);
                 }
 
                 Stage stage = (Stage) tvEquiposComputo.getScene().getWindow();
