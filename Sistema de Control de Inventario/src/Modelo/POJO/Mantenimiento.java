@@ -30,4 +30,9 @@ public class Mantenimiento {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+    
+    @Override
+    public String toString() {
+        return this.tipo;
+    }
 }
