@@ -90,7 +90,7 @@ public class UsuarioFXMLControlador implements Initializable {
 
                 if(Utilidades.mostrarDialogoConfirmacion("Confirmar eliminación", "Desea eliminar al usuario con correo "+usuarioSeleccionado+" ?")){
                     UsuarioDAO.eliminarUsuario(usuarioSeleccionado);
-                    Utilidades.mostrarAlertaSimple("Usuario eliminado", "El usuario se eliminó con éxito", Alert.AlertType.CONFIRMATION);
+                    Utilidades.mostrarAlertaSimple("Usuario eliminado", "El usuario se eliminó con éxito", Alert.AlertType.INFORMATION);
                     cargarDatosTabla();
 
                 }

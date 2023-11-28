@@ -144,7 +144,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     private void guardarModificaciónUsuario(Usuario usuario){
         try{
             if(UsuarioDAO.modificarUsuario(usuario, usuarioModificar)){
-                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }
@@ -157,7 +157,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     private void guardarModificaciónUsuarioFoto(Usuario usuario){
         try{
             if(UsuarioDAO.modificarUsuarioFoto(usuario, archivoFoto, usuarioModificar)){
-                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.CONFIRMATION);
+                Utilidades.mostrarAlertaSimple("Registro exitoso", "El usuario se modificó con exito", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) cbCargo.getScene().getWindow();
                 stage.close();
             }

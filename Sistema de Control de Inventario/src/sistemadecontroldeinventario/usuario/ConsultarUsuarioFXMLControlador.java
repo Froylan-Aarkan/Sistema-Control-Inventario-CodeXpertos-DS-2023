@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -29,14 +30,18 @@ public class ConsultarUsuarioFXMLControlador implements Initializable {
 
     @FXML
     private ImageView ivFoto;
-    @FXML
     private Label lblNombre;
-    @FXML
     private Label lblCorreo;
-    @FXML
     private Label lblContrasenia;
-    @FXML
     private Label lblCargo;
+    @FXML
+    private TextField tfNombre;
+    @FXML
+    private TextField tfCorreo;
+    @FXML
+    private TextField tfPassword;
+    @FXML
+    private TextField tfCargo;
 
     /**
      * Initializes the controller class.
@@ -55,10 +60,10 @@ public class ConsultarUsuarioFXMLControlador implements Initializable {
     public void inicializarUsuario(String usuarioSeleccionado) throws IOException{
         try{
             Usuario usuario = UsuarioDAO.recuperarTodoUsuarioPorCorreo(usuarioSeleccionado);
-            lblNombre.setText(usuario.getNombreCompleto());
-            lblCorreo.setText(usuario.getCorreoInstitucional());
-            lblContrasenia.setText(usuario.getContrasenia());
-            lblCargo.setText(usuario.getCargo());
+            tfNombre.setText(usuario.getNombreCompleto());
+            tfCorreo.setText(usuario.getCorreoInstitucional());
+            tfPassword.setText(usuario.getContrasenia());
+            tfCargo.setText(usuario.getCargo());
             
             if(usuario.getFoto()!=null){
                 Image img = new Image(new ByteArrayInputStream(usuario.getFoto()));
