@@ -174,6 +174,8 @@ public class ConsultarCentroDeComputoController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el centro de cómputo a modificar.", Alert.AlertType.WARNING);
         }
     }
 

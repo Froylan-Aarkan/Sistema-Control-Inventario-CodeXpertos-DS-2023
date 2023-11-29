@@ -96,6 +96,8 @@ public class ConsultarBitacoraFXMLController implements Initializable {
             }catch (IOException ex) {
                 Logger.getLogger(BitacoraConsultadaFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            Utilidades.mostrarAlertaSimple("Equipo no seleccionado", "No se ha seleccionado el equipo de cómputo a consultar.", Alert.AlertType.WARNING);
         }
     }
     
