@@ -56,13 +56,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-<<<<<<< Updated upstream
       <TextField fx:id="tfnombre" layoutX="274.0" layoutY="374.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <TextField fx:id="tfCorreo" layoutX="757.0" layoutY="369.0" prefHeight="31.0" prefWidth="308.0" style="-fx-border-color: #6ABCDC;" />
-=======
-      <TextField fx:id="tfnombre" layoutX="274.0" layoutY="374.0" prefHeight="31.0" prefWidth="300.0" />
-      <TextField fx:id="tfCorreo" layoutX="757.0" layoutY="369.0" prefHeight="31.0" prefWidth="308.0" />
->>>>>>> Stashed changes
       <Label layoutX="275.0" layoutY="353.0" text="Nombre completo">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -83,18 +78,14 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-<<<<<<< Updated upstream
+
       <TextField fx:id="tfContrasenia" layoutX="274.0" layoutY="524.0" prefHeight="31.0" prefWidth="300.0" style="-fx-border-color: #6ABCDC;" />
       <ImageView fx:id="ivFoto" fitHeight="205.0" fitWidth="282.0" layoutX="542.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="613.0" layoutY="317.0" mnemonicParsing="false" onAction="#subirFoto" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #004aad;" text="Subir foto" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-=======
-      <TextField fx:id="tfContrasenia" layoutX="274.0" layoutY="524.0" prefHeight="31.0" prefWidth="300.0" />
-      <ImageView fx:id="ivFoto" fitHeight="205.0" fitWidth="282.0" layoutX="543.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="613.0" layoutY="314.0" mnemonicParsing="false" onAction="#subirFoto" prefHeight="25.0" prefWidth="140.0" text="Subir foto" />
->>>>>>> Stashed changes
+
       <ComboBox fx:id="cbCargo" layoutX="757.0" layoutY="527.0" prefHeight="25.0" prefWidth="300.0" />
    </children>
 </AnchorPane>
