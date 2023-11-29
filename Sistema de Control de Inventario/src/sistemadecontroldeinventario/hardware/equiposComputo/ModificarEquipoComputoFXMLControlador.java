@@ -359,13 +359,13 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 tfAlmacenamiento.setStyle("");
             }
             
-            if(HardwareDAO.buscarIdHardwarePorPosicion(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo(), cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem()) > 0){
+            if(HardwareDAO.buscarIdHardwarePorPosicion(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo(), cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem(), hardwareModificacion.getIdHardware()) > 0){
                lbErrorLetra.setText("Esa posición ya esta ocupada.");
-               cbLetra.setStyle("");
-               cbNumero.setStyle("");
+               cbLetra.setStyle("-fx-border-color: red");
+               cbNumero.setStyle("-fx-border-color: red");
                 sonValidos = false;
             }else{
-                lbErrorLetra.setText("");
+               lbErrorLetra.setText("");
                cbLetra.setStyle("");
                cbNumero.setStyle(""); 
             }
@@ -388,6 +388,6 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
     public void inicializarVentana(Hardware hardwareModificacion){
         this.hardwareModificacion = hardwareModificacion;
         cargarDatos();
-    }
-    
+        System.out.println(hardwareModificacion.getIdHardware());
+    }    
 }

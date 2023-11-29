@@ -71,7 +71,6 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
 
     @FXML
     private void modificarPeriferico(ActionEvent event) {
-        //TODO verificacion de cambios
         if(camposValidos()){
             if(Utilidades.mostrarDialogoConfirmacion("Modificar periférico", "¿Desea modificar el periférico?")){
                 Periferico perifericoModificado = new Periferico();
@@ -156,6 +155,12 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
 
     }
     
+    
+    @FXML
+    private void quitarUbicacion(ActionEvent event) {
+        cbUbicacion.getSelectionModel().clearSelection();
+    }
+    
     private void cargarComboBoxes(){
         cbTipoConexion.getItems().addAll("Alambrico", "Inalambrico");
         cbEstado.getItems().addAll("Funcional", "Dañado");
@@ -228,6 +233,5 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
     public void inicializarVentana(Periferico perifericoModificacion){
         this.perifericoModificacion = perifericoModificacion;
         cargarDatos();
-    }
-    
+    }    
 }

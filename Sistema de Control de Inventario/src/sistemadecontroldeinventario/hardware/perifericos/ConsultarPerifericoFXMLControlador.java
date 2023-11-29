@@ -69,7 +69,12 @@ public class ConsultarPerifericoFXMLControlador implements Initializable {
         }
         
         try {
-            tfUbicacion.setText(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(perifericoConsulta.getIdCentroComputo()));
+            if(perifericoConsulta.getIdCentroComputo() != 0){
+                tfUbicacion.setText(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(perifericoConsulta.getIdCentroComputo()));
+            }else{
+                tfUbicacion.setText("No aplica");
+            }
+            
         } catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }

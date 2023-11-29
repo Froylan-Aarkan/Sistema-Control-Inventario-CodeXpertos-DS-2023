@@ -12,12 +12,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -117,7 +112,6 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.setResizable(false);
                 stagePerifericos.setTitle("Consultar periférico");
                 stagePerifericos.showAndWait();
-                cargarTabla();
             }catch(IOException | SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -141,9 +135,9 @@ public class PerifericosFXMLControlador implements Initializable {
                 Stage stagePerifericos = new Stage();
                 stagePerifericos.setScene(escenarioModificarPeriferico);
                 stagePerifericos.initModality(Modality.APPLICATION_MODAL);
-                stagePerifericos.showAndWait();
                 stagePerifericos.setResizable(false);
                 stagePerifericos.setTitle("Modificar periférico");
+                stagePerifericos.showAndWait();                
                 cargarTabla();
             } catch (IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -164,9 +158,9 @@ public class PerifericosFXMLControlador implements Initializable {
             Stage stagePerifericos = new Stage();
             stagePerifericos.setScene(escenarioRegistrarPeriferico);
             stagePerifericos.initModality(Modality.APPLICATION_MODAL);
-            stagePerifericos.showAndWait();
             stagePerifericos.setResizable(false);
             stagePerifericos.setTitle("Registrar periférico");
+            stagePerifericos.showAndWait(); 
             cargarTabla();
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

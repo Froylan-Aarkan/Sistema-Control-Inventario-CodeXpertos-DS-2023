@@ -163,9 +163,6 @@ public class PerifericoDAO {
                 int filasAfectadas = consultaEliminarPerifericos.executeUpdate();
                 
                 if(filasAfectadas > 0){
-                    mensajeRespuesta.mostrarAlertaSimple("Operación finalizada con éxito",
-                            "Se eliminó el periferico correctamente.",
-                            Alert.AlertType.INFORMATION);
                     resultado = true;
                 }else{
                     mensajeRespuesta.mostrarAlertaSimple("Operación fallida",
