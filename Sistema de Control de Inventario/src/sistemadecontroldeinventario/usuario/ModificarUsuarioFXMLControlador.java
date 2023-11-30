@@ -257,7 +257,7 @@ public class ModificarUsuarioFXMLControlador implements Initializable {
     
     private void cargarComboBox(){
         listaCargos = FXCollections.observableArrayList();
-        listaCargos.addAll("Administrador", "Encargado", "Docente");
+        listaCargos.addAll("Administrador", "Encargado");
         cbCargo.setItems(listaCargos);
     }
     

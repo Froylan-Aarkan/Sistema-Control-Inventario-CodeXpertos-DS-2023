@@ -5,6 +5,7 @@
 package sistemadecontroldeinventario.hardware.perifericos;
 
 import Modelo.DAO.PerifericoDAO;
+import Modelo.POJO.Hardware;
 import Modelo.POJO.Periferico;
 import Utilidades.Utilidades;
 import java.io.IOException;
@@ -12,8 +13,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,6 +54,8 @@ public class PerifericosFXMLControlador implements Initializable {
     private TableColumn tcEstado;
     @FXML
     private TableView<Periferico> tvPerifericos;
+    @FXML
+    private TextField tfBusqueda;
 
     /**
      * Initializes the controller class.
@@ -56,6 +64,7 @@ public class PerifericosFXMLControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarTabla();
+        inicializarBusquedaPerifericos();
     }    
 
     @FXML
@@ -93,6 +102,7 @@ public class PerifericosFXMLControlador implements Initializable {
         }
         
         cargarTabla();
+        inicializarBusquedaPerifericos();
     }
 
     @FXML
@@ -112,6 +122,7 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.setResizable(false);
                 stagePerifericos.setTitle("Consultar periférico");
                 stagePerifericos.showAndWait();
+                inicializarBusquedaPerifericos();
             }catch(IOException | SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -139,6 +150,7 @@ public class PerifericosFXMLControlador implements Initializable {
                 stagePerifericos.setTitle("Modificar periférico");
                 stagePerifericos.showAndWait();                
                 cargarTabla();
+                inicializarBusquedaPerifericos();
             } catch (IOException | SQLException e) {
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                 e.printStackTrace();
@@ -162,6 +174,7 @@ public class PerifericosFXMLControlador implements Initializable {
             stagePerifericos.setTitle("Registrar periférico");
             stagePerifericos.showAndWait(); 
             cargarTabla();
+            inicializarBusquedaPerifericos();
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -205,6 +218,51 @@ public class PerifericosFXMLControlador implements Initializable {
                 Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
             }
         }      
+    }
+    
+    private void inicializarBusquedaPerifericos(){
+        if(listaPerifericos.size() > 0){
+            FilteredList<Periferico> filtro = new FilteredList<>(listaPerifericos, p -> true);
+            
+            tfBusqueda.textProperty().addListener(new ChangeListener<String>(){
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    filtro.setPredicate(busqueda -> {
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+                        
+                        String filtroMinusculas = newValue.toLowerCase();
+                        if(busqueda.getNumeroSerie().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getEstado().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getMarca().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getModelo().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        if(busqueda.getAula().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
+                        return false;
+                    });
+                }
+                
+            });
+            
+            SortedList<Periferico> sortedPerifericos = new SortedList<>(filtro);
+            sortedPerifericos.comparatorProperty().bind(tvPerifericos.comparatorProperty());
+            tvPerifericos.setItems(sortedPerifericos);
+        }
     }
     
     private boolean verificarSeleccion(){

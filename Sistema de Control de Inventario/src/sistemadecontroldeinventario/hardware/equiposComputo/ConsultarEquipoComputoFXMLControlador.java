@@ -4,13 +4,16 @@
  */
 package sistemadecontroldeinventario.hardware.equiposComputo;
 
+import Modelo.DAO.CentroComputoDAO;
 import Modelo.POJO.Hardware;
 import Utilidades.Utilidades;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -91,7 +94,13 @@ public class ConsultarEquipoComputoFXMLControlador implements Initializable {
         tfAlmacenamiento.setText(hardwareConsulta.getAlmacenamiento() + " GB");
         tfEstado.setText(hardwareConsulta.getEstado());
         tfFechaIngreso.setText(hardwareConsulta.getFechaIngreso().toString());
-        tfUbicacion.setText(hardwareConsulta.getCentroComputo() + " - " + hardwareConsulta.getPosicion());
+        
+        if(hardwareConsulta.getIdCentroComputo() != 0){
+            tfUbicacion.setText(hardwareConsulta.getAula());
+        }else{
+            tfUbicacion.setText("No aplica.");
+        }
+        
     }
     
     public void inicializarVentana(Hardware hardwareConsulta){

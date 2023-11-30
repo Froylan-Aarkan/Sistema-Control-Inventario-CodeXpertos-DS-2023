@@ -51,7 +51,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="631.0" layoutY="656.0" mnemonicParsing="false" onAction="#eliminarSoftwareEquipo" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE" />
+      <Button layoutX="631.0" layoutY="656.0" mnemonicParsing="false" onAction="#eliminarSoftwareEquipo" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label layoutX="24.0" layoutY="81.0" prefHeight="59.0" prefWidth="174.0" text="Software:">
          <font>
             <Font size="41.0" />

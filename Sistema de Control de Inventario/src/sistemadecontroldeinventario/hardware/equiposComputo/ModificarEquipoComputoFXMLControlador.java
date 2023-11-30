@@ -97,8 +97,9 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-           cargarCentrosComputo();
-           cargarComboBoxes();
+        cargarCentrosComputo();
+        cargarComboBoxes();
+        iniciarListeners();
     }    
 
     @FXML
@@ -119,7 +120,7 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
     @FXML
     private void modificarEquipoComputo(ActionEvent event) {
         if(camposValidos()){
-            if(Utilidades.mostrarDialogoConfirmacion("Registrar equipo de cómputo", "¿Desea modificar el equipo de cómputo?")){
+            if(Utilidades.mostrarDialogoConfirmacion("Modificar equipo de cómputo", "¿Desea modificar el equipo de cómputo?")){
                 Hardware equipoComputoModificado = new Hardware();
                 equipoComputoModificado.setIdHardware(hardwareModificacion.getIdHardware());
                 equipoComputoModificado.setMarca(tfMarca.getText());
@@ -144,15 +145,14 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                     equipoComputoModificado.setArquitectura(86);
                 }
                 
-                equipoComputoModificado.setIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo());
-                equipoComputoModificado.setPosicion(cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem());
-                
-                try {
-                    equipoComputoModificado.setCentroComputo(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo()));
-                } catch (SQLException e) {
-                    Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                if(cbUbicacion.getSelectionModel().isEmpty()){
+                    equipoComputoModificado.setIdCentroComputo(0);
+                    equipoComputoModificado.setPosicion("No aplica.");
+                }else{
+                    equipoComputoModificado.setIdCentroComputo(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo());
+                    equipoComputoModificado.setPosicion(cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem());
                 }
-
+                
                 if(!hardwareModificacion.equals(equipoComputoModificado)){
                     try {
                         if(HardwareDAO.modificarEquipoDeComputo(equipoComputoModificado)){
@@ -169,6 +169,13 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 }
             }
         }
+    }
+    
+    @FXML
+    private void quitarUbicacion(ActionEvent event) {
+        cbUbicacion.getSelectionModel().clearSelection();
+        cbLetra.getSelectionModel().clearSelection();
+        cbNumero.getSelectionModel().clearSelection();
     }
     
     private void cargarDatos(){
@@ -200,18 +207,21 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
             cbLetra.getSelectionModel().select(cbLetra.getItems().indexOf(String.valueOf(hardwareModificacion.getPosicion().charAt(0))));
             cbNumero.getSelectionModel().select(cbNumero.getItems().indexOf(String.valueOf(hardwareModificacion.getPosicion().charAt(1))));
         }
-      
+        //seleccionar combobox con el centro de cómputo del hardware.
         try {
-            CentroComputo centroSeleccion = CentroComputoDAO.recuperarCentroComputoPorId(hardwareModificacion.getIdCentroComputo());
-            for (CentroComputo centroComboBox : cbUbicacion.getItems()) {
-                if(centroComboBox.getIdCentroComputo() == centroSeleccion.getIdCentroComputo()){
-                    cbUbicacion.getSelectionModel().select(centroComboBox);
+            if(hardwareModificacion.getIdCentroComputo() != 0){
+                CentroComputo centroSeleccion = CentroComputoDAO.recuperarCentroComputoPorId(hardwareModificacion.getIdCentroComputo());
+                for (CentroComputo centroComboBox : cbUbicacion.getItems()) {
+                    if(centroComboBox.getIdCentroComputo() == centroSeleccion.getIdCentroComputo()){
+                        cbUbicacion.getSelectionModel().select(centroComboBox);
+                    }
                 }
-            }
+            }else{
+                cbLetra.setDisable(true);
+                cbNumero.setDisable(true);
+            }            
         }catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo salió mal: " + e.getMessage(), Alert.AlertType.ERROR);
-        }catch(NullPointerException e){
-            e.printStackTrace();
         }
     }
     
@@ -359,17 +369,18 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
                 tfAlmacenamiento.setStyle("");
             }
             
-            if(HardwareDAO.buscarIdHardwarePorPosicion(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo(), cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem(), hardwareModificacion.getIdHardware()) > 0){
-               lbErrorLetra.setText("Esa posición ya esta ocupada.");
-               cbLetra.setStyle("-fx-border-color: red");
-               cbNumero.setStyle("-fx-border-color: red");
-                sonValidos = false;
-            }else{
-               lbErrorLetra.setText("");
-               cbLetra.setStyle("");
-               cbNumero.setStyle(""); 
+            if(!cbUbicacion.getSelectionModel().isEmpty()){
+                if(HardwareDAO.buscarIdHardwarePorPosicion(cbUbicacion.getSelectionModel().getSelectedItem().getIdCentroComputo(), cbLetra.getSelectionModel().getSelectedItem() + cbNumero.getSelectionModel().getSelectedItem(), hardwareModificacion.getIdHardware()) > 0){
+                    lbErrorLetra.setText("Esa posición ya esta ocupada.");
+                    cbLetra.setStyle("-fx-border-color: red");
+                    cbNumero.setStyle("-fx-border-color: red");
+                    sonValidos = false;
+                }else{
+                    lbErrorLetra.setText("");
+                    cbLetra.setStyle("");
+                    cbNumero.setStyle(""); 
+                }
             }
-            
         } catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -384,10 +395,21 @@ public class ModificarEquipoComputoFXMLControlador implements Initializable {
             return false;
         }
     }
+    
+    private void iniciarListeners(){
+        cbUbicacion.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue == null){
+                cbLetra.setDisable(true);
+                cbNumero.setDisable(true);
+            }else{
+                cbLetra.setDisable(false);
+                cbNumero.setDisable(false);
+            }
+        });
+    }
 
     public void inicializarVentana(Hardware hardwareModificacion){
         this.hardwareModificacion = hardwareModificacion;
         cargarDatos();
-        System.out.println(hardwareModificacion.getIdHardware());
-    }    
+    }
 }

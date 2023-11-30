@@ -53,19 +53,31 @@
       <Button layoutX="1126.0" layoutY="667.0" mnemonicParsing="false" onAction="#eliminarUsuario" style="-fx-background-color: #058125;" text="Eliminar" textFill="WHITE">
          <font>
             <Font size="23.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button layoutX="757.0" layoutY="667.0" mnemonicParsing="false" onAction="#consultarUsuario" style="-fx-background-color: #058125;" text="Consultar " textFill="WHITE">
          <font>
             <Font size="23.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button layoutX="398.0" layoutY="668.0" mnemonicParsing="false" onAction="#modificarUsuario" style="-fx-background-color: #058125;" text="Modificar" textFill="WHITE">
          <font>
             <Font size="23.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button layoutX="83.0" layoutY="667.0" mnemonicParsing="false" onAction="#registrarUsuario" style="-fx-background-color: #058125;" text="Registrar" textFill="WHITE">
          <font>
             <Font size="23.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button layoutX="1273.0" layoutY="-2.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: #004aad;">
          <graphic>
             <ImageView fitHeight="59.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
@@ -74,6 +86,9 @@
                </image>
             </ImageView>
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
    </children>
 </AnchorPane>

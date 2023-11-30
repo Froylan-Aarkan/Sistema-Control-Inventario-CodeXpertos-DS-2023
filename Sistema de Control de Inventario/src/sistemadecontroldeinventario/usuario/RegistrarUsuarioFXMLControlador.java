@@ -190,9 +190,7 @@ public class RegistrarUsuarioFXMLControlador implements Initializable {
     
     private void cargarComboBox(){
         listaCargos = FXCollections.observableArrayList();
-        listaCargos.add("Administrador");
-        listaCargos.add("Encargado");
-        listaCargos.add("Docente");
+        listaCargos.addAll("Administrador", "Encargado");
         cbCargo.setItems(listaCargos);
     }
 }

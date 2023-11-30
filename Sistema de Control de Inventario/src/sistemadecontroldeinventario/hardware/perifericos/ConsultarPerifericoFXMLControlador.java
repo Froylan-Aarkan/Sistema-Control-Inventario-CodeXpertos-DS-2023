@@ -68,15 +68,10 @@ public class ConsultarPerifericoFXMLControlador implements Initializable {
             tfTipoConexion.setText("Alámbrico");
         }
         
-        try {
-            if(perifericoConsulta.getIdCentroComputo() != 0){
-                tfUbicacion.setText(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(perifericoConsulta.getIdCentroComputo()));
-            }else{
-                tfUbicacion.setText("No aplica");
-            }
-            
-        } catch (SQLException e) {
-            Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+        if(perifericoConsulta.getIdCentroComputo() != 0){
+            tfUbicacion.setText(perifericoConsulta.getAula());
+        }else{
+            tfUbicacion.setText("No aplica");
         }
     }
     

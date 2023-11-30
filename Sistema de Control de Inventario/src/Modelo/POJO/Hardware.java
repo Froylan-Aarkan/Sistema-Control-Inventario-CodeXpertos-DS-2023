@@ -29,7 +29,7 @@ public class Hardware {
     private String marca;
     private String tarjetaMadre;
     private int idCentroComputo;
-    private String centroComputo;
+    private String aula;
 
     public Hardware() {
     }
@@ -102,8 +102,8 @@ public class Hardware {
         return idCentroComputo;
     }
 
-    public String getCentroComputo() {
-        return centroComputo;
+    public String getAula() {
+        return aula;
     }
 
     public void setIdHardware(int idHardware) {
@@ -174,8 +174,8 @@ public class Hardware {
         this.idCentroComputo = idCentroComputo;
     }
 
-    public void setCentroComputo(String centroComputo) {
-        this.centroComputo = centroComputo;
+    public void setAula(String aula) {
+        this.aula = aula;
     }
 
     @Override
@@ -185,25 +185,25 @@ public class Hardware {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.idHardware;
-        hash = 97 * hash + Objects.hashCode(this.modelo);
-        hash = 97 * hash + Objects.hashCode(this.numeroSerie);
-        hash = 97 * hash + Objects.hashCode(this.estado);
-        hash = 97 * hash + Objects.hashCode(this.procesador);
-        hash = 97 * hash + Objects.hashCode(this.posicion);
-        hash = 97 * hash + Float.floatToIntBits(this.almacenamiento);
-        hash = 97 * hash + Float.floatToIntBits(this.ram);
-        hash = 97 * hash + Objects.hashCode(this.direccionMac);
-        hash = 97 * hash + Objects.hashCode(this.direccionIp);
-        hash = 97 * hash + Objects.hashCode(this.grafica);
-        hash = 97 * hash + Objects.hashCode(this.fechaIngreso);
-        hash = 97 * hash + Objects.hashCode(this.sistemaOperativo);
-        hash = 97 * hash + this.arquitectura;
-        hash = 97 * hash + Objects.hashCode(this.marca);
-        hash = 97 * hash + Objects.hashCode(this.tarjetaMadre);
-        hash = 97 * hash + this.idCentroComputo;
-        hash = 97 * hash + Objects.hashCode(this.centroComputo);
+        int hash = 5;
+        hash = 59 * hash + this.idHardware;
+        hash = 59 * hash + Objects.hashCode(this.modelo);
+        hash = 59 * hash + Objects.hashCode(this.numeroSerie);
+        hash = 59 * hash + Objects.hashCode(this.estado);
+        hash = 59 * hash + Objects.hashCode(this.procesador);
+        hash = 59 * hash + Objects.hashCode(this.posicion);
+        hash = 59 * hash + Float.floatToIntBits(this.almacenamiento);
+        hash = 59 * hash + Float.floatToIntBits(this.ram);
+        hash = 59 * hash + Objects.hashCode(this.direccionMac);
+        hash = 59 * hash + Objects.hashCode(this.direccionIp);
+        hash = 59 * hash + Objects.hashCode(this.grafica);
+        hash = 59 * hash + Objects.hashCode(this.fechaIngreso);
+        hash = 59 * hash + Objects.hashCode(this.sistemaOperativo);
+        hash = 59 * hash + this.arquitectura;
+        hash = 59 * hash + Objects.hashCode(this.marca);
+        hash = 59 * hash + Objects.hashCode(this.tarjetaMadre);
+        hash = 59 * hash + this.idCentroComputo;
+        hash = 59 * hash + Objects.hashCode(this.aula);
         return hash;
     }
 
@@ -267,10 +267,9 @@ public class Hardware {
         if (!Objects.equals(this.tarjetaMadre, other.tarjetaMadre)) {
             return false;
         }
-        if (!Objects.equals(this.centroComputo, other.centroComputo)) {
+        if (!Objects.equals(this.aula, other.aula)) {
             return false;
         }
         return Objects.equals(this.fechaIngreso, other.fechaIngreso);
     }
-
 }

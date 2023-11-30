@@ -113,12 +113,31 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
                         stageEquiposDeComputo.setResizable(false);
                         stageEquiposDeComputo.setTitle("Registrar Bitácora");
                         stageEquiposDeComputo.showAndWait();
-
                     }catch (IOException e) {
                         Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                         e.printStackTrace();
                     } 
                 }
+            }else{
+                try{
+                        FXMLLoader loaderVentanaModificarEquipoDeComputo = new FXMLLoader(getClass().getResource("BitacoraDeMantenimientoFXML.fxml"));
+                        Parent ventanaModificarEquipoDeComputo = loaderVentanaModificarEquipoDeComputo.load();
+
+                        BitacoraDeMantenimientoFXMLController controlador = loaderVentanaModificarEquipoDeComputo.getController();
+                        controlador.recibirHardware(idDispositivo);
+
+                        Scene escenarioModificarEquipoDeComputo = new Scene(ventanaModificarEquipoDeComputo);
+                        Stage stageEquiposDeComputo = new Stage();
+                        stageEquiposDeComputo.setScene(escenarioModificarEquipoDeComputo);
+                        stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+                        stageEquiposDeComputo.setResizable(false);
+                        stageEquiposDeComputo.setTitle("Registrar Bitácora");
+                        stageEquiposDeComputo.showAndWait();
+
+                    }catch (IOException e) {
+                        Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+                        e.printStackTrace();
+                    } 
             }
 
         }else{
@@ -142,14 +161,6 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
         } catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
-    }
-    
-    private boolean verificarSeleccion(){
-        return tbDispositivo.getSelectionModel().getSelectedItem() != null;
-    }
-    
-    public void inicializarVentana(String cargoUsuario){
-        this.cargoUsuario = cargoUsuario;
     }
 
     @FXML
@@ -175,4 +186,31 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
         } 
     }
     
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        if(Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", "¿Seguro que desea cerrar sesión?")){
+            try {
+                FXMLLoader loaderInicioSesion = new FXMLLoader(getClass().getResource("/sistemadecontroldeinventario/InicioSesionFXML.fxml"));
+                Parent inicioSesion = loaderInicioSesion.load();
+
+                Scene escenaVentanaPrincipal = new Scene(inicioSesion);
+                Stage stageInicioSesion = (Stage) tbDispositivo.getScene().getWindow();
+                stageInicioSesion.setScene(escenaVentanaPrincipal);
+                stageInicioSesion.setResizable(false);
+                stageInicioSesion.setTitle("Iniciar sesión");
+                stageInicioSesion.show();
+            } catch (IOException e) {
+                Utilidades.mostrarAlertaSimple("Algo salió mal", "Algo salio mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+        }        
+    }
+    
+    private boolean verificarSeleccion(){
+        return tbDispositivo.getSelectionModel().getSelectedItem() != null;
+    }
+    
+    public void inicializarVentana(String cargoUsuario){
+        this.cargoUsuario = cargoUsuario;
+    }
 }

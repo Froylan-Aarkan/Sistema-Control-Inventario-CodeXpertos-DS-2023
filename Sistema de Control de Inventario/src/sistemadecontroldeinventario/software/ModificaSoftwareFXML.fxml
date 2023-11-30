@@ -25,11 +25,17 @@
          <font>
             <Font size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button layoutX="467.0" layoutY="244.0" mnemonicParsing="false" onAction="#cerrarVentana" style="-fx-background-color: #FF0000;" text="Regresar" textFill="WHITE">
          <font>
             <Font size="14.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label fx:id="lbNombre" layoutX="53.0" layoutY="148.0" prefHeight="8.0" prefWidth="488.0" textFill="RED">
          <font>
             <Font size="10.0" />

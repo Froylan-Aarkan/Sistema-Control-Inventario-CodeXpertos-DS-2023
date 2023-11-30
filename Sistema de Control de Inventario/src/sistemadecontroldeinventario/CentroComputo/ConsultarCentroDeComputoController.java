@@ -127,6 +127,8 @@ public class ConsultarCentroDeComputoController implements Initializable {
             Stage stageEquiposDeComputo = new Stage();
             stageEquiposDeComputo.setScene(escenarioRegistrarEquipoDeComputo);
             stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+            stageEquiposDeComputo.setResizable(false);
+            stageEquiposDeComputo.setTitle("Registrar centro de cómputo");
             stageEquiposDeComputo.showAndWait();            
         } catch (IOException ex) {
             Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,6 +149,8 @@ public class ConsultarCentroDeComputoController implements Initializable {
                 Stage stageInformacionCentroDeComputo = new Stage();
                 stageInformacionCentroDeComputo.setScene(escenarioInformacionCentroDeComputo);
                 stageInformacionCentroDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageInformacionCentroDeComputo.setResizable(false);
+                stageInformacionCentroDeComputo.setTitle("Consultar centro de cómputo");
                 stageInformacionCentroDeComputo.showAndWait();
             } catch (IOException ex) {
                 Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,6 +174,8 @@ public class ConsultarCentroDeComputoController implements Initializable {
                 Stage stageInformacionCentroDeComputo = new Stage();
                 stageInformacionCentroDeComputo.setScene(escenarioInformacionCentroDeComputo);
                 stageInformacionCentroDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageInformacionCentroDeComputo.setResizable(false);
+                stageInformacionCentroDeComputo.setTitle("Modificar centro de cómputo");
                 stageInformacionCentroDeComputo.showAndWait();
             } catch (IOException ex) {
                 Logger.getLogger(ConsultarCentroDeComputoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,8 +191,7 @@ public class ConsultarCentroDeComputoController implements Initializable {
             if(Utilidades.mostrarDialogoConfirmacion("Eliminar centro de cómputo", "¿Desea eliminar el centro de cómputo seleccionado?")){
                 try {
                     if(CentroComputoDAO.eliminarCentroComputo(tbCentroComputo.getSelectionModel().getSelectedItem().getIdCentroComputo())){
-                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el centro de cómputo.", Alert.AlertType.INFORMATION);
-                        
+                        Utilidades.mostrarAlertaSimple("Eliminación exitosa.", "Se eliminó exitosamente el centro de cómputo.", Alert.AlertType.INFORMATION);                        
                     }
                 } catch (SQLException e) {
                     Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);

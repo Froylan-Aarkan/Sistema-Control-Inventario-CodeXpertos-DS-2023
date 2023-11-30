@@ -48,13 +48,13 @@ public class ConsultarUsuarioFXMLControlador implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-    Stage stage = (Stage) ivFoto.getScene().getWindow();
-    stage.close();
+        Stage stage = (Stage) ivFoto.getScene().getWindow();
+        stage.close();
     }
     
     public void inicializarUsuario(String usuarioSeleccionado) throws IOException{

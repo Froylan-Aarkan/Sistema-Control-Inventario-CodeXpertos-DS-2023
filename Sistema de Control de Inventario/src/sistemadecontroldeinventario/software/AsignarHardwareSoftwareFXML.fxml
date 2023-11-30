@@ -44,17 +44,20 @@
          </Label>
          <TableView fx:id="tvSoftware" layoutX="614.0" layoutY="157.0" prefHeight="418.0" prefWidth="713.0" style="-fx-border-color: #6ABCDC;">
          <columns>
-            <TableColumn fx:id="tcNombre" prefWidth="391.0" text="Nombre" />
-            <TableColumn fx:id="tcPeso" minWidth="0.0" prefWidth="195.0" text="Peso" />
-            <TableColumn fx:id="tcArquitectura" maxWidth="646.0" prefWidth="126.0" text="Arquitectura" />
+            <TableColumn fx:id="tcNombre" prefWidth="320.0" text="Nombre" />
+            <TableColumn fx:id="tcPeso" minWidth="0.0" prefWidth="220.0" text="Peso" />
+            <TableColumn fx:id="tcArquitectura" maxWidth="646.0" prefWidth="171.0" text="Arquitectura" />
          </columns>
         </TableView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00aa45" height="80.0" layoutY="652.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
         <Button layoutX="629.0" layoutY="667.0" mnemonicParsing="false" onAction="#asignarHardwareSoftware" style="-fx-background-color: #058125;" text="Asignar" textFill="WHITE">
          <font>
             <Font size="23.0" />
-         </font></Button>
-      <ComboBox fx:id="cbHardware" layoutX="83.0" layoutY="157.0" onAction="#cbNumeroSerieHardware" prefHeight="25.0" prefWidth="352.0" promptText="--------------------Seleccione un equipo--------------------" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <ComboBox fx:id="cbHardware" layoutX="83.0" layoutY="157.0" onAction="#cbNumeroSerieHardware" prefHeight="37.0" prefWidth="352.0" promptText="--------------------Seleccione un equipo--------------------" />
       <Label layoutX="83.0" layoutY="127.0" text="Número de serie:" textFill="#2115ff">
          <font>
             <Font name="System Bold" size="20.0" />

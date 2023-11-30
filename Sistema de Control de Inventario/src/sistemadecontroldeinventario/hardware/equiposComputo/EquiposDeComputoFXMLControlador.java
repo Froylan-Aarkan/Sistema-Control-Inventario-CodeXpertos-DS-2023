@@ -259,6 +259,10 @@ public class EquiposDeComputoFXMLControlador implements Initializable {
                             return true;
                         }
                         
+                        if(busqueda.getAula().toLowerCase().contains(filtroMinusculas)){
+                            return true;
+                        }
+                        
                         return false;
                     });
                 }

@@ -149,6 +149,8 @@ public class SoftwareFXMLControlador implements Initializable {
                     Stage stageSoftware = new Stage();
                     stageSoftware.setScene(escenarioUsuario);
                     stageSoftware.initModality(Modality.APPLICATION_MODAL);
+                    stageSoftware.setResizable(false);
+                    stageSoftware.setTitle("Consultar software por equipo de cómputo");
 
                     ConsultarSoftwareEquiposFXMLControlador controlador = (ConsultarSoftwareEquiposFXMLControlador) loaderVentanaConsultarUsuario.getController();
                     
@@ -197,15 +199,16 @@ public class SoftwareFXMLControlador implements Initializable {
     
     private void abrirFormularioSoftware(){
         try {
-            FXMLLoader loaderVentanaRegistrarEquipoDeComputo = new FXMLLoader(getClass().getResource("RegistroSoftwareFXML.fxml"));
-            Parent ventanaRegistrarEquipoDeComputo = loaderVentanaRegistrarEquipoDeComputo.load();
+            FXMLLoader loaderVentanaRegistrarSoftware = new FXMLLoader(getClass().getResource("RegistroSoftwareFXML.fxml"));
+            Parent ventanaRegistrarSoftware = loaderVentanaRegistrarSoftware.load();
             
-            Scene escenarioEquiposDeComputo = new Scene(ventanaRegistrarEquipoDeComputo);
-            Stage stageEquiposDeComputo = new Stage();
-            stageEquiposDeComputo.setScene(escenarioEquiposDeComputo);
-            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-            stageEquiposDeComputo.showAndWait();
-            
+            Scene escenarioEquiposDeComputo = new Scene(ventanaRegistrarSoftware);
+            Stage stageFormularioSoftware = new Stage();
+            stageFormularioSoftware.setScene(escenarioEquiposDeComputo);
+            stageFormularioSoftware.initModality(Modality.APPLICATION_MODAL);
+            stageFormularioSoftware.setResizable(false);
+            stageFormularioSoftware.setTitle("Registrar software");
+            stageFormularioSoftware.showAndWait();            
         } catch (IOException ex) {
             Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,6 +228,8 @@ public class SoftwareFXMLControlador implements Initializable {
             Stage stageSoftware = new Stage();
             stageSoftware.setScene(escenarioSoftware);
             stageSoftware.initModality(Modality.APPLICATION_MODAL);
+            stageSoftware.setResizable(false);
+            stageSoftware.setTitle("Modificar software");
             stageSoftware.showAndWait();
             
         } catch (IOException ex) {

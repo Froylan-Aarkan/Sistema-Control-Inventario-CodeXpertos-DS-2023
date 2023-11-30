@@ -37,8 +37,8 @@ public class PerifericoDAO {
                     perifericoTemporal.setModelo(resultadoConsulta.getString("modelo"));
                     perifericoTemporal.setEstado(resultadoConsulta.getString("estado"));
                     perifericoTemporal.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
-                    perifericoTemporal.setIdCentroComputo(resultadoConsulta.getByte("inalambrico"));
-                    
+                    perifericoTemporal.setInalambrico(resultadoConsulta.getBoolean("inalambrico"));
+                    perifericoTemporal.setAula(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo")));
                     perifericosBD.add(perifericoTemporal);
                 }
                 
@@ -105,6 +105,7 @@ public class PerifericoDAO {
                     perifericoBD.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
                     perifericoBD.setInalambrico(resultadoConsulta.getBoolean("inalambrico"));
                     perifericoBD.setIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo"));
+                    perifericoBD.setAula(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo")));
                 }
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el periférico: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -131,7 +132,13 @@ public class PerifericoDAO {
                 consultaPeriferico.setString(4, perifericoModificacion.getTipo());
                 consultaPeriferico.setBoolean(5, perifericoModificacion.isInalambrico());
                 consultaPeriferico.setString(6, perifericoModificacion.getEstado());
-                consultaPeriferico.setInt(7, perifericoModificacion.getIdCentroComputo());
+                
+                if(perifericoModificacion.getIdCentroComputo() != 0){
+                    consultaPeriferico.setInt(7, perifericoModificacion.getIdCentroComputo());
+                }else{
+                    consultaPeriferico.setNull(7, java.sql.Types.INTEGER);
+                }
+                
                 consultaPeriferico.setInt(8, perifericoModificacion.getIdPeriferico());
                 
                 int filasAfectadas = consultaPeriferico.executeUpdate();

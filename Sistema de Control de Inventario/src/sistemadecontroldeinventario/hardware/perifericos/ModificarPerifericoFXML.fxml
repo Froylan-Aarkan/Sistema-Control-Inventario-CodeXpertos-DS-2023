@@ -92,6 +92,9 @@
       </Label>
       <Label fx:id="lbErrorUbicacion" layoutX="59.0" layoutY="343.0" textFill="RED" />
       <Label fx:id="lbErrorEstado" layoutX="587.0" layoutY="243.0" textFill="RED" />
-      <Button layoutX="491.0" layoutY="312.0" mnemonicParsing="false" onAction="#quitarUbicacion" style="-fx-background-color: #004aad;" text="Quitar ubicación" textFill="WHITE" />
+      <Button layoutX="491.0" layoutY="312.0" mnemonicParsing="false" onAction="#quitarUbicacion" style="-fx-background-color: #004aad;" text="Quitar ubicación" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

@@ -139,20 +139,19 @@ public class ModificarPerifericoFXMLControlador implements Initializable {
         }else{
             cbTipoConexion.getSelectionModel().select(0);
         }
-        
+        //seleccionar combobox con el centro de cómputo del periférico.       
         try {
-            CentroComputo centroSeleccion = CentroComputoDAO.recuperarCentroComputoPorId(perifericoModificacion.getIdCentroComputo());
-            for (CentroComputo centroComboBox : cbUbicacion.getItems()) {
-                if(centroComboBox.getIdCentroComputo() == centroSeleccion.getIdCentroComputo()){
-                    cbUbicacion.getSelectionModel().select(centroComboBox);
+            if(perifericoModificacion.getIdCentroComputo() != 0){
+                CentroComputo centroSeleccion = CentroComputoDAO.recuperarCentroComputoPorId(perifericoModificacion.getIdCentroComputo());
+                for (CentroComputo centroComboBox : cbUbicacion.getItems()) {
+                    if(centroComboBox.getIdCentroComputo() == centroSeleccion.getIdCentroComputo()){
+                        cbUbicacion.getSelectionModel().select(centroComboBox);
+                    }
                 }
             }
         }catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo salió mal: " + e.getMessage(), Alert.AlertType.ERROR);
-        }catch(NullPointerException e){
-            e.printStackTrace();
-        }
-
+        }        
     }
     
     

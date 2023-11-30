@@ -19,6 +19,7 @@ public class Periferico {
     private String numeroSerie;
     private boolean inalambrico;
     private int idCentroComputo;
+    private String aula;
 
     public Periferico() {
     }
@@ -55,6 +56,10 @@ public class Periferico {
         return idCentroComputo;
     }
 
+    public String getAula() {
+        return aula;
+    }
+
     public void setIdPeriferico(int idPeriferico) {
         this.idPeriferico = idPeriferico;
     }
@@ -87,17 +92,22 @@ public class Periferico {
         this.idCentroComputo = idCentroComputo;
     }
 
+    public void setAula(String aula) {
+        this.aula = aula;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.idPeriferico;
-        hash = 53 * hash + Objects.hashCode(this.tipo);
-        hash = 53 * hash + Objects.hashCode(this.marca);
-        hash = 53 * hash + Objects.hashCode(this.modelo);
-        hash = 53 * hash + Objects.hashCode(this.estado);
-        hash = 53 * hash + Objects.hashCode(this.numeroSerie);
-        hash = 53 * hash + (this.inalambrico ? 1 : 0);
-        hash = 53 * hash + this.idCentroComputo;
+        int hash = 5;
+        hash = 23 * hash + this.idPeriferico;
+        hash = 23 * hash + Objects.hashCode(this.tipo);
+        hash = 23 * hash + Objects.hashCode(this.marca);
+        hash = 23 * hash + Objects.hashCode(this.modelo);
+        hash = 23 * hash + Objects.hashCode(this.estado);
+        hash = 23 * hash + Objects.hashCode(this.numeroSerie);
+        hash = 23 * hash + (this.inalambrico ? 1 : 0);
+        hash = 23 * hash + this.idCentroComputo;
+        hash = 23 * hash + Objects.hashCode(this.aula);
         return hash;
     }
 
@@ -134,7 +144,9 @@ public class Periferico {
         if (!Objects.equals(this.estado, other.estado)) {
             return false;
         }
-        return Objects.equals(this.numeroSerie, other.numeroSerie);
+        if (!Objects.equals(this.numeroSerie, other.numeroSerie)) {
+            return false;
+        }
+        return Objects.equals(this.aula, other.aula);
     }
-    
 }

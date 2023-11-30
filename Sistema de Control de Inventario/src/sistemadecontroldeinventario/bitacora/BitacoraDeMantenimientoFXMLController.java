@@ -101,6 +101,8 @@ public class BitacoraDeMantenimientoFXMLController implements Initializable {
             
             BitacoraDAO bitacoraDAO = new BitacoraDAO();
             bitacoraDAO.RegistrarCentroComputo(bitacora);
+            Stage stage = (Stage) btnSalir.getScene().getWindow();
+            stage.close();
         }else{
             Utilidades.mostrarAlertaSimple("Campos vacíos", "Hay campos vacíos", Alert.AlertType.CONFIRMATION);
         }

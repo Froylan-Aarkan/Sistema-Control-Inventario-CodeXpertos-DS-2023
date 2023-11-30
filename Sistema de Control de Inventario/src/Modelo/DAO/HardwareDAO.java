@@ -38,6 +38,7 @@ public class HardwareDAO {
                     hardwareTemporal.setModelo(resultadoConsulta.getString("modelo"));
                     hardwareTemporal.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
                     hardwareTemporal.setEstado(resultadoConsulta.getString("estado"));
+                    hardwareTemporal.setAula(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo")));
                     hardwareBD.add(hardwareTemporal);
                 }
                 
@@ -127,7 +128,7 @@ public class HardwareDAO {
                 equipoComputoBusqueda.setFechaIngreso(resultadoConsulta.getDate("fechaIngreso"));
                 equipoComputoBusqueda.setPosicion(resultadoConsulta.getString("posicion"));
                 equipoComputoBusqueda.setIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo"));
-                equipoComputoBusqueda.setCentroComputo(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(equipoComputoBusqueda.getIdCentroComputo()));
+                equipoComputoBusqueda.setAula(CentroComputoDAO.recuperarAulaCentroComputoPorIdCentroComputo(resultadoConsulta.getInt("CentroComputo_idCentroComputo")));
             }
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -248,7 +249,12 @@ public class HardwareDAO {
                 consultaHardware.setString(10, equipoComputo.getDireccionMac());
                 consultaHardware.setString(11, equipoComputo.getDireccionIp());
                 consultaHardware.setFloat(12, equipoComputo.getAlmacenamiento());
-                consultaHardware.setInt(13, equipoComputo.getIdCentroComputo());
+                
+                if(equipoComputo.getIdCentroComputo() != 0){
+                    consultaHardware.setInt(13, equipoComputo.getIdCentroComputo());
+                }else{
+                    consultaHardware.setNull(13, java.sql.Types.INTEGER);
+                }
                 consultaHardware.setString(14, equipoComputo.getPosicion());
                 consultaHardware.setInt(15, equipoComputo.getIdHardware());
                 

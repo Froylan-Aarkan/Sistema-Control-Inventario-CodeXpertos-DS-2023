@@ -105,7 +105,6 @@ public class UsuarioFXMLControlador implements Initializable {
                     UsuarioDAO.eliminarUsuario(usuarioSeleccionado);
                     Utilidades.mostrarAlertaSimple("Usuario eliminado", "El usuario se eliminó con éxito", Alert.AlertType.INFORMATION);
                     cargarDatosTabla();
-
                 }
             }else{
                 Utilidades.mostrarAlertaSimple("Error al eliminar", "No se puede eliminar el administrador", Alert.AlertType.ERROR);
@@ -125,15 +124,15 @@ public class UsuarioFXMLControlador implements Initializable {
                 Parent ventanaConsultarUsuario = loaderVentanaConsultarUsuario.load();
             
                 Scene escenarioUsuario = new Scene(ventanaConsultarUsuario);
-                Stage stageSoftware = new Stage();
-                stageSoftware.setScene(escenarioUsuario);
-                stageSoftware.initModality(Modality.APPLICATION_MODAL);
+                Stage stageUsuario = new Stage();
+                stageUsuario.setScene(escenarioUsuario);
+                stageUsuario.initModality(Modality.APPLICATION_MODAL);
+                stageUsuario.setResizable(false);
+                stageUsuario.setTitle("Consultar usuario");
 
                 ConsultarUsuarioFXMLControlador controlador = (ConsultarUsuarioFXMLControlador) loaderVentanaConsultarUsuario.getController();
                 controlador.inicializarUsuario(usuarioSeleccionado);
-                stageSoftware.showAndWait();
-                
-            
+                stageUsuario.showAndWait();
             } catch (IOException ex) {
                 Logger.getLogger(InicioSesionFXMLControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -154,9 +153,10 @@ public class UsuarioFXMLControlador implements Initializable {
                     Stage stageSoftware = new Stage();
                     stageSoftware.setScene(escenarioUsuario);
                     stageSoftware.initModality(Modality.APPLICATION_MODAL);
+                    stageSoftware.setResizable(false);
+                    stageSoftware.setTitle("Modificar usuario");
                     ModificarUsuarioFXMLControlador controlador = (ModificarUsuarioFXMLControlador) loaderVentanaConsultarUsuario.getController();
                     controlador.inicializarUsuario(usuarioSeleccionado);
-
                     stageSoftware.showAndWait();
                     cargarDatosTabla();
             }catch(IOException e){
@@ -176,6 +176,8 @@ public class UsuarioFXMLControlador implements Initializable {
                 Scene escenarioUsuario = new Scene(ventanaConsultarUsuario);
                 Stage stageSoftware = new Stage();
                 stageSoftware.setScene(escenarioUsuario);
+                stageSoftware.setResizable(false);
+                stageSoftware.setTitle("Registrar usuario");
                 stageSoftware.initModality(Modality.APPLICATION_MODAL);
 
                 stageSoftware.showAndWait();
