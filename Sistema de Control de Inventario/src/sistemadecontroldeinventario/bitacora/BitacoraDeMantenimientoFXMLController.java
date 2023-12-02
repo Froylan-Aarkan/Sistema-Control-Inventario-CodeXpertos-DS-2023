@@ -75,19 +75,15 @@ public class BitacoraDeMantenimientoFXMLController implements Initializable {
             
             for(Mantenimiento mantenimiento : listaMantenimiento){
                 cbTipo.setItems(listaMantenimiento);
-            }
-            
-            
-            
+            }   
         }catch(SQLException e){
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    private void clicRegistrar(ActionEvent event) throws SQLException, ParseException {
-        
-        if(validarCamposVacios() == true){
+    private void clicRegistrar(ActionEvent event) throws SQLException, ParseException {        
+        if(validarCamposVacios()){
             int idMantenimiento = cbTipo.getSelectionModel().getSelectedItem().getIdMantenimiento();
                     
             LocalDateTime localDateTime = LocalDateTime.now();
@@ -98,22 +94,18 @@ public class BitacoraDeMantenimientoFXMLController implements Initializable {
             bitacora.setDescripcion(taBitacoraDescripcion.getText());
             bitacora.setIdHardware(idHardwareSeleccionado);
             bitacora.setIdMantenimiento(idMantenimiento);
-            
-            BitacoraDAO bitacoraDAO = new BitacoraDAO();
-            bitacoraDAO.RegistrarCentroComputo(bitacora);
+            BitacoraDAO.RegistrarCentroComputo(bitacora);
             Stage stage = (Stage) btnSalir.getScene().getWindow();
             stage.close();
         }else{
-            Utilidades.mostrarAlertaSimple("Campos vacíos", "Hay campos vacíos", Alert.AlertType.CONFIRMATION);
+            Utilidades.mostrarAlertaSimple("Campos vacíos", "Hay campos vacíos", Alert.AlertType.WARNING);
         }
     }
     
     private boolean validarCamposVacios(){
-        String descripcion = taBitacoraDescripcion.getText();
-        
         boolean camposValidos = true;
         
-        if(descripcion == null && descripcion.isEmpty()){
+        if(taBitacoraDescripcion.getText().isEmpty()){
             camposValidos = false;
         }
         if(cbTipo.getSelectionModel().isEmpty()){

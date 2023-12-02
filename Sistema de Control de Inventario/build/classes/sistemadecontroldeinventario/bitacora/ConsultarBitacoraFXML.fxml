@@ -57,7 +57,7 @@
       
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00aa45" height="80.0" layoutY="675.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
     
-      <Button fx:id="btnConsultar" layoutX="629.0" layoutY="689.0" mnemonicParsing="false" onAction="#clicRegistrar" style="-fx-background-color: #058125;" text="Consultar" textFill="WHITE">
+      <Button fx:id="btnConsultar" layoutX="629.0" layoutY="689.0" mnemonicParsing="false" onAction="#clicConsultar" style="-fx-background-color: #058125;" text="Consultar" textFill="WHITE">
           <font>
             <Font size="23.0" />
          </font>

@@ -38,23 +38,21 @@ import sistemadecontroldeinventario.hardware.VentanaHardwareFXMLControlador;
  * @author Elotlan
  */
 public class SeleccionarDispositivoFXMLController implements Initializable {
-
+    private String cargoUsuario;
+    private ObservableList<Hardware> listaHardware; 
+    
     @FXML
     private TableView<Hardware> tbDispositivo;
     @FXML
-    private TableColumn<?, ?> colModelo;
+    private TableColumn colModelo;
     @FXML
-    private TableColumn<?, ?> colNumeroSerie;
+    private TableColumn colNumeroSerie;
     @FXML
-    private TableColumn<?, ?> colEstado;
+    private TableColumn colEstado;
     @FXML
     private Button btnRegistrar;
     @FXML
     private Button btnSalir;
-    
-    
-    private String cargoUsuario;
-    private ObservableList<Hardware> listaHardware; 
     @FXML
     private Button btnConsultar;
 
@@ -63,33 +61,9 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        configurarTabla();
         cargarTabla();
     }    
-    
-    private void cargarTabla(){
-        colModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
-        colNumeroSerie.setCellValueFactory(new PropertyValueFactory("numeroSerie"));
-        colEstado.setCellValueFactory(new PropertyValueFactory("estado"));
-        
-        try{
-            listaHardware = FXCollections.observableArrayList();
-            ArrayList<Hardware> hardwareBD = HardwareDAO.recuperarTodoHardware();            
-
-            listaHardware.addAll(hardwareBD);
-            tbDispositivo.setItems(listaHardware);
-            
-            if(listaHardware.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Atencion");
-                alert.setHeaderText("No hay problematicas registradas para consultar");
-                alert.setContentText("Intentelo de nuevo más tarde");
-                alert.showAndWait();
-            }
-
-        }catch(SQLException e){
-            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
-        } 
-    }
     
     @FXML
     private void clicRegistrar(ActionEvent event) throws SQLException, ParseException {
@@ -165,20 +139,18 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
 
     @FXML
     private void clicConsultar(ActionEvent event) throws SQLException, ParseException {
-            try{
+        try{
             FXMLLoader loaderVentanaConsultarBitacora = new FXMLLoader(getClass().getResource("ConsultarBitacoraFXML.fxml"));
             Parent ventanaModificarEquipoDeComputo = loaderVentanaConsultarBitacora.load();
 
             ConsultarBitacoraFXMLController controlador = loaderVentanaConsultarBitacora.getController();
-            controlador.mostrarTabla();
-            
             Scene escenarioModificarEquipoDeComputo = new Scene(ventanaModificarEquipoDeComputo);
-                Stage stageEquiposDeComputo = new Stage();
-                stageEquiposDeComputo.setScene(escenarioModificarEquipoDeComputo);
-                stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
-                stageEquiposDeComputo.setResizable(false);
-                stageEquiposDeComputo.setTitle("Registrar Bitácora");
-                stageEquiposDeComputo.showAndWait();
+            Stage stageEquiposDeComputo = new Stage();
+            stageEquiposDeComputo.setScene(escenarioModificarEquipoDeComputo);
+            stageEquiposDeComputo.initModality(Modality.APPLICATION_MODAL);
+            stageEquiposDeComputo.setResizable(false);
+            stageEquiposDeComputo.setTitle("Registrar Bitácora");
+            stageEquiposDeComputo.showAndWait();
             
         }catch (IOException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -204,6 +176,25 @@ public class SeleccionarDispositivoFXMLController implements Initializable {
                 e.printStackTrace();
             }
         }        
+    }
+    
+    private void configurarTabla(){
+        colModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
+        colNumeroSerie.setCellValueFactory(new PropertyValueFactory("numeroSerie"));
+        colEstado.setCellValueFactory(new PropertyValueFactory("estado"));
+    }
+    
+    private void cargarTabla(){
+        try{
+            listaHardware = FXCollections.observableArrayList();
+            ArrayList<Hardware> hardwareBD = HardwareDAO.recuperarTodoHardware();            
+
+            listaHardware.addAll(hardwareBD);
+            tbDispositivo.setItems(listaHardware);
+
+        }catch(SQLException e){
+            Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
     
     private boolean verificarSeleccion(){

@@ -13,6 +13,7 @@ public class Bitacora {
     private int idMantenimiento;
     private String fecha;
     private String descripcion;
+    private String numeroSerie;
 
     public Bitacora() {
     }
@@ -31,6 +32,14 @@ public class Bitacora {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public String getNumeroSerie() {
+        return numeroSerie;
+    }
+
+    public void setNumeroSerie(String numeroSerie) {
+        this.numeroSerie = numeroSerie;
     }
 
     public void setIdHardware(int idHardware) {

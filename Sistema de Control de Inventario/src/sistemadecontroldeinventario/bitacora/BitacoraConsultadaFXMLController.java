@@ -5,6 +5,7 @@
  */
 package sistemadecontroldeinventario.bitacora;
 
+import Modelo.DAO.HardwareDAO;
 import Modelo.POJO.Bitacora;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,9 +33,7 @@ public class BitacoraConsultadaFXMLController implements Initializable {
     @FXML
     private Label lblFecha;
     
-    Bitacora bitacoraRecibida;
-    String numSerie;
-
+    Bitacora bitacoraConsulta;
     /**
      * Initializes the controller class.
      */
@@ -49,14 +48,11 @@ public class BitacoraConsultadaFXMLController implements Initializable {
         stage.close();
     }
     
-    public void recibirInfo(Bitacora bitacoranueva, String numeroSerie){
-        bitacoraRecibida = bitacoranueva;
-        numSerie = numeroSerie;
+    public void inicializarVentana(Bitacora bitacoraConsulta){
+        this.bitacoraConsulta = bitacoraConsulta;
         
-        lblNumSerie.setText(numSerie);
-        lblFecha.setText(bitacoraRecibida.getFecha());
-        taDescripcion.setText(bitacoraRecibida.getDescripcion());
-        
+        taDescripcion.setText(bitacoraConsulta.getDescripcion());
+        lblFecha.setText(bitacoraConsulta.getFecha());
+        lblNumSerie.setText(bitacoraConsulta.getNumeroSerie());
     }
-    
 }

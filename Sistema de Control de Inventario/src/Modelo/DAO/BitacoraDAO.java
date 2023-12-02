@@ -7,12 +7,8 @@ package Modelo.DAO;
 
 import Modelo.ConexionBaseDeDatos;
 import Modelo.POJO.Bitacora;
-import Modelo.POJO.VistaBitacora;
-import Modelo.POJO.CentroComputo;
-import Modelo.POJO.VistaBitacora;
 import Utilidades.Utilidades;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +25,7 @@ import javafx.scene.control.Alert;
  * @author Elotlan
  */
 public class BitacoraDAO {
-    public int RegistrarCentroComputo(Bitacora bitacora) throws SQLException, ParseException{
+    public static int RegistrarCentroComputo(Bitacora bitacora) throws SQLException, ParseException{
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
@@ -60,7 +56,7 @@ public class BitacoraDAO {
         return 0;
     }
     
-    public int buscarHardwareBitacora(int idHardware) throws SQLException, ParseException{
+    public static int buscarHardwareBitacora(int idHardware) throws SQLException, ParseException{
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
@@ -87,21 +83,22 @@ public class BitacoraDAO {
         return 0;
     }
     
-    public static ArrayList<VistaBitacora> recuperarTodoHardware() throws SQLException, ParseException{
-        ArrayList<VistaBitacora> bitacoraBD = null;
+    public static ArrayList<Bitacora> recuperarTodaBitacora() throws SQLException, ParseException{
+        ArrayList<Bitacora> bitacoraBD = null;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
             try{
-                String consulta = "SELECT h.idHardware, h.numeroSerie, b.fecha FROM hardware h JOIN bitacora b ON h.idHardware = b.Hardware_idHardware";
+                String consulta = "SELECT * FROM bitacora";
                 PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
                 ResultSet resultadoConsulta = consultaHardware.executeQuery();
                 bitacoraBD = new ArrayList<>();
                 
                 while(resultadoConsulta.next()){
-                    VistaBitacora bitacoraTempo = new VistaBitacora();
-                    bitacoraTempo.setIdHardware(resultadoConsulta.getInt("idHardware"));
-                    bitacoraTempo.setNumeroSerie(resultadoConsulta.getString("numeroSerie"));
-
+                    Bitacora bitacoraTemporal = new Bitacora();
+                    bitacoraTemporal.setIdMantenimiento(resultadoConsulta.getInt("Mantenimiento_idBitacora"));
+                    bitacoraTemporal.setIdHardware(resultadoConsulta.getInt("Hardware_idHardware"));
+                    bitacoraTemporal.setDescripcion(resultadoConsulta.getString("descripcion"));
+                    bitacoraTemporal.setNumeroSerie(HardwareDAO.buscarNumeroSeriePorIdHardware(resultadoConsulta.getInt("Hardware_idHardware")));
                     String fechaString = resultadoConsulta.getString("fecha");
 
                     // Utilizando SimpleDateFormat para convertir la cadena a java.util.Date
@@ -112,9 +109,9 @@ public class BitacoraDAO {
                     java.sql.Date fechaSqlDate = new java.sql.Date(fechaDate.getTime());
 
                     // Almacenando la fecha como String en tu objeto Bitacora
-                    bitacoraTempo.setFecha(fechaSqlDate.toString());
+                    bitacoraTemporal.setFecha(fechaSqlDate.toString());
                     
-                    bitacoraBD.add(bitacoraTempo);
+                    bitacoraBD.add(bitacoraTemporal);
                     
                 }
                 

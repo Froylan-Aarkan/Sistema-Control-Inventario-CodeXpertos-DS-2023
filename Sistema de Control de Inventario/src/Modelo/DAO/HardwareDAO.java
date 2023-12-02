@@ -167,7 +167,7 @@ public class HardwareDAO {
         return resultadoOperacion;
     }
     
-    public static boolean EliminarSoftwareHardware(int idSoftware, int idHardware){
+    public static boolean EliminarSoftwareHardware(int idSoftware, int idHardware) throws SQLException{
         boolean resultadoOperacion = false;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
@@ -188,6 +188,8 @@ public class HardwareDAO {
                 }
             }catch(SQLException e){
                 e.getMessage();
+            }finally{
+                conexionBD.close();
             }
            
         }else{
@@ -311,7 +313,7 @@ public class HardwareDAO {
         return resultado;
     }
     
-    public static int buscarIdHardwarePorPosicion(int idCentroComputo, String posicion, int idHardware){
+    public static int buscarIdHardwarePorPosicion(int idCentroComputo, String posicion, int idHardware) throws SQLException{
         int idHardwareConsulta = 0;
         Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
         if(conexionBD != null){
@@ -327,11 +329,38 @@ public class HardwareDAO {
                 }
             }catch(SQLException e){
                 Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
             }
         }else{
             Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde..", Alert.AlertType.ERROR);
         }
         
         return idHardwareConsulta;
+    }
+    
+    public static String buscarNumeroSeriePorIdHardware(int idHardware) throws SQLException{
+        String numeroSerie = "";
+        Connection conexionBD = ConexionBaseDeDatos.abrirConexionBaseDatos();
+        if(conexionBD != null){
+            try{
+                String consulta = "SELECT numeroSerie FROM hardware WHERE idHardware = ?";
+                PreparedStatement consultaHardware = conexionBD.prepareStatement(consulta);
+                consultaHardware.setInt(1, idHardware);
+                ResultSet resultadoConsulta = consultaHardware.executeQuery();
+                
+                if(resultadoConsulta.next()){
+                    numeroSerie = resultadoConsulta.getString("numeroSerie");
+                }
+            }catch(SQLException e){
+                Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal al intentar recuperar el equipo de cómputo: " + e.getMessage(), Alert.AlertType.ERROR);
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            Utilidades.mostrarAlertaSimple("Error de conexion", "No hay conexión con la base de datos, inténtelo más tarde..", Alert.AlertType.ERROR);
+        }
+        
+        return numeroSerie;
     }
 }

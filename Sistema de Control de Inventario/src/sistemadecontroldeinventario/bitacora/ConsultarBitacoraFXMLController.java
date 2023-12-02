@@ -7,7 +7,7 @@ package sistemadecontroldeinventario.bitacora;
 
 import Modelo.DAO.BitacoraDAO;
 import Modelo.POJO.Bitacora;
-import Modelo.POJO.VistaBitacora;
+import Modelo.POJO.Hardware;
 import Utilidades.Utilidades;
 import java.io.IOException;
 import java.net.URL;
@@ -39,13 +39,14 @@ import javafx.stage.Stage;
  * @author Elotlan
  */
 public class ConsultarBitacoraFXMLController implements Initializable {
-
+    private ObservableList<Bitacora> listaBitacora;
+    
     @FXML
     private Button btnSalir;
     @FXML
     private Button btnConsultar;
     @FXML
-    private TableView<VistaBitacora> tbBitacora;
+    private TableView<Bitacora> tbBitacora;
     @FXML
     private TableColumn colNumSerie;
     @FXML
@@ -56,13 +57,8 @@ public class ConsultarBitacoraFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            mostrarTabla();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultarBitacoraFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ConsultarBitacoraFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        configurarTabla();
+        cargarTabla();
     }    
 
     @FXML
@@ -72,27 +68,19 @@ public class ConsultarBitacoraFXMLController implements Initializable {
     }
 
     @FXML
-    private void clicRegistrar(ActionEvent event) throws SQLException, ParseException, IOException {
+    private void clicConsultar(ActionEvent event) throws SQLException, ParseException, IOException {
         if(verificarSeleccion()){
-            BitacoraDAO bitacoraDAO = new BitacoraDAO();
-            Bitacora bitacora = new Bitacora();
-            bitacora = bitacoraDAO.recuperarBitacoraPorId(tbBitacora.getSelectionModel().getSelectedItem().getIdHardware());
-            String num = tbBitacora.getSelectionModel().getSelectedItem().getNumeroSerie();
             try{
                 FXMLLoader loaderBitacoraConsultada = new FXMLLoader(getClass().getResource("BitacoraConsultadaFXML.fxml"));
-                Parent ventanaInformacionCentroDeComputo = loaderBitacoraConsultada.load();
-                
+                Parent ventanaInformacionCentroDeComputo = loaderBitacoraConsultada.load();               
                 BitacoraConsultadaFXMLController controlador = loaderBitacoraConsultada.getController();
-                controlador.recibirInfo(bitacora, num);
-                
+                controlador.inicializarVentana(tbBitacora.getSelectionModel().getSelectedItem());
                 Scene escenarioInformacionCentroDeComputo = new Scene(ventanaInformacionCentroDeComputo);
                 Stage stageInformacionCentroDeComputo = new Stage();
                 stageInformacionCentroDeComputo.setScene(escenarioInformacionCentroDeComputo);
                 stageInformacionCentroDeComputo.initModality(Modality.APPLICATION_MODAL);
+                stageInformacionCentroDeComputo.setResizable(false);
                 stageInformacionCentroDeComputo.showAndWait();
-
-                Stage stage = (Stage) btnConsultar.getScene().getWindow();
-                stage.close();
             }catch (IOException ex) {
                 Logger.getLogger(BitacoraConsultadaFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -101,27 +89,19 @@ public class ConsultarBitacoraFXMLController implements Initializable {
         }
     }
     
-    public void mostrarTabla() throws SQLException, ParseException{
-        colNumSerie.setCellValueFactory(new PropertyValueFactory<VistaBitacora, String>("numeroSerie"));
-        colFecha.setCellValueFactory(new PropertyValueFactory<VistaBitacora, String>("fecha"));
-        
-        BitacoraDAO bitacoraDAO = new BitacoraDAO();
-        ArrayList<VistaBitacora> bitacorasDisponibles;
-        bitacorasDisponibles = bitacoraDAO.recuperarTodoHardware();
-        
-        ObservableList<VistaBitacora> bitacorasObservables = FXCollections.observableArrayList();
-        for(VistaBitacora bitacoras : bitacorasDisponibles){
-            bitacorasObservables.add(bitacoras);
-        }
-        
-        tbBitacora.setItems(bitacorasObservables);
-        
-        if(bitacorasDisponibles.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Atencion");
-            alert.setHeaderText("No hay bitacoras registradas para consultar");
-            alert.setContentText("Intentelo de nuevo más tarde");
-            alert.showAndWait();
+    private void configurarTabla(){
+        colFecha.setCellValueFactory(new PropertyValueFactory("fecha"));
+        colNumSerie.setCellValueFactory(new PropertyValueFactory("numeroSerie"));
+    }
+    
+    private void cargarTabla(){
+        try{
+            listaBitacora = FXCollections.observableArrayList();
+            ArrayList<Bitacora> bitacoraBD = BitacoraDAO.recuperarTodaBitacora();
+            listaBitacora.addAll(bitacoraBD);
+            tbBitacora.setItems(listaBitacora);
+        }catch(SQLException | ParseException e){
+            Utilidades.mostrarAlertaSimple("Algo salio mal", "Algo salió mal: " + e.getMessage() + ".", Alert.AlertType.ERROR);
         }
     }
     
