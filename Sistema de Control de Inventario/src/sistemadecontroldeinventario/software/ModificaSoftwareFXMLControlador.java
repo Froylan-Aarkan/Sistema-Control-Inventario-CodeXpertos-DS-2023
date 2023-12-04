@@ -126,6 +126,7 @@ public class ModificaSoftwareFXMLControlador implements Initializable {
         if(tfNombre.getText().equals("")){
             lbNombre.setText("No se puede dejar vacío.");
             tfNombre.setStyle("-fx-border-color: red");
+            sonValidos = false;
         }else{
             lbNombre.setText("");
             tfNombre.setStyle("");
