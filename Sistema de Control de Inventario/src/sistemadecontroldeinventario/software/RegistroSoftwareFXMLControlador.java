@@ -122,16 +122,15 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
     }
 
     private boolean camposValidos(){
-        boolean sonValidos = false;
+        boolean sonValidos = true;
         
-        if(tfNombre.getText().equals("")){
+        if(tfNombre.getText().isEmpty()){
             lbNombre.setText("No se puede dejar vacío.");
             tfNombre.setStyle("-fx-border-color: red");
             sonValidos = false;
         }else{
             lbNombre.setText("");
             tfNombre.setStyle("");
-            sonValidos = true;
         }
         
         String[] unidadesDeAlmacenamiento = {"kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"};
@@ -147,13 +146,11 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
             if(esNumerico(pesoNumerico)){
                 lbPeso.setText("");
                 tfPeso.setStyle("");
-                sonValidos = true;
                 
                 for (String unidad : unidadesDeAlmacenamiento) {
-                    if (pesoExtension.toLowerCase().endsWith(unidad)) {
+                    if (!pesoExtension.toLowerCase().endsWith(unidad)) {
                         lbPeso.setText("");
                         tfPeso.setStyle("");
-                        sonValidos = true;
                         break;
                     }else{
                         lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
