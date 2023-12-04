@@ -277,8 +277,6 @@ public class RegistrarEquipoComputoFXMLControlador implements Initializable {
                 lbErrorAlmacenamiento.setText("");
                 tfAlmacenamiento.setStyle("");
             }
-            
-            
         } catch (SQLException e) {
             Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getSQLState(), Alert.AlertType.ERROR);
         }
