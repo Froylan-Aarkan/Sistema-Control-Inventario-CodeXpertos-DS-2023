@@ -122,7 +122,7 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
     }
 
     private boolean camposValidos(){
-        boolean sonValidos = true;
+        boolean sonValidos = false;
         
         if(tfNombre.getText().equals("")){
             lbNombre.setText("No se puede dejar vacío.");
@@ -131,6 +131,7 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
         }else{
             lbNombre.setText("");
             tfNombre.setStyle("");
+            sonValidos = true;
         }
         
         String[] unidadesDeAlmacenamiento = {"kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"};
@@ -140,22 +141,30 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
             tfPeso.setStyle("-fx-border-color: red");
             sonValidos = false;
         }else if(tfPeso.getText().toLowerCase().endsWith("b")){
-            for (String unidad : unidadesDeAlmacenamiento) {
-                if (tfPeso.getText().toLowerCase().endsWith(unidad)) {
-                    lbPeso.setText("");
-                    tfPeso.setStyle("");
-                    sonValidos = true;
-                    break;
-                }
-            }
-            if (!sonValidos) {
-                lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
-                tfPeso.setStyle("-fx-border-color: red");
-                sonValidos = false;
-            }else{
+            
+            String pesoNumerico = tfPeso.getText().substring(0, tfPeso.getText().length() - 2);
+            String pesoExtension = tfPeso.getText().substring(tfPeso.getText().length() - 2);
+            if(esNumerico(pesoNumerico)){
                 lbPeso.setText("");
                 tfPeso.setStyle("");
                 sonValidos = true;
+                
+                for (String unidad : unidadesDeAlmacenamiento) {
+                    if (pesoExtension.toLowerCase().endsWith(unidad)) {
+                        lbPeso.setText("");
+                        tfPeso.setStyle("");
+                        sonValidos = true;
+                        break;
+                    }else{
+                        lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
+                        tfPeso.setStyle("-fx-border-color: red");
+                        sonValidos = false;
+                    }
+                }
+            }else{
+                lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
+                tfPeso.setStyle("-fx-border-color: red");
+                sonValidos = false;
             }
         }else{
             lbPeso.setText("Ingrese una unidad correcta. Ej. 2Kb, 1Mb, 3Gb, etc.");
@@ -174,6 +183,15 @@ public class RegistroSoftwareFXMLControlador implements Initializable {
         }
 
         return sonValidos;
+    }
+    
+    private boolean esNumerico(String cadena){
+        try {
+            Float.parseFloat(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
     }
 
     public void inicializarVentana(String cargoUsuario){
