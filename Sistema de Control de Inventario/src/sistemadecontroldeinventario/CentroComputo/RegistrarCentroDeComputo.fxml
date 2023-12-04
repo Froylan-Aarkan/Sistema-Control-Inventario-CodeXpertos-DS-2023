@@ -60,7 +60,7 @@
       
       
       <javafx.scene.shape.Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
-      <Label layoutX="385.0" layoutY="1.0" text="Registrar centro de Cómputo" textFill="WHITE">
+      <Label layoutX="273.0" layoutY="-7.0" prefHeight="61.0" prefWidth="821.0" text="Registrar centro de Cómputo" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font></Label>

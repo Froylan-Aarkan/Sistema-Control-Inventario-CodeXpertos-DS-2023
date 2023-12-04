@@ -50,5 +50,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          </Button>
+      <Label layoutX="393.0" layoutY="261.0" text="Detalles del mantenimiento:" />
     </children>
 </AnchorPane>

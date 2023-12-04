@@ -53,7 +53,7 @@
       </Button>
    
       <javafx.scene.shape.Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
-      <Label layoutX="324.0" layoutY="5.0" text="Modificar centro de Cómputo" textFill="WHITE">
+      <Label layoutX="264.0" layoutY="-7.0" text="Modificar centro de Cómputo" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font></Label>

@@ -45,7 +45,7 @@
       <TextField fx:id="tfPiso" layoutX="165.0" layoutY="468.0" prefHeight="55.0" prefWidth="331.0" />
       
       <javafx.scene.shape.Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="80.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1366.0" />
-      <Label layoutX="402.0" layoutY="5.0" text="Centro de Cómputo" textFill="WHITE">
+      <Label layoutX="402.0" layoutY="-7.0" text="Centro de Cómputo" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font></Label>
