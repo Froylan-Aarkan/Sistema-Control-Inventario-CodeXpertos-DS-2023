@@ -20,7 +20,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -74,8 +73,12 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
             int idSeleccionado = tvEquiposComputo.getSelectionModel().getSelectedItem().getIdHardware();
             if(idSeleccionado > 0 ){
                 if(Utilidades.mostrarDialogoConfirmacion("Eliminar software de equipo", "¿Desea eliminar el software del equipo?")){
-                    if(HardwareDAO.EliminarSoftwareHardware( idSeleccionado, idConsulta)){
-                        Utilidades.mostrarAlertaSimple("Software eliminado", "Se ha eliminado correctamente el software del equipo", Alert.AlertType.INFORMATION);
+                    try {
+                        if(HardwareDAO.EliminarSoftwareHardware( idSeleccionado, idConsulta)){
+                            Utilidades.mostrarAlertaSimple("Software eliminado", "Se ha eliminado correctamente el software del equipo", Alert.AlertType.INFORMATION);
+                        }
+                    } catch (SQLException e) {
+                        Utilidades.mostrarAlertaSimple("Error", "Algo ocurrió mal: " + e.getMessage(), Alert.AlertType.ERROR);
                     }
                 }else{
                     Utilidades.mostrarAlertaSimple("Eliminacion cancelada", "Eliminación de software cancelada", Alert.AlertType.INFORMATION);
@@ -89,9 +92,7 @@ public class ConsultarSoftwareEquiposFXMLControlador implements Initializable {
         }
     }
     
-    private void configurarTabla(){
-        
-        
+    private void configurarTabla(){       
         tcMarca.setCellValueFactory(new PropertyValueFactory("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory("modelo"));
         tcPosicion.setCellValueFactory(new PropertyValueFactory("posicion"));
